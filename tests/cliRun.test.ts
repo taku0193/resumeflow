@@ -64,3 +64,11 @@ test('C10-05: an empty project is a successful empty list', async () => {
   expect(result.exitCode).toBe(0);
   expect(result.stdout).toContain('ありません');
 });
+test('C13-02: a project name containing a newline cannot add fake list rows', async () => {
+  const context = cliContextFixture();
+  await context.store.append(cliCheckpointFixture({ workspaceUri: context.project.uri, workspaceName: 'project\nFAKE_ROW' }));
+  const result = await runCli(['list'], async () => context);
+  expect(result.exitCode).toBe(0);
+  expect(result.stdout.trimEnd().split('\n')).toHaveLength(1);
+  expect(result.stdout).toContain('project\\nFAKE_ROW');
+});

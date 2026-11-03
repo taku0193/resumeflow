@@ -1,0 +1,49 @@
+
+> resumeflow@0.0.1 test:unit
+> node scripts/run-vitest.mjs tests/cliRun.test.ts -t C13-02
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliRun.test.ts (7 tests | 1 failed | 6 skipped) 13ms
+   ↓ C9-04a: help returns usage without creating any project or storage context
+   ↓ C9-04b: save waits for persistence and returns one JSON result without running unapproved Git
+   ↓ C9-04c: storage failure returns stderr with no success and no native data
+   ↓ C9-04c: usage errors exit2 without accessing data
+   ↓ C10-05: list/show/context read current project data without saving or executing Git
+   ↓ C10-05: an empty project is a successful empty list
+   × C13-02: a project name containing a newline cannot add fake list rows 12ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliRun.test.ts > C13-02: a project name containing a newline cannot add fake list rows
+AssertionError: expected [ …(2) ] to have a length of 1 but got 2
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ tests/cliRun.test.ts:72:47
+     70|   const result = await runCli(['list'], async () => context);
+     71|   expect(result.exitCode).toBe(0);
+     72|   expect(result.stdout.trimEnd().split('\n')).toHaveLength(1);
+       |                                               ^
+     73|   expect(result.stdout).toContain('project\\nFAKE_ROW');
+     74| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  14:35:27
+   Duration  295ms (transform 51%, import 25%, tests 18%, worker 5%)
+
+JSON report written to /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow/.test-data/vitest-NtO0Sd/result.json
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
