@@ -19,3 +19,15 @@ test('C8-N1: the Node runner uses shell-free bounded Git with fsmonitor and opti
     cwd: '/synthetic', shell: false, timeout: 2000, maxBuffer: 1024 * 1024, encoding: 'buffer', windowsHide: true,
   }, expect.any(Function));
 });
+test.each([
+  [{ code: 'ENOENT' }, Buffer.alloc(0), 'GIT_NOT_INSTALLED'],
+  [{ code: 'ERR_CHILD_PROCESS_STDIO_MAXBUFFER', killed: true }, Buffer.alloc(0), 'GIT_OUTPUT_LIMIT'],
+  [{ killed: true }, Buffer.alloc(0), 'GIT_TIMEOUT'],
+  [{ code: 128 }, Buffer.alloc(0), 'GIT_FAILED'],
+  [null, Buffer.from([0xff]), 'INVALID_GIT_OUTPUT'],
+])('C8-N2: normalizes process/encoding failures without quoting stderr', async (error, bytes, code) => {
+  complete(error, bytes);
+  const caught = await new NodeGitRunner().run('/synthetic', ['rev-parse', '--show-toplevel']).catch(error => error);
+  expect(caught).toMatchObject({ code });
+  expect(String(caught)).not.toContain('SENSITIVE_NATIVE_STDERR');
+});
