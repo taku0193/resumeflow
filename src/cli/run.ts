@@ -3,6 +3,8 @@ import type { CliCheckpointStore } from '../services/cliCheckpointStore';
 import type { GitRunner } from '../services/gitCapture';
 import { captureGit } from '../services/gitCapture';
 import { createCliCheckpoint } from '../services/createCliCheckpoint';
+import { CliError } from '../models/cliError';
+import { CheckpointError } from '../models/checkpointError';
 export interface CliContext {
   project: { path: string; uri: string; name: string };
   store: Pick<CliCheckpointStore, 'load' | 'append'>;
@@ -13,6 +15,7 @@ export interface CliContext {
 }
 export interface CliResult { exitCode: number; stdout: string; stderr: string }
 export async function runCli(args: readonly string[], factory: (options: CliOptions) => Promise<CliContext>): Promise<CliResult> {
+  try {
   const options = parseCliArguments(args);
   if (options.command === 'help') return { exitCode: 0, stderr: '', stdout: 'ResumeFlow\n  save [--note TEXT] [--next TEXT] [--allow-git]\n  help\n共通: --project DIR --data-dir DIR --format text|json\n' };
   const context = await factory(options);
@@ -29,4 +32,13 @@ export async function runCli(args: readonly string[], factory: (options: CliOpti
     exitCode: 0, stderr: '', stdout: options.format === 'json'
       ? `${JSON.stringify({ ok: true, data: checkpoint })}\n` : `保存しました: ${checkpoint.id}\n`,
   };
+  } catch (error) {
+    const known = error instanceof CliError || error instanceof CheckpointError;
+    return {
+      exitCode: error instanceof CliError && error.usage ? 2 : 1,
+      stdout: '', stderr: `${JSON.stringify({ ok: false, error: {
+        code: known ? error.code : 'OPERATION_FAILED', message: known ? error.message : '操作を完了できませんでした。',
+      } })}\n`,
+    };
+  }
 }

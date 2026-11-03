@@ -1,0 +1,50 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliRun.test.ts -t C9-04c
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliRun.test.ts (4 tests | 2 failed | 2 skipped) 6ms
+   × C9-04c: storage failure returns stderr with no success and no native data 4ms
+   × C9-04c: usage errors exit2 without accessing data 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliRun.test.ts > C9-04c: storage failure returns stderr with no success and no native data
+CheckpointError: 保存できません。
+ ❯ CliCheckpointStore.<anonymous> tests/cliRun.test.ts:26:52
+     24| test('C9-04c: storage failure returns stderr with no success and no na…
+     25|   const context = cliContextFixture();
+     26|   context.store.append = vi.fn(async () => { throw new CheckpointError…
+       |                                                    ^
+     27|   const result = await runCli(['save', '--format', 'json'], async () =…
+     28|   expect(result.exitCode).toBe(1);
+ ❯ src/cli/run.ts:25:25
+
+Caused by: Error: SENSITIVE_BODY
+ ❯ CliCheckpointStore.<anonymous> tests/cliRun.test.ts:26:109
+ ❯ src/cli/run.ts:25:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/cliRun.test.ts > C9-04c: usage errors exit2 without accessing data
+CliError: 引数を確認してください。help で使い方を表示できます。
+ ❯ parseCliArguments src/cli/arguments.ts:31:11
+     29|   } catch (error) {
+     30|     if (error instanceof CliError) throw error;
+     31|     throw new CliError('USAGE', '引数を確認してください。help で使い方を表示できます。', true);
+       |           ^
+     32|   }
+     33| }
+ ❯ runCli src/cli/run.ts:16:19
+ ❯ tests/cliRun.test.ts:35:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 skipped (4)
+   Start at  13:53:10
+   Duration  146ms (transform 53%, import 27%, tests 15%, worker 6%)
+
