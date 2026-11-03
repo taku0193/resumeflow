@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      RESUMEFLOW_VSCODE_VERSION: '1.144.1'
+      RESUMEFLOW_VSCODE_VERSION: '1.140.0'
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0

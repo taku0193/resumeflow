@@ -25,7 +25,9 @@ await writeFile(settingsPath, JSON.stringify({
   'security.workspace.trust.enabled': false,
 }));
 
-const vscodeVersion = process.env.RESUMEFLOW_VSCODE_VERSION || '1.144.1';
+// Pin the UI baseline to the newest version tested by ExTester 8.28.1.
+// Extension Host integration tests independently exercise VS Code stable.
+const vscodeVersion = process.env.RESUMEFLOW_VSCODE_VERSION || '1.140.0';
 const tester = new ExTester(join(runRoot, 'resources'), ReleaseQuality.Stable, join(runRoot, 'extensions'));
 const vsix = await packageForE2e(join(runRoot, 'resumeflow.vsix'));
 await tester.downloadCode(vscodeVersion);
@@ -35,5 +37,5 @@ process.exitCode = await tester.runTests(['dist/e2e/**/*.test.js'], {
   vscodeVersion,
   resources: [workspace],
   settings: settingsPath,
-  config: join(projectRoot, 'e2e.mocharc.cjs'),
+  config: join(projectRoot, 'e2e.mocharc.json'),
 });
