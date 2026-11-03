@@ -16,3 +16,12 @@ test.each([
   try { parseCliArguments(args); } catch (caught) { error = caught; }
   expect(error).toMatchObject({ code: 'USAGE', usage: true });
 });
+test('C10-04: parses read commands with exact UUIDs and context default Markdown', () => {
+  const id = 'a9b2c3d4-1111-4222-8333-123456789abc';
+  expect(() => parseCliArguments(['list'])).not.toThrow();
+  expect(parseCliArguments(['list']).command).toBe('list');
+  expect(parseCliArguments(['show', id])).toMatchObject({ command: 'show', id, format: 'text' });
+  expect(parseCliArguments(['context', id])).toMatchObject({ command: 'context', id, format: 'markdown' });
+  expect(() => parseCliArguments(['context', 'bad-id'])).toThrow();
+  expect(() => parseCliArguments(['list', '--allow-git'])).toThrow();
+});

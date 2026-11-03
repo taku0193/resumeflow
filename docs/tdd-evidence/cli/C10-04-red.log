@@ -1,0 +1,37 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliArguments.test.ts -t C10-04
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliArguments.test.ts (12 tests | 1 failed | 11 skipped) 5ms
+   × C10-04: parses read commands with exact UUIDs and context default Markdown 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliArguments.test.ts > C10-04: parses read commands with exact UUIDs and context default Markdown
+AssertionError: expected [Function] to not throw an error but 'CliError: 引数を確認してください。help で使い方を表示できま…' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"CliError: 引数を確認してください。help で使い方を表示できます。"
+
+ ❯ tests/cliArguments.test.ts:21:49
+     19| test('C10-04: parses read commands with exact UUIDs and context defaul…
+     20|   const id = 'a9b2c3d4-1111-4222-8333-123456789abc';
+     21|   expect(() => parseCliArguments(['list'])).not.toThrow();
+       |                                                 ^
+     22|   expect(parseCliArguments(['list']).command).toBe('list');
+     23|   expect(parseCliArguments(['show', id])).toMatchObject({ command: 'sh…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  14:00:06
+   Duration  143ms (transform 49%, import 26%, tests 17%, worker 7%)
+

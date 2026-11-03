@@ -14,17 +14,20 @@ export function parseCliArguments(args: readonly string[]): CliOptions {
     } });
     const names = tokens.filter(token => token.kind === 'option').map(token => token.name);
     const command = values.help ? 'help' : positionals[0] ?? 'help';
-    if (!['help', 'save'].includes(command) || positionals.length > 1
+    const needsId = command === 'show' || command === 'context';
+    if (!['help', 'save', 'list', 'show', 'context'].includes(command)
+      || (needsId ? positionals.length !== 2 || !/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(positionals[1]!) : positionals.length > 1)
       || new Set(names).size !== names.length || values.project === '' || values['data-dir'] === ''
-      || (values.format !== undefined && !['text', 'json'].includes(values.format))
+      || (values.format !== undefined && !['text', 'json', ...(command === 'context' ? ['markdown'] : [])].includes(values.format))
+      || (command !== 'save' && names.some(name => ['note', 'next', 'allow-git'].includes(name)))
       || (command === 'help' && names.some(name => name !== 'help'))) {
       throw new CliError('USAGE', '引数を確認してください。help で使い方を表示できます。', true);
     }
     return {
       command: command as CliCommand,
       project: values.project ?? null, dataDirectory: values['data-dir'] ?? null,
-      format: (values.format ?? 'text') as CliOptions['format'], note: values.note ?? '', nextAction: values.next ?? '',
-      allowGit: values['allow-git'] === true, id: null, yes: false,
+      format: (values.format ?? (command === 'context' ? 'markdown' : 'text')) as CliOptions['format'], note: values.note ?? '', nextAction: values.next ?? '',
+      allowGit: values['allow-git'] === true, id: positionals[1] ?? null, yes: false,
     };
   } catch (error) {
     if (error instanceof CliError) throw error;
