@@ -1,0 +1,57 @@
+GitHub Actions run 41565997052 / integration job 125687558173
+Commit ba80c6c92afc373806a68d74cc639ddf36e9640b
+Command: xvfb-run -a npm run test:integration
+Verbatim excerpt from the test output (full log linked in S3_TDD_LOG.md):
+2026-11-03T02:25:40.6502811Z   S3: real VS Code editor metadata
+2026-11-03T02:25:40.8604319Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/YjEyZDI3YjUtYjQ4Ni00ZGQ0LWJjOWQtZDAwYjNkMmM0ZjRi" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:25:40.8720587Z     1) P1-07 API: captures background tabs, omits loaded-only documents, uses selection.active
+2026-11-03T02:25:40.9492582Z   6 passing (1s)
+2026-11-03T02:25:40.9501075Z   1 failing
+2026-11-03T02:25:40.9575835Z   1) S3: real VS Code editor metadata
+2026-11-03T02:25:40.9576699Z        P1-07 API: captures background tabs, omits loaded-only documents, uses selection.active:
+2026-11-03T02:25:40.9577740Z 
+2026-11-03T02:25:40.9578134Z       AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+2026-11-03T02:25:40.9578626Z + actual - expected
+2026-11-03T02:25:40.9578884Z 
+2026-11-03T02:25:40.9579097Z   {
+2026-11-03T02:25:40.9579432Z +   activeFileUri: null,
+2026-11-03T02:25:40.9579798Z +   cursor: null,
+2026-11-03T02:25:40.9582893Z +   openFiles: [],
+2026-11-03T02:25:40.9584805Z 1 test failed.
+2026-11-03T02:25:40.9585487Z -   activeFileUri: 'file:///home/runner/work/resumeflow/resumeflow/.test-data/run-t1abxg/workspace/editor-capture/%E6%97%A5%E6%9C%AC%E8%AA%9E%20file.txt',
+2026-11-03T02:25:40.9588724Z Extension host test runner error 1 test failed.
+2026-11-03T02:25:40.9588995Z -   cursor: {
+2026-11-03T02:25:40.9589396Z -     character: 7,
+2026-11-03T02:25:40.9589732Z -     line: 2
+2026-11-03T02:25:40.9590050Z -   },
+2026-11-03T02:25:40.9590366Z -   openFiles: [
+2026-11-03T02:25:40.9591242Z -     'file:///home/runner/work/resumeflow/resumeflow/.test-data/run-t1abxg/workspace/editor-capture/first.txt',
+2026-11-03T02:25:40.9592422Z -     'file:///home/runner/work/resumeflow/resumeflow/.test-data/run-t1abxg/workspace/editor-capture/%E6%97%A5%E6%9C%AC%E8%AA%9E%20file.txt'
+2026-11-03T02:25:40.9595449Z -   ],
+2026-11-03T02:25:40.9595798Z     unsavedFileUris: []
+2026-11-03T02:25:40.9596142Z   }
+2026-11-03T02:25:40.9596376Z 
+2026-11-03T02:25:40.9596615Z       + expected - actual
+2026-11-03T02:25:40.9597888Z 
+2026-11-03T02:25:40.9598114Z        {
+2026-11-03T02:25:40.9598472Z       -  "activeFileUri": [null]
+2026-11-03T02:25:40.9598841Z       -  "cursor": [null]
+2026-11-03T02:25:40.9602760Z       -  "openFiles": []
+2026-11-03T02:25:40.9608740Z       +  "activeFileUri": "file:///home/runner/work/resumeflow/resumeflow/.test-data/run-t1abxg/workspace/editor-capture/%E6%97%A5%E6%9C%AC%E8%AA%9E%20file.txt"
+2026-11-03T02:25:40.9609551Z       +  "cursor": {
+2026-11-03T02:25:40.9609918Z       +    "character": 7
+2026-11-03T02:25:40.9610283Z       +    "line": 2
+2026-11-03T02:25:40.9610607Z       +  }
+2026-11-03T02:25:40.9610939Z       +  "openFiles": [
+2026-11-03T02:25:40.9611572Z       +    "file:///home/runner/work/resumeflow/resumeflow/.test-data/run-t1abxg/workspace/editor-capture/first.txt"
+2026-11-03T02:25:40.9612683Z       +    "file:///home/runner/work/resumeflow/resumeflow/.test-data/run-t1abxg/workspace/editor-capture/%E6%97%A5%E6%9C%AC%E8%AA%9E%20file.txt"
+2026-11-03T02:25:40.9613371Z       +  ]
+2026-11-03T02:25:40.9615654Z          "unsavedFileUris": []
+2026-11-03T02:25:40.9616047Z        }
+2026-11-03T02:25:40.9616357Z       
+2026-11-03T02:25:40.9616810Z   	at Context.<anonymous> (dist/test/editorCapture.test.js:80:16)
+2026-11-03T02:25:40.9617190Z 
+2026-11-03T02:25:40.9678241Z Asking native host service to exit with code 1.
+2026-11-03T02:25:40.9750873Z [90m[main 2026-11-03T02:25:40.974Z][0m Extension host with pid 2443 exited with code: 0, signal: unknown.
+2026-11-03T02:25:41.0835360Z Exit code:   1
+2026-11-03T02:25:41.1058412Z ##[error]Process completed with exit code 1.

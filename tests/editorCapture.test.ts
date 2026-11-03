@@ -70,6 +70,18 @@ test.each([
   expect(result.snapshot.cursor).toBeNull();
 });
 
+test('P1-07 regression: returned coordinates and URI arrays do not alias the input metadata', () => {
+  const cursor = { line: 0, character: 0 };
+  const editors = editorSnapshot({ activeTabUri: firstUri, activeEditor: { uri: firstUri, cursor } });
+  const result = captureEditors(workspaceUri, editors);
+  result.snapshot.cursor!.line = 99;
+  result.snapshot.openFiles.pop();
+  expect(cursor).toEqual({ line: 0, character: 0 });
+  expect(captureEditors(workspaceUri, editors).snapshot).toMatchObject({
+    openFiles: [firstUri, secondUri], cursor: { line: 0, character: 0 },
+  });
+});
+
 test('P1-09a: records dirty eligible file URIs once without reading or retaining document bodies', () => {
   const dirty = textTab(firstUri, { isDirty: true });
   Object.defineProperty(dirty, 'getText', { get: () => { throw new Error('Body access is forbidden'); } });
