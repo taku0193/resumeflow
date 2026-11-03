@@ -159,3 +159,22 @@ test.each([
   expect(appendError).toMatchObject({ name: 'CheckpointError', code });
   expect(loadError.message).not.toContain('private-marker');
 });
+
+test.each(['read', 'write'] as const)('P1-06: reports %s I/O failures and keeps existing data', async stage => {
+  const original = JSON.stringify({ schemaVersion: 1, checkpoints: [validCheckpoint] });
+  const storage = new MemoryStorage(original);
+  const read = vi.spyOn(storage, 'read');
+  const write = vi.spyOn(storage, 'writeAtomic');
+  const cause = new Error('disk failure: private-marker');
+  if (stage === 'read') read.mockRejectedValue(cause);
+  else write.mockRejectedValue(cause);
+
+  const failure = await new CheckpointStore(storage).append(nextCheckpoint).catch(error => error);
+
+  expect(failure).toMatchObject({ name: 'CheckpointError', code: stage === 'read' ? 'READ_FAILED' : 'WRITE_FAILED' });
+  expect(failure.cause).toBe(cause);
+  expect(failure.message).not.toContain('private-marker');
+  expect(storage.contents).toBe(original);
+  if (stage === 'read') expect(write).not.toHaveBeenCalled();
+  else expect(write).toHaveBeenCalledTimes(1);
+});

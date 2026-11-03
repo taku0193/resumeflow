@@ -49,3 +49,11 @@
 ### P1-05 の整理
 
 JSON の構文解析とスキーマ検証を `parseCheckpointCollection` にまとめ、ストレージ I/O から独立した純粋処理に移動。`npm run verify` が全単体68件・型チェック・ビルドで成功。`docs/tdd-evidence/s2/P1-05-refactor.log` に記録。
+
+## P1-06: I/O 失敗を呼出し側へ伝える
+
+- RED: `npm run test:unit -- tests/checkpointStore.test.ts -t P1-06`。read / write の例外が未分類の Error のままで、CheckpointError の READ_FAILED / WRITE_FAILED と一致せず2件失敗。
+- GREEN: 読込 I/O と書込 I/O の境界でのみ例外を変換。2件成功。cause の保持、元データ不変、read 失敗時の書込0回、内部メッセージを公開エラーへ引用しないことを検証。
+- REFACTOR: JSON / スキーマのエラー分類を I/O と分けて維持。`npm run verify` の型チェック・全単体70件・ビルドが成功。
+- 証跡: `docs/tdd-evidence/s2/P1-06-{red,green,regression}.log`。
+- 次: 実 VS Code I/O での破損保護・一時ファイル置換失敗の補完統合テスト、既存 E2E の回帰確認。
