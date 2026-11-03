@@ -4,7 +4,9 @@ export function captureEditors(workspaceUri: string, editors: EditorSnapshot): E
   const eligibleTabs = editors.tabs.flatMap(tab =>
     tab.kind === 'text' && tab.scheme === 'file' && tab.workspaceUri === workspaceUri ? [tab] : []);
   const openFiles = [...new Set(eligibleTabs.map(tab => tab.uri))];
-  const active = editors.activeEditor;
+  const candidate = editors.activeEditor;
+  const active = candidate && candidate.uri === editors.activeTabUri && openFiles.includes(candidate.uri)
+    ? candidate : null;
   return {
     snapshot: {
       openFiles,

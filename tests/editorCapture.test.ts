@@ -56,3 +56,16 @@ test('P1-08b: special tabs have no captured URI and are counted for a later warn
   expect(result.snapshot.openFiles).toEqual([firstUri]);
   expect(result.warnings.excludedTabCount).toBe(1);
 });
+
+test.each([
+  ['a diff or custom tab, even if the same file is open as text elsewhere', null, firstUri],
+  ['an editor that does not match the active text tab', secondUri, firstUri],
+  ['an excluded active file', 'file:///outside/private.ts', 'file:///outside/private.ts'],
+])('P1-08c: no active file or cursor for %s', (_name, activeTabUri, activeUri) => {
+  const result = captureEditors(workspaceUri, editorSnapshot({
+    activeTabUri,
+    activeEditor: { uri: activeUri!, cursor: { line: 3, character: 2 } },
+  }));
+  expect(result.snapshot.activeFileUri).toBeNull();
+  expect(result.snapshot.cursor).toBeNull();
+});
