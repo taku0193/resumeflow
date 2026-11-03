@@ -1,0 +1,18 @@
+
+> resumeflow@0.0.1 verify
+> npm run typecheck && npm run test:unit && npm run build
+
+
+> resumeflow@0.0.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.unit.json
+
+tests/checkpointStore.test.ts(78,60): error TS2345: Argument of type '(_description: string | { id: string; schemaVersion: 1; createdAt: string; title: string; workspaceUri: string; workspaceName: string; note: string; nextAction: string; openFiles: string[]; activeFileUri: string | null; cursor: CursorPosition | null; unsavedFileUris: string[]; git: GitSnapshot; }, checkpoint: string...' is not assignable to parameter of type '(...args: (string | { id: string; schemaVersion: 1; createdAt: string; title: string; workspaceUri: string; workspaceName: string; note: string; nextAction: string; openFiles: string[]; activeFileUri: string | null; cursor: CursorPosition | null; unsavedFileUris: string[]; git: GitSnapshot; })[] | ... 16 more ... | ...'.
+  Types of parameters '_description' and 'args' are incompatible.
+    Type '(string | { id: string; schemaVersion: 1; createdAt: string; title: string; workspaceUri: string; workspaceName: string; note: string; nextAction: string; openFiles: string[]; activeFileUri: string | null; cursor: CursorPosition | null; unsavedFileUris: string[]; git: GitSnapshot; })[] | ... 16 more ... | [...]' is not assignable to type '[_description: string | { id: string; schemaVersion: 1; createdAt: string; title: string; workspaceUri: string; workspaceName: string; note: string; nextAction: string; openFiles: string[]; activeFileUri: string | null; cursor: CursorPosition | null; unsavedFileUris: string[]; git: GitSnapshot; }, checkpoint: string...'.
+      Type '(string | { id: string; schemaVersion: 1; createdAt: string; title: string; workspaceUri: string; workspaceName: string; note: string; nextAction: string; openFiles: string[]; activeFileUri: string | null; cursor: CursorPosition | null; unsavedFileUris: string[]; git: GitSnapshot; })[]' is not assignable to type '[_description: string | { id: string; schemaVersion: 1; createdAt: string; title: string; workspaceUri: string; workspaceName: string; note: string; nextAction: string; openFiles: string[]; activeFileUri: string | null; cursor: CursorPosition | null; unsavedFileUris: string[]; git: GitSnapshot; }, checkpoint: string...'.
+        Target requires 2 element(s) but source may have fewer.
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

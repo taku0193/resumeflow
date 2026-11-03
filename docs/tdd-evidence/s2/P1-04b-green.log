@@ -1,0 +1,18 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-04b
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  28 passed | 9 skipped (37)
+   Start at  10:41:35
+   Duration  226ms (transform 51%, import 25%, tests 15%, worker 8%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

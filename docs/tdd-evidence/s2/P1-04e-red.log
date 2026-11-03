@@ -1,0 +1,305 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-04e
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (72 tests | 3 failed | 69 skipped) 12ms
+   × P1-04e: sparse open tabs arrays cannot be saved as null entries 10ms
+   × P1-04e: sparse dirty files arrays cannot be saved as null entries 1ms
+   × P1-04e: sparse Git changes arrays cannot be saved as null entries 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04e: sparse open tabs arrays cannot be saved as null entries
+AssertionError: expected "writeAtomic" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st writeAtomic call:
+
+    Array [
+      "{
+      "schemaVersion": 1,
+      "checkpoints": [
+        {
+          "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "API レスポンス形式を調査中\n期待値の確認が必要",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "activeFileUri": "file:///projects/my-app/src/api.ts",
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              {
+                "path": "src/api.ts",
+                "status": " M"
+              }
+            ],
+            "error": null
+          }
+        },
+        {
+          "id": "b9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "API レスポンス形式を調査中\n期待値の確認が必要",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            null
+          ],
+          "activeFileUri": null,
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              {
+                "path": "src/api.ts",
+                "status": " M"
+              }
+            ],
+            "error": null
+          }
+        }
+      ]
+    }",
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/checkpointStore.test.ts:192:21
+    190|   const failure = await new CheckpointStore(storage).append(checkpoint…
+    191|
+    192|   expect(write).not.toHaveBeenCalled();
+       |                     ^
+    193|   expect(storage.contents).toBe(original);
+    194|   expect(failure).toMatchObject({ code: 'INVALID_SCHEMA' });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04e: sparse dirty files arrays cannot be saved as null entries
+AssertionError: expected "writeAtomic" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st writeAtomic call:
+
+    Array [
+      "{
+      "schemaVersion": 1,
+      "checkpoints": [
+        {
+          "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "API レスポンス形式を調査中\n期待値の確認が必要",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "activeFileUri": "file:///projects/my-app/src/api.ts",
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              {
+                "path": "src/api.ts",
+                "status": " M"
+              }
+            ],
+            "error": null
+          }
+        },
+        {
+          "id": "b9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "API レスポンス形式を調査中\n期待値の確認が必要",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "activeFileUri": "file:///projects/my-app/src/api.ts",
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            null
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              {
+                "path": "src/api.ts",
+                "status": " M"
+              }
+            ],
+            "error": null
+          }
+        }
+      ]
+    }",
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/checkpointStore.test.ts:192:21
+    190|   const failure = await new CheckpointStore(storage).append(checkpoint…
+    191|
+    192|   expect(write).not.toHaveBeenCalled();
+       |                     ^
+    193|   expect(storage.contents).toBe(original);
+    194|   expect(failure).toMatchObject({ code: 'INVALID_SCHEMA' });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04e: sparse Git changes arrays cannot be saved as null entries
+AssertionError: expected "writeAtomic" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st writeAtomic call:
+
+    Array [
+      "{
+      "schemaVersion": 1,
+      "checkpoints": [
+        {
+          "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "API レスポンス形式を調査中\n期待値の確認が必要",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "activeFileUri": "file:///projects/my-app/src/api.ts",
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              {
+                "path": "src/api.ts",
+                "status": " M"
+              }
+            ],
+            "error": null
+          }
+        },
+        {
+          "id": "b9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "API レスポンス形式を調査中\n期待値の確認が必要",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "activeFileUri": "file:///projects/my-app/src/api.ts",
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              null
+            ],
+            "error": null
+          }
+        }
+      ]
+    }",
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/checkpointStore.test.ts:192:21
+    190|   const failure = await new CheckpointStore(storage).append(checkpoint…
+    191|
+    192|   expect(write).not.toHaveBeenCalled();
+       |                     ^
+    193|   expect(storage.contents).toBe(original);
+    194|   expect(failure).toMatchObject({ code: 'INVALID_SCHEMA' });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 69 skipped (72)
+   Start at  11:01:10
+   Duration  288ms (transform 50%, import 26%, tests 19%, worker 6%)
+

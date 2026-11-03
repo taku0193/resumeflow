@@ -1,0 +1,69 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-05
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (67 tests | 4 failed | 61 skipped) 13ms
+   × P1-05: preserves corrupted data after load and append fail ("") 9ms
+   × P1-05: preserves corrupted data after load and append fail ("  ") 1ms
+   × P1-05: preserves corrupted data after load and append fail ("{\"schemaVersion\":1,\"checkpoints\":[") 1ms
+   × P1-05: preserves corrupted data after load and append fail ("private-marker is not JSON") 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-05: preserves corrupted data after load and append fail ("")
+ FAIL  tests/checkpointStore.test.ts > P1-05: preserves corrupted data after load and append fail ("  ")
+ FAIL  tests/checkpointStore.test.ts > P1-05: preserves corrupted data after load and append fail ("{\"schemaVersion\":1,\"checkpoints\":[")
+AssertionError: expected SyntaxError: Unexpected end of JSON input to match object { name: 'CheckpointError', …(1) }
+
+- Expected
++ Received
+
+- {
+-   "code": "INVALID_JSON",
+-   "name": "CheckpointError",
++ SyntaxError {
++   "message": "Unexpected end of JSON input",
+  }
+
+ ❯ tests/checkpointStore.test.ts:158:21
+    156|   expect(write).not.toHaveBeenCalled();
+    157|   expect(storage.contents).toBe(original);
+    158|   expect(loadError).toMatchObject({ name: 'CheckpointError', code });
+       |                     ^
+    159|   expect(appendError).toMatchObject({ name: 'CheckpointError', code });
+    160|   expect(loadError.message).not.toContain('private-marker');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-05: preserves corrupted data after load and append fail ("private-marker is not JSON")
+AssertionError: expected SyntaxError: Unexpected token 'p', "priva… to match object { name: 'CheckpointError', …(1) }
+
+- Expected
++ Received
+
+- {
+-   "code": "INVALID_JSON",
+-   "name": "CheckpointError",
++ SyntaxError {
++   "message": "Unexpected token 'p', \"private-ma\"... is not valid JSON",
+  }
+
+ ❯ tests/checkpointStore.test.ts:158:21
+    156|   expect(write).not.toHaveBeenCalled();
+    157|   expect(storage.contents).toBe(original);
+    158|   expect(loadError).toMatchObject({ name: 'CheckpointError', code });
+       |                     ^
+    159|   expect(appendError).toMatchObject({ name: 'CheckpointError', code });
+    160|   expect(loadError.message).not.toContain('private-marker');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 2 passed | 61 skipped (67)
+   Start at  10:47:04
+   Duration  255ms (transform 49%, tests 23%, import 23%, worker 5%)
+

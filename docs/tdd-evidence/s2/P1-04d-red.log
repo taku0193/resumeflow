@@ -1,0 +1,43 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-04d
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (61 tests | 3 failed | 58 skipped) 11ms
+   × P1-04d: refuses invalid appends without writing (unknown file body) 8ms
+   × P1-04d: refuses invalid appends without writing (invalid UUID) 1ms
+   × P1-04d: refuses invalid appends without writing (duplicate ID) 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04d: refuses invalid appends without writing (unknown file body)
+ FAIL  tests/checkpointStore.test.ts > P1-04d: refuses invalid appends without writing (invalid UUID)
+ FAIL  tests/checkpointStore.test.ts > P1-04d: refuses invalid appends without writing (duplicate ID)
+AssertionError: promise resolved "undefined" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+undefined
+
+ ❯ tests/checkpointStore.test.ts:137:64
+    135|   const write = vi.spyOn(storage, 'writeAtomic');
+    136|
+    137|   await expect(new CheckpointStore(storage).append(checkpoint)).reject…
+       |                                                                ^
+    138|   expect(write).not.toHaveBeenCalled();
+    139|   expect(storage.contents).toBe(original);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 58 skipped (61)
+   Start at  10:45:24
+   Duration  242ms (transform 51%, import 23%, tests 20%, worker 6%)
+

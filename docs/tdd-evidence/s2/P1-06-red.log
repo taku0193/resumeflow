@@ -1,0 +1,65 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-06
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (69 tests | 2 failed | 67 skipped) 14ms
+   × P1-06: reports read I/O failures and keeps existing data 10ms
+   × P1-06: reports write I/O failures and keeps existing data 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-06: reports read I/O failures and keeps existing data
+AssertionError: expected Error: disk failure: private-marker to match object { name: 'CheckpointError', …(1) }
+
+- Expected
++ Received
+
+- {
+-   "code": "READ_FAILED",
+-   "name": "CheckpointError",
++ Error {
++   "message": "disk failure: private-marker",
+  }
+
+ ❯ tests/checkpointStore.test.ts:174:19
+    172|   const failure = await new CheckpointStore(storage).append(nextCheckp…
+    173|
+    174|   expect(failure).toMatchObject({ name: 'CheckpointError', code: stage…
+       |                   ^
+    175|   expect(failure.cause).toBe(cause);
+    176|   expect(failure.message).not.toContain('private-marker');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-06: reports write I/O failures and keeps existing data
+AssertionError: expected Error: disk failure: private-marker to match object { name: 'CheckpointError', …(1) }
+
+- Expected
++ Received
+
+- {
+-   "code": "WRITE_FAILED",
+-   "name": "CheckpointError",
++ Error {
++   "message": "disk failure: private-marker",
+  }
+
+ ❯ tests/checkpointStore.test.ts:174:19
+    172|   const failure = await new CheckpointStore(storage).append(nextCheckp…
+    173|
+    174|   expect(failure).toMatchObject({ name: 'CheckpointError', code: stage…
+       |                   ^
+    175|   expect(failure.cause).toBe(cause);
+    176|   expect(failure.message).not.toContain('private-marker');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 67 skipped (69)
+   Start at  10:48:56
+   Duration  226ms (transform 49%, tests 24%, import 22%, worker 5%)
+

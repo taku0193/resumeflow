@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-04d
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed | 58 skipped (61)
+   Start at  10:45:39
+   Duration  206ms (transform 45%, import 28%, tests 16%, worker 11%)
+

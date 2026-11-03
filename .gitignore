@@ -6,7 +6,7 @@ coverage/
 .test-data/
 *.vsix
 *.log
-!docs/tdd-evidence/*.log
+!docs/tdd-evidence/**/*.log
 .DS_Store
 .env
 .env.*

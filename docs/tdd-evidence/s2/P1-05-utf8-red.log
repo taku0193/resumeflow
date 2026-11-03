@@ -1,0 +1,114 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointEncoding.test.ts
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointEncoding.test.ts (3 tests | 1 failed) 11ms
+   × P1-05-UTF8: malformed bytes cannot be decoded and overwritten 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointEncoding.test.ts > P1-05-UTF8: malformed bytes cannot be decoded and overwritten
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "{
+      "schemaVersion": 1,
+      "checkpoints": [
+        {
+          "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "�TF8_MARKER",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "activeFileUri": "file:///projects/my-app/src/api.ts",
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              {
+                "path": "src/api.ts",
+                "status": " M"
+              }
+            ],
+            "error": null
+          }
+        },
+        {
+          "id": "b9b2c3d4-1111-4222-8333-123456789abc",
+          "schemaVersion": 1,
+          "createdAt": "2026-11-03T00:00:00.000Z",
+          "title": "my-app — 2026-11-03 09:00",
+          "workspaceUri": "file:///projects/my-app",
+          "workspaceName": "my-app",
+          "note": "API レスポンス形式を調査中\n期待値の確認が必要",
+          "nextAction": "テストの期待値を確認する",
+          "openFiles": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "activeFileUri": "file:///projects/my-app/src/api.ts",
+          "cursor": {
+            "line": 42,
+            "character": 8
+          },
+          "unsavedFileUris": [
+            "file:///projects/my-app/src/api.ts"
+          ],
+          "git": {
+            "available": true,
+            "repoRootUri": "file:///projects/my-app",
+            "branch": "feature/api",
+            "headCommit": "1234567890abcdef1234567890abcdef12345678",
+            "changes": [
+              {
+                "path": "src/api.ts",
+                "status": " M"
+              }
+            ],
+            "error": null
+          }
+        }
+      ]
+    }",
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/checkpointEncoding.test.ts:17:27
+     15|   const appendError = await store.append(checkpointFixture({ id: 'b9b2…
+     16|
+     17|   expect(writeAtomic).not.toHaveBeenCalled();
+       |                           ^
+     18|   expect(bytes).toEqual(original);
+     19|   expect(loadError).toMatchObject({ code: 'READ_FAILED' });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  10:53:43
+   Duration  219ms (transform 47%, import 23%, tests 23%, worker 7%)
+

@@ -1,0 +1,1078 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-04c
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (58 tests | 17 failed | 37 skipped) 22ms
+   × P1-04c: rejects invalid field values (UUID) 9ms
+   × P1-04c: rejects invalid field values (non-ISO date) 1ms
+   × P1-04c: rejects invalid field values (invalid calendar date) 1ms
+   × P1-04c: rejects invalid field values (non-UTC timestamp) 1ms
+   × P1-04c: rejects invalid field values (malformed URI) 1ms
+   × P1-04c: rejects invalid field values (non-file workspace) 1ms
+   × P1-04c: rejects invalid field values (non-file tab) 1ms
+   × P1-04c: rejects invalid field values (non-file dirty URI) 1ms
+   × P1-04c: rejects invalid field values (non-file Git root) 1ms
+   × P1-04c: rejects invalid field values (file URI query) 1ms
+   × P1-04c: rejects invalid field values (file URI fragment) 1ms
+   × P1-04c: rejects invalid field values (negative line) 0ms
+   × P1-04c: rejects invalid field values (fractional character) 0ms
+   × P1-04c: rejects invalid field values (unsafe integer) 0ms
+   × P1-04c: rejects invalid field values (active URI outside open files) 0ms
+   × P1-04c: rejects invalid field values (duplicate open tabs) 1ms
+   × P1-04c: rejects duplicate checkpoint IDs 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (UUID)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "not-a-uuid",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (non-ISO date)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (invalid calendar date)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-02-30T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (non-UTC timestamp)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T09:00:00+09:00",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (malformed URI)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "not-a-uri",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (non-file workspace)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "https://example.com/project",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (non-file tab)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "untitled:buffer",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (non-file dirty URI)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "untitled:buffer",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (non-file Git root)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "https://example.com/project",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (file URI query)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app?mode=unsafe",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (file URI fragment)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app#fragment",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (negative line)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 0,
++         "line": -1,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (fractional character)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 0.5,
++         "line": 0,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (unsafe integer)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 0,
++         "line": 9007199254740992,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (active URI outside open files)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/other.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects invalid field values (duplicate open tabs)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:104:52
+    102| ])('P1-04c: rejects invalid field values (%s)', async (_description, c…
+    103|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    104|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    105| });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04c: rejects duplicate checkpoint IDs
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:109:52
+    107| test('P1-04c: rejects duplicate checkpoint IDs', async () => {
+    108|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+    109|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+    110| });
+    111|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/17]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  17 failed | 4 passed | 37 skipped (58)
+   Start at  10:42:21
+   Duration  315ms (transform 43%, tests 32%, import 19%, worker 5%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
