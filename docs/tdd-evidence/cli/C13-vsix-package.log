@@ -1,0 +1,43 @@
+
+> resumeflow@0.0.1 test:e2e:package
+> npm run build && node scripts/package-e2e.mjs
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+Executing prepublish script 'npm run vscode:prepublish'...
+
+> resumeflow@0.0.1 vscode:prepublish
+> npm run build
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+ INFO  Files included in the VSIX:
+resumeflow.vsix
+├─ [Content_Types].xml 
+├─ extension.vsixmanifest 
+└─ extension/
+   ├─ CLI_SPEC.md [7.27 KB]
+   ├─ package.json [2.16 KB]
+   ├─ readme.md [9.7 KB]
+   ├─ dist/
+   │  ├─ extension.js [0.57 KB]
+   │  ├─ adapters/ (5 files) [12.58 KB]
+   │  ├─ cli/ (3 files) [7.1 KB]
+   │  ├─ models/ (9 files) [10.4 KB]
+   │  └─ services/ (10 files) [12.65 KB]
+   └─ skills/
+      └─ resumeflow-checkpoint/ (2 files) [5.87 KB]
+
+=> Run vsce ls --tree to see all included files.
+
+ DONE  Packaged: /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow/.test-data/e2e/package/resumeflow.vsix (35 files, 35.86 KB)
+VSIX allowlist verified: 33 runtime/documentation files
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

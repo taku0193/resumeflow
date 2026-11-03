@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { runCli } from './run';
 import { createNodeCliContext } from '../adapters/nodeCliContext';
 void runCli(process.argv.slice(2), createNodeCliContext).then(result => {

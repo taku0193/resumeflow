@@ -14,7 +14,10 @@
     "dist/extension.js",
     "dist/adapters/**/*.js",
     "dist/models/**/*.js",
-    "dist/services/**/*.js"
+    "dist/services/**/*.js",
+    "CLI_SPEC.md",
+    "dist/cli/**/*.js",
+    "skills/resumeflow-checkpoint/**/*"
   ],
   "engines": {
     "vscode": "^1.100.0"
@@ -23,6 +26,9 @@
     "Other"
   ],
   "main": "./dist/extension.js",
+  "bin": {
+    "resumeflow": "dist/cli/main.js"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
