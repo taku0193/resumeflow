@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1100" viewBox="0 0 640 1100" role="img" aria-labelledby="title description">
+  <title id="title">ResumeFlow — 保存して、続きから。</title>
+  <desc id="description">中断時にsaveでメモと次の行動を保存。PC内のcheckpoints.jsonに残し、再開時にcontextでMarkdownを取り出して新しいチャットへ渡す。スマートフォン向けの縦長説明図。</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#b8492d"/></marker></defs>
+  <rect width="640" height="1100" fill="#f8f3e7"/>
+  <path d="M22 22H618V1078H22Z" fill="none" stroke="#d7cdbb"/>
+  <g fill="#292b25" font-family="-apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans CJK JP', 'Yu Gothic', sans-serif">
+    <text x="48" y="98" font-family="Georgia, 'Times New Roman', serif" font-size="64" letter-spacing="-2">ResumeFlow</text>
+    <text x="50" y="142" font-size="24">作業の区切りを、次の始まりへ。</text>
+    <path d="M48 172H592" stroke="#292b25" stroke-width="2"/>
+
+    <text x="48" y="228" fill="#b8492d" font-family="Georgia, serif" font-size="34">01</text>
+    <text x="109" y="228" font-size="29" font-weight="650">中断するときに保存</text>
+    <text x="110" y="276" font-size="24" font-family="'SFMono-Regular', Consolas, monospace">npm run cli -- save</text>
+    <text x="111" y="318" font-size="23" fill="#777365">「ここまでの進捗」と「次の行動」</text>
+    <path d="M320 344V387" stroke="#b8492d" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <text x="48" y="439" fill="#b8492d" font-family="Georgia, serif" font-size="34">02</text>
+    <text x="109" y="439" font-size="29" font-weight="650">手元のPCに残す</text>
+    <path d="M111 466H471L514 510V680H111Z" fill="#fffdf7" stroke="#292b25" stroke-width="1.8"/>
+    <path d="M471 466V510H514" fill="#ece3d1" stroke="#292b25" stroke-width="1.8"/>
+    <text x="138" y="518" font-size="27" font-family="'SFMono-Regular', Consolas, monospace" font-weight="650">checkpoints.json</text>
+    <path d="M138 537H487" stroke="#d7cdbb"/>
+    <text x="139" y="575" font-size="24">進捗メモ / 次の行動</text>
+    <text x="139" y="614" font-size="24">プロジェクト / Gitの状態</text>
+    <text x="139" y="651" font-size="19" fill="#777365">Git取得は許可した場合だけ</text>
+    <path d="M320 707V750" stroke="#b8492d" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <text x="48" y="803" fill="#b8492d" font-family="Georgia, serif" font-size="34">03</text>
+    <text x="109" y="803" font-size="29" font-weight="650">新しいチャットで再開</text>
+    <text x="110" y="849" font-size="23" font-family="'SFMono-Regular', Consolas, monospace">npm run cli -- context UUID</text>
+    <path d="M111 880H563M111 880V983M111 983H563" stroke="#a99e89" fill="none"/>
+    <text x="130" y="914" font-size="23" fill="#687457">再開用Markdownを渡す。</text>
+    <text x="130" y="955" font-size="23">現状を確認して、作業の続きへ。</text>
+
+    <path d="M48 1013H592" stroke="#d7cdbb"/>
+    <text x="50" y="1047" font-size="19" fill="#777365">ローカル保存 · 実行時オフライン</text>
+    <text x="50" y="1068" font-size="10" letter-spacing="1.5" fill="#777365">WORKFLOW ILLUSTRATION / NOT AN APP SCREENSHOT</text>
+  </g>
+</svg>

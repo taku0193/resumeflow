@@ -18,7 +18,10 @@
     "CLI_SPEC.md",
     "dist/cli/**/*.js",
     "skills/resumeflow-checkpoint/**/*",
-    "docs/assets/resumeflow-hero.svg"
+    "docs/assets/resumeflow-hero.svg",
+    "docs/assets/resumeflow-flow-mobile.svg",
+    "docs/assets/resumeflow-hero.png",
+    "docs/assets/resumeflow-flow-mobile.png"
   ],
   "engines": {
     "vscode": "^1.100.0"

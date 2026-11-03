@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="./docs/assets/resumeflow-hero.svg" alt="ResumeFlow — 中断メモと次の一手を、saveからcontextへ引き継ぐワークフローの図" width="100%">
+  <picture>
+    <source media="(max-width: 600px)" srcset="./docs/assets/resumeflow-flow-mobile.png">
+    <img src="./docs/assets/resumeflow-hero.png" alt="ResumeFlow — saveで進捗を記録し、PC内に保存、contextで新しいチャットへ渡す流れ" width="100%">
+  </picture>
 </p>
 
 <h1 align="center">文脈を残して、続きから。</h1>
@@ -10,10 +13,10 @@
 </p>
 
 <p align="center">
-  <a href="package.json"><img src="https://img.shields.io/badge/Node.js-22.12%2B-6ee7b7?style=flat-square&amp;logo=nodedotjs&amp;logoColor=6ee7b7&amp;labelColor=0b1220" alt="Node.js 22.12以降"></a>
-  <a href="https://github.com/taku0193/resumeflow/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-Linux%20%C2%B7%20macOS%20%C2%B7%20Windows-93c5fd?style=flat-square&amp;labelColor=0b1220" alt="CIの対象: Linux、macOS、Windows"></a>
-  <a href="#privacy"><img src="https://img.shields.io/badge/Storage-Local-a7f3d0?style=flat-square&amp;labelColor=0b1220" alt="ローカル保存"></a>
-  <a href="package.json"><img src="https://img.shields.io/badge/Runtime_dependencies-0-c4b5fd?style=flat-square&amp;labelColor=0b1220" alt="実行時の外部パッケージ依存は0。開発依存は別"></a>
+  <a href="package.json"><img src="https://img.shields.io/badge/Node.js-22.12%2B-687457?style=flat-square&amp;logo=nodedotjs&amp;logoColor=687457&amp;labelColor=292b25" alt="Node.js 22.12以降"></a>
+  <a href="https://github.com/taku0193/resumeflow/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-Linux%20%C2%B7%20macOS%20%C2%B7%20Windows-b8492d?style=flat-square&amp;labelColor=292b25" alt="CIの対象: Linux、macOS、Windows"></a>
+  <a href="#privacy"><img src="https://img.shields.io/badge/Storage-Local-8f947b?style=flat-square&amp;labelColor=292b25" alt="ローカル保存"></a>
+  <a href="package.json"><img src="https://img.shields.io/badge/Runtime_dependencies-0-c7b99d?style=flat-square&amp;labelColor=292b25" alt="実行時の外部パッケージ依存は0。開発依存は別"></a>
 </p>
 
 <p align="center">
