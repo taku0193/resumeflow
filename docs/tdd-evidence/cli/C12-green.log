@@ -1,0 +1,71 @@
+
+> resumeflow@0.0.1 test:cli:e2e
+> npm run build && node --test --test-reporter=tap dist/cliTest/save.test.js dist/cliTest/read.test.js dist/cliTest/delete.test.js dist/cliTest/skill.test.js
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: CLI-E2E-delete: refusal preserves bytes and approval removes only the selected record
+ok 1 - CLI-E2E-delete: refusal preserves bytes and approval removes only the selected record
+  ---
+  duration_ms: 1832.128708
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-delete-corrupt: deletion cannot overwrite a damaged collection
+ok 2 - CLI-E2E-delete-corrupt: deletion cannot overwrite a damaged collection
+  ---
+  duration_ms: 480.794125
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-read: save exits, then fresh processes list/show/context with project separation
+ok 3 - CLI-E2E-read: save exits, then fresh processes list/show/context with project separation
+  ---
+  duration_ms: 1818.411375
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-empty: a read-only empty list creates no storage directory
+ok 4 - CLI-E2E-empty: a read-only empty list creates no storage directory
+  ---
+  duration_ms: 258.432708
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-save: a real CLI process saves Japanese metadata without any editor
+ok 5 - CLI-E2E-save: a real CLI process saves Japanese metadata without any editor
+  ---
+  duration_ms: 297.609666
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-help: help and invalid arguments need no project or storage
+ok 6 - CLI-E2E-help: help and invalid arguments need no project or storage
+  ---
+  duration_ms: 584.944958
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-corrupt: corrupted data bytes survive a real save failure
+ok 7 - CLI-E2E-corrupt: corrupted data bytes survive a real save failure
+  ---
+  duration_ms: 341.143792
+  type: 'test'
+  ...
+# Subtest: C12-01: the skill bridge preserves literal memo data and retrieves CLI context
+ok 8 - C12-01: the skill bridge preserves literal memo data and retrieves CLI context
+  ---
+  duration_ms: 2212.966875
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2556.259792
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

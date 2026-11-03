@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: C12-01: the skill bridge preserves literal memo data and retrieves CLI context
+not ok 1 - C12-01: the skill bridge preserves literal memo data and retrieves CLI context
+  ---
+  duration_ms: 107.667042
+  type: 'test'
+  location: '/Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow/dist/cliTest/skill.test.js:12:22'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      ok(saved.stdout.includes('"ok":true'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (/Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow/dist/cliTest/skill.test.js:25:26)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 227.924666
