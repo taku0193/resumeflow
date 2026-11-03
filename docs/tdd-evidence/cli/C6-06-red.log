@@ -1,0 +1,79 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliPaths.test.ts -t C6-06
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliPaths.test.ts (3 tests | 3 failed) 7ms
+   × C6-06: darwin uses application storage outside the working repository 5ms
+   × C6-06: linux uses application storage outside the working repository 0ms
+   × C6-06: win32 uses application storage outside the working repository 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliPaths.test.ts > C6-06: darwin uses application storage outside the working repository
+AssertionError: expected '' to be '/Users/example/Library/Application Su…' // Object.is equality
+
+- Expected
++ Received
+
+- /Users/example/Library/Application Support/ResumeFlow
+
+ ❯ tests/cliPaths.test.ts:9:48
+      7|   ['win32', 'C:\\Users\\example', 'C:\\Users\\example\\AppData\\Local\…
+      8| ] as const)('C6-06: %s uses application storage outside the working re…
+      9|   expect(defaultDataDirectory(platform, home)).toBe(expected);
+       |                                                ^
+     10| });
+     11|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/cliPaths.test.ts > C6-06: linux uses application storage outside the working repository
+AssertionError: expected '' to be '/home/example/.local/share/resumeflow' // Object.is equality
+
+- Expected
++ Received
+
+- /home/example/.local/share/resumeflow
+
+ ❯ tests/cliPaths.test.ts:9:48
+      7|   ['win32', 'C:\\Users\\example', 'C:\\Users\\example\\AppData\\Local\…
+      8| ] as const)('C6-06: %s uses application storage outside the working re…
+      9|   expect(defaultDataDirectory(platform, home)).toBe(expected);
+       |                                                ^
+     10| });
+     11|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/cliPaths.test.ts > C6-06: win32 uses application storage outside the working repository
+AssertionError: expected '' to be 'C:\Users\example\AppData\Local\Resume…' // Object.is equality
+
+- Expected
++ Received
+
+- C:\Users\example\AppData\Local\ResumeFlow
+
+ ❯ tests/cliPaths.test.ts:9:48
+      7|   ['win32', 'C:\\Users\\example', 'C:\\Users\\example\\AppData\\Local\…
+      8| ] as const)('C6-06: %s uses application storage outside the working re…
+      9|   expect(defaultDataDirectory(platform, home)).toBe(expected);
+       |                                                ^
+     10| });
+     11|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  12:17:40
+   Duration  212ms (transform 49%, import 24%, tests 17%, worker 9%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

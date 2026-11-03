@@ -1,0 +1,41 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/nodeCheckpointStorage.test.ts -t C6-02
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/nodeCheckpointStorage.test.ts (5 tests | 1 failed | 4 skipped) 8ms
+   × C6-02: a competing writer cannot enter the read-modify-write transaction 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nodeCheckpointStorage.test.ts > C6-02: a competing writer cannot enter the read-modify-write transaction
+AssertionError: promise resolved "'entered'" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+"entered"
+
+ ❯ tests/nodeCheckpointStorage.test.ts:32:57
+     30|   const second = new NodeCheckpointStorage(root);
+     31|   await first.withLock(async () => {
+     32|     await expect(second.withLock(async () => 'entered')).rejects.toMat…
+       |                                                         ^
+     33|   });
+     34|   expect(await second.withLock(async () => 'released')).toBe('released…
+ ❯ NodeCheckpointStorage.withLock src/adapters/nodeCheckpointStorage.ts:9:68
+ ❯ tests/nodeCheckpointStorage.test.ts:31:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  12:14:14
+   Duration  220ms (transform 51%, import 28%, tests 15%, worker 6%)
+

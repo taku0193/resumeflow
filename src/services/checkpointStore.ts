@@ -1,6 +1,6 @@
 import type { Checkpoint, CheckpointCollection } from '../models/checkpoint';
 import { assertCheckpointCollection, parseCheckpointCollection } from '../models/checkpointSchema';
-import { CheckpointError } from '../models/checkpointError';
+import { JsonCollectionStore } from './jsonCollectionStore';
 
 /** I/O boundary: undefined means the data file does not exist. */
 export interface CheckpointStorage {
@@ -8,18 +8,13 @@ export interface CheckpointStorage {
   writeAtomic(contents: string): Promise<void>;
 }
 
-export class CheckpointStore {
-  constructor(private readonly storage: CheckpointStorage) {}
-
-  async load(): Promise<CheckpointCollection> {
-    let contents: string | undefined;
-    try {
-      contents = await this.storage.read();
-    } catch (cause) {
-      throw new CheckpointError('READ_FAILED', 'チェックポイントを読み込めません。保存先へのアクセスを確認してください。', { cause });
-    }
-    if (contents === undefined) return { schemaVersion: 1, checkpoints: [] };
-    return parseCheckpointCollection(contents);
+export class CheckpointStore extends JsonCollectionStore<CheckpointCollection> {
+  constructor(storage: CheckpointStorage) {
+    super(storage, {
+      empty: () => ({ schemaVersion: 1, checkpoints: [] }),
+      parse: parseCheckpointCollection,
+      validate: assertCheckpointCollection,
+    });
   }
 
   async append(checkpoint: Checkpoint): Promise<void> {
@@ -28,11 +23,6 @@ export class CheckpointStore {
       schemaVersion: 1,
       checkpoints: [...current.checkpoints, checkpoint],
     };
-    assertCheckpointCollection(updated);
-    try {
-      await this.storage.writeAtomic(JSON.stringify(updated, null, 2));
-    } catch (cause) {
-      throw new CheckpointError('WRITE_FAILED', 'チェックポイントを保存できません。空き容量とアクセス権を確認してください。', { cause });
-    }
+    await this.save(updated);
   }
 }

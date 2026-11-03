@@ -1,0 +1,119 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/nodeCheckpointStorage.test.ts -t C6-05
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/nodeCheckpointStorage.test.ts (7 tests | 2 failed | 5 skipped) 15ms
+   × C6-05: portable store appends schema2 through the common JSON store 9ms
+   × C6-05: schema1 is readable but append refuses to alter its bytes 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nodeCheckpointStorage.test.ts > C6-05: portable store appends schema2 through the common JSON store
+AssertionError: expected [] to deeply equal [ { …(14) }, { …(14) } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "activeFileUri": null,
+-     "createdAt": "2026-11-03T00:00:00.000Z",
+-     "cursor": null,
+-     "editorCapture": "not-connected",
+-     "git": {
+-       "available": true,
+-       "branch": "feature/api",
+-       "changes": [
+-         {
+-           "originalPath": "old name.ts",
+-           "path": "new name.ts",
+-           "status": "R ",
+-         },
+-       ],
+-       "error": null,
+-       "headCommit": "1234567890abcdef1234567890abcdef12345678",
+-       "repoRootUri": "file:///projects/my-app",
+-     },
+-     "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+-     "nextAction": "テストの期待値を確認する",
+-     "note": "API レスポンス形式を調査中
+- 期待値の確認が必要",
+-     "openFiles": [],
+-     "schemaVersion": 2,
+-     "title": "my-app — 2026-11-03 09:00",
+-     "unsavedFileUris": [],
+-     "workspaceName": "my-app",
+-     "workspaceUri": "file:///projects/my-app",
+-   },
+-   {
+-     "activeFileUri": null,
+-     "createdAt": "2026-11-03T00:00:00.000Z",
+-     "cursor": null,
+-     "editorCapture": "not-connected",
+-     "git": {
+-       "available": true,
+-       "branch": "feature/api",
+-       "changes": [
+-         {
+-           "originalPath": "old name.ts",
+-           "path": "new name.ts",
+-           "status": "R ",
+-         },
+-       ],
+-       "error": null,
+-       "headCommit": "1234567890abcdef1234567890abcdef12345678",
+-       "repoRootUri": "file:///projects/my-app",
+-     },
+-     "id": "b9b2c3d4-1111-4222-8333-123456789abc",
+-     "nextAction": "テストの期待値を確認する",
+-     "note": "second",
+-     "openFiles": [],
+-     "schemaVersion": 2,
+-     "title": "my-app — 2026-11-03 09:00",
+-     "unsavedFileUris": [],
+-     "workspaceName": "my-app",
+-     "workspaceUri": "file:///projects/my-app",
+-   },
+- ]
++ []
+
+ ❯ tests/nodeCheckpointStorage.test.ts:71:70
+     69|   await store.append(first);
+     70|   await store.append(second);
+     71|   expect((await new CliCheckpointStore(storage).load()).checkpoints).t…
+       |                                                                      ^
+     72| });
+     73|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/nodeCheckpointStorage.test.ts > C6-05: schema1 is readable but append refuses to alter its bytes
+AssertionError: promise resolved "undefined" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+undefined
+
+ ❯ tests/nodeCheckpointStorage.test.ts:80:53
+     78|   const store = new CliCheckpointStore(new NodeCheckpointStorage(root)…
+     79|   expect((await store.load()).checkpoints[0]?.editorCapture).toBe('leg…
+     80|   await expect(store.append(cliCheckpointFixture())).rejects.toMatchOb…
+       |                                                     ^
+     81|   expect(await readFile(join(root, 'checkpoints.json'), 'utf8')).toBe(…
+     82| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 skipped (7)
+   Start at  12:17:02
+   Duration  235ms (transform 47%, import 25%, tests 23%, worker 5%)
+

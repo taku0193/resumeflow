@@ -1,0 +1,96 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliSchema.test.ts -t C6-03
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliSchema.test.ts (8 tests | 8 failed) 12ms
+   × C6-03: schema2 retains rename metadata and explicit unavailable editor state 8ms
+   × C6-03: rejects syntax without quoting saved input 2ms
+   × C6-03: rejects version without quoting saved input 0ms
+   × C6-03: rejects extra payload without quoting saved input 0ms
+   × C6-03: rejects unknown editor state without quoting saved input 0ms
+   × C6-03: rejects false editor claim without quoting saved input 0ms
+   × C6-03: rejects invalid rename field without quoting saved input 0ms
+   × C6-03: rejects duplicate ID without quoting saved input 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliSchema.test.ts > C6-03: schema2 retains rename metadata and explicit unavailable editor state
+AssertionError: expected { schemaVersion: 2, checkpoints: [] } to deeply equal { schemaVersion: 2, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "checkpoints": [
+-     {
+-       "activeFileUri": null,
+-       "createdAt": "2026-11-03T00:00:00.000Z",
+-       "cursor": null,
+-       "editorCapture": "not-connected",
+-       "git": {
+-         "available": true,
+-         "branch": "feature/api",
+-         "changes": [
+-           {
+-             "originalPath": "old name.ts",
+-             "path": "new name.ts",
+-             "status": "R ",
+-           },
+-         ],
+-         "error": null,
+-         "headCommit": "1234567890abcdef1234567890abcdef12345678",
+-         "repoRootUri": "file:///projects/my-app",
+-       },
+-       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+-       "nextAction": "テストの期待値を確認する",
+-       "note": "API レスポンス形式を調査中
+- 期待値の確認が必要",
+-       "openFiles": [],
+-       "schemaVersion": 2,
+-       "title": "my-app — 2026-11-03 09:00",
+-       "unsavedFileUris": [],
+-       "workspaceName": "my-app",
+-       "workspaceUri": "file:///projects/my-app",
+-     },
+-   ],
++   "checkpoints": [],
+    "schemaVersion": 2,
+  }
+
+ ❯ tests/cliSchema.test.ts:18:58
+     16| test('C6-03: schema2 retains rename metadata and explicit unavailable …
+     17|   const collection = { schemaVersion: 2 as const, checkpoints: [cliFix…
+     18|   expect(parseCliCollection(JSON.stringify(collection))).toEqual(colle…
+       |                                                          ^
+     19|   expect(() => assertCliCollection(collection)).not.toThrow();
+     20| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/cliSchema.test.ts > C6-03: rejects syntax without quoting saved input
+ FAIL  tests/cliSchema.test.ts > C6-03: rejects version without quoting saved input
+ FAIL  tests/cliSchema.test.ts > C6-03: rejects extra payload without quoting saved input
+ FAIL  tests/cliSchema.test.ts > C6-03: rejects unknown editor state without quoting saved input
+ FAIL  tests/cliSchema.test.ts > C6-03: rejects false editor claim without quoting saved input
+ FAIL  tests/cliSchema.test.ts > C6-03: rejects invalid rename field without quoting saved input
+ FAIL  tests/cliSchema.test.ts > C6-03: rejects duplicate ID without quoting saved input
+AssertionError: expected [Function] to throw an error
+ ❯ tests/cliSchema.test.ts:31:46
+     29|   ['duplicate ID', JSON.stringify({ schemaVersion: 2, checkpoints: [cl…
+     30| ])('C6-03: rejects %s without quoting saved input', (_name, contents) …
+     31|   expect(() => parseCliCollection(contents)).toThrow();
+       |                                              ^
+     32| });
+     33|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed (8)
+   Start at  12:15:47
+   Duration  278ms (transform 59%, tests 19%, import 16%, worker 6%)
+
