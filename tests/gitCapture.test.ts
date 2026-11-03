@@ -53,3 +53,15 @@ test.each(['detached', 'unborn'])('P1-12c: represents %s without failing the cap
     available: true, branch: state === 'detached' ? null : 'main', headCommit: state === 'unborn' ? null : sha, error: null,
   });
 });
+
+test.each(['root', 'sha', 'status'])('P1-12d: rejects invalid %s output without persisting it', async field => {
+  const git = runner();
+  const original = git.run.getMockImplementation()!;
+  git.run.mockImplementation(async (directory, args) => {
+    if (field === 'root' && args.includes('--show-toplevel')) return 'not-absolute\n';
+    if (field === 'sha' && args.includes('--verify')) return 'not-a-sha\n';
+    if (field === 'status' && args[0] === 'status') return 'truncated';
+    return original(directory, args);
+  });
+  expect(await captureGit(root, true, git)).toMatchObject({ available: false, error: 'INVALID_GIT_OUTPUT' });
+});

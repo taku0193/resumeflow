@@ -2,6 +2,7 @@ import type { CliGitSnapshot } from '../models/cliCheckpoint';
 import { pathToFileURL } from 'node:url';
 import { parseGitStatus } from './gitStatusParser';
 import { CliError } from '../models/cliError';
+import { isAbsolute } from 'node:path';
 export interface GitRunner { run(directory: string, args: readonly string[]): Promise<string> }
 export class GitCommandError extends Error {
   constructor(readonly code: string, readonly exitCode?: number) { super('Git metadata command failed'); }
@@ -22,6 +23,9 @@ export async function captureGit(directory: string, allowed: boolean, runner: Gi
   detected = true;
   const branch = await optional(['symbolic-ref', '--quiet', '--short', 'HEAD']);
   const headCommit = await optional(['rev-parse', '--verify', '--quiet', 'HEAD']);
+  if (!isAbsolute(root) || (headCommit !== null && !/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(headCommit))) {
+    throw new CliError('INVALID_GIT_OUTPUT', 'Git の状態情報を解析できません。');
+  }
   const changes = parseGitStatus(await runner.run(directory, ['status', '--porcelain=v1', '-z', '--untracked-files=all']));
   return { available: true, repoRootUri: pathToFileURL(root).toString(), branch, headCommit, changes, error: null };
   } catch (error) {

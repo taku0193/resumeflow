@@ -1,0 +1,44 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitCapture.test.ts -t P1-12d
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/gitCapture.test.ts (12 tests | 2 failed | 9 skipped) 8ms
+   × P1-12d: rejects invalid root output without persisting it 6ms
+   × P1-12d: rejects invalid sha output without persisting it 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gitCapture.test.ts > P1-12d: rejects invalid root output without persisting it
+ FAIL  tests/gitCapture.test.ts > P1-12d: rejects invalid sha output without persisting it
+AssertionError: expected { available: true, …(5) } to match object { available: false, …(1) }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "available": false,
+-   "error": "INVALID_GIT_OUTPUT",
++   "available": true,
++   "error": null,
+  }
+
+ ❯ tests/gitCapture.test.ts:66:45
+     64|     return original(directory, args);
+     65|   });
+     66|   expect(await captureGit(root, true, git)).toMatchObject({ available:…
+       |                                             ^
+     67| });
+     68|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed | 9 skipped (12)
+   Start at  13:31:33
+   Duration  143ms (transform 45%, import 24%, tests 23%, worker 7%)
+
