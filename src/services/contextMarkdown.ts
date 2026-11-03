@@ -4,7 +4,8 @@ export function displayText(value: string): string {
 }
 function block(value: string): string {
   const text = displayText(value);
-  const longest = Math.max(2, ...Array.from(text.matchAll(/`+/g), match => match[0].length));
+  let longest = 2;
+  for (const match of text.matchAll(/`+/g)) longest = Math.max(longest, match[0].length);
   const fence = '`'.repeat(longest + 1);
   return `${fence}\n${text}\n${fence}`;
 }
