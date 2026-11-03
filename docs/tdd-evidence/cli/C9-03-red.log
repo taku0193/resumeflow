@@ -1,0 +1,102 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/createCliCheckpoint.test.ts -t C9-03
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/createCliCheckpoint.test.ts (2 tests | 2 failed) 6ms
+   × C9-03: builds a checkpoint from explicit metadata with no editor claim 5ms
+   × C9-03: builds a checkpoint from explicit metadata with no editor claim 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/createCliCheckpoint.test.ts > C9-03: builds a checkpoint from explicit metadata with no editor claim
+AssertionError: expected {} to deeply equal { …(14) }
+
+- Expected
++ Received
+
+- {
+-   "activeFileUri": null,
+-   "createdAt": "2026-11-03T00:00:00.000Z",
+-   "cursor": null,
+-   "editorCapture": "not-connected",
+-   "git": {
+-     "available": false,
+-     "branch": null,
+-     "changes": [],
+-     "error": "NOT_ALLOWED",
+-     "headCommit": null,
+-     "repoRootUri": null,
+-   },
+-   "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+-   "nextAction": "",
+-   "note": "",
+-   "openFiles": [],
+-   "schemaVersion": 2,
+-   "title": "project — 2026-11-03T00:00:00.000Z",
+-   "unsavedFileUris": [],
+-   "workspaceName": "project",
+-   "workspaceUri": "file:///project",
+- }
++ {}
+
+ ❯ tests/createCliCheckpoint.test.ts:7:88
+      5|   const input = { workspaceUri: 'file:///project', workspaceName: 'pro…
+      6|   const id = 'a9b2c3d4-1111-4222-8333-123456789abc';
+      7|   expect(createCliCheckpoint(input, () => new Date('2026-11-03T00:00:0…
+       |                                                                                        ^
+      8|     ...input, id, schemaVersion: 2, createdAt: '2026-11-03T00:00:00.00…
+      9|     editorCapture: 'not-connected', openFiles: [], activeFileUri: null…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/createCliCheckpoint.test.ts > C9-03: builds a checkpoint from explicit metadata with no editor claim
+AssertionError: expected {} to deeply equal { …(14) }
+
+- Expected
++ Received
+
+- {
+-   "activeFileUri": null,
+-   "createdAt": "2026-11-03T00:00:00.000Z",
+-   "cursor": null,
+-   "editorCapture": "not-connected",
+-   "git": {
+-     "available": false,
+-     "branch": null,
+-     "changes": [],
+-     "error": "NOT_ALLOWED",
+-     "headCommit": null,
+-     "repoRootUri": null,
+-   },
+-   "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+-   "nextAction": "",
+-   "note": "調査中
+- 続きはこちら",
+-   "openFiles": [],
+-   "schemaVersion": 2,
+-   "title": "project — 2026-11-03T00:00:00.000Z",
+-   "unsavedFileUris": [],
+-   "workspaceName": "project",
+-   "workspaceUri": "file:///project",
+- }
++ {}
+
+ ❯ tests/createCliCheckpoint.test.ts:7:88
+      5|   const input = { workspaceUri: 'file:///project', workspaceName: 'pro…
+      6|   const id = 'a9b2c3d4-1111-4222-8333-123456789abc';
+      7|   expect(createCliCheckpoint(input, () => new Date('2026-11-03T00:00:0…
+       |                                                                                        ^
+      8|     ...input, id, schemaVersion: 2, createdAt: '2026-11-03T00:00:00.00…
+      9|     editorCapture: 'not-connected', openFiles: [], activeFileUri: null…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  13:40:30
+   Duration  149ms (transform 49%, import 24%, tests 19%, worker 7%)
+
