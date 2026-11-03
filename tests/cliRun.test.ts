@@ -24,7 +24,9 @@ test('C9-04b: save waits for persistence and returns one JSON result without run
 test('C9-04c: storage failure returns stderr with no success and no native data', async () => {
   const context = cliContextFixture();
   context.store.append = vi.fn(async () => { throw new CheckpointError('WRITE_FAILED', '保存できません。', { cause: new Error('SENSITIVE_BODY') }); });
-  const result = await runCli(['save', '--format', 'json'], async () => context);
+  const pending = runCli(['save', '--format', 'json'], async () => context);
+  await expect(pending).resolves.toMatchObject({ exitCode: 1, stdout: '' });
+  const result = await pending;
   expect(result.exitCode).toBe(1);
   expect(result.stdout).toBe('');
   expect(JSON.parse(result.stderr)).toMatchObject({ ok: false, error: { code: 'WRITE_FAILED' } });
@@ -32,7 +34,9 @@ test('C9-04c: storage failure returns stderr with no success and no native data'
 });
 test('C9-04c: usage errors exit2 without accessing data', async () => {
   const factory = vi.fn(async () => cliContextFixture());
-  const result = await runCli(['save', '--unknown'], factory);
+  const pending = runCli(['save', '--unknown'], factory);
+  await expect(pending).resolves.toMatchObject({ exitCode: 2, stdout: '' });
+  const result = await pending;
   expect(result.exitCode).toBe(2);
   expect(result.stdout).toBe('');
   expect(JSON.parse(result.stderr).error.code).toBe('USAGE');
