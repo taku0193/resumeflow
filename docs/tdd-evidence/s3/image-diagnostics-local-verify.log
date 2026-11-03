@@ -1,0 +1,30 @@
+
+> resumeflow@0.0.1 verify
+> npm run typecheck && npm run test:unit && npm run build
+
+
+> resumeflow@0.0.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.unit.json
+
+
+> resumeflow@0.0.1 test:unit
+> vitest run
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  4 passed (4)
+      Tests  91 passed (91)
+   Start at  11:32:54
+   Duration  295ms (import 33%, tests 29%, transform 25%, worker 12%)
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

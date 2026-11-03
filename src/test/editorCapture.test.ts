@@ -11,7 +11,15 @@ import { checkpointFixture } from './fixtures/checkpointFixture';
 async function waitForState(predicate: () => boolean): Promise<void> {
   const deadline = Date.now() + 5000;
   while (!predicate()) {
-    assert.ok(Date.now() < deadline, 'VS Code editor state did not settle');
+    assert.ok(Date.now() < deadline, `VS Code editor state did not settle: ${JSON.stringify(
+      vscode.window.tabGroups.all.map(group => ({
+        active: group.isActive,
+        tabs: group.tabs.map(tab => ({
+          label: tab.label, active: tab.isActive,
+          inputType: (tab.input as object | undefined)?.constructor?.name,
+          input: tab.input,
+        })),
+      })))}`);
     await new Promise(resolve => setTimeout(resolve, 20));
   }
 }
@@ -132,6 +140,7 @@ suite('S3: real VS Code editor metadata', () => {
   });
 
   test('P1-08 API: excludes a local image opened in the built-in custom image editor', async () => {
+    console.log('Image fixture provider:', vscode.extensions.getExtension('vscode.media-preview')?.isActive ?? 'not installed');
     const uri = vscode.Uri.joinPath(directory, 'pixel.png');
     await vscode.workspace.fs.writeFile(uri, Buffer.from(
       'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aGtkAAAAASUVORK5CYII=', 'base64'));
