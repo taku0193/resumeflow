@@ -101,3 +101,15 @@ export function assertCheckpointCollection(value: unknown): asserts value is Che
     ids.add(checkpoint.id);
   });
 }
+
+export function parseCheckpointCollection(contents: string): CheckpointCollection {
+  let collection: unknown;
+  try {
+    collection = JSON.parse(contents);
+  } catch {
+    // A native SyntaxError may quote the input. Do not expose stored text.
+    throw new CheckpointError('INVALID_JSON', 'チェックポイントの JSON を読み込めません。元データは変更していません。');
+  }
+  assertCheckpointCollection(collection);
+  return collection;
+}

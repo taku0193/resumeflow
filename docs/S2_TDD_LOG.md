@@ -45,3 +45,7 @@
 - 検証: `npm run verify` の型チェック・全単体68件・ビルドが成功。
 - 証跡: `docs/tdd-evidence/s2/P1-05-{red,green,regression}.log`。
 - 次: 純粋な JSON 読込処理の整理後、P1-06。
+
+### P1-05 の整理
+
+JSON の構文解析とスキーマ検証を `parseCheckpointCollection` にまとめ、ストレージ I/O から独立した純粋処理に移動。`npm run verify` が全単体68件・型チェック・ビルドで成功。`docs/tdd-evidence/s2/P1-05-refactor.log` に記録。

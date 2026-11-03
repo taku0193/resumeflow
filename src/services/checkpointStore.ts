@@ -1,6 +1,5 @@
 import type { Checkpoint, CheckpointCollection } from '../models/checkpoint';
-import { assertCheckpointCollection } from '../models/checkpointSchema';
-import { CheckpointError } from '../models/checkpointError';
+import { assertCheckpointCollection, parseCheckpointCollection } from '../models/checkpointSchema';
 
 /** I/O boundary: undefined means the data file does not exist. */
 export interface CheckpointStorage {
@@ -14,14 +13,7 @@ export class CheckpointStore {
   async load(): Promise<CheckpointCollection> {
     const contents = await this.storage.read();
     if (contents === undefined) return { schemaVersion: 1, checkpoints: [] };
-    let collection: unknown;
-    try {
-      collection = JSON.parse(contents);
-    } catch {
-      throw new CheckpointError('INVALID_JSON', 'チェックポイントの JSON を読み込めません。元データは変更していません。');
-    }
-    assertCheckpointCollection(collection);
-    return collection;
+    return parseCheckpointCollection(contents);
   }
 
   async append(checkpoint: Checkpoint): Promise<void> {
