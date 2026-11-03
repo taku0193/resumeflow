@@ -1,0 +1,42 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/editorCapture.test.ts -t P1-09b
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/editorCapture.test.ts (14 tests | 2 failed | 12 skipped) 9ms
+   × P1-09b: an untitled tab (dirty=true) yields only a distinct warning count 7ms
+   × P1-09b: an untitled tab (dirty=false) yields only a distinct warning count 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-09b: an untitled tab (dirty=true) yields only a distinct warning count
+ FAIL  tests/editorCapture.test.ts > P1-09b: an untitled tab (dirty=false) yields only a distinct warning count
+AssertionError: expected { excludedTabCount: 3, …(1) } to deeply equal { excludedTabCount: 3, …(1) }
+
+- Expected
++ Received
+
+  {
+    "excludedTabCount": 3,
+-   "unsavedUntitledCount": 1,
++   "unsavedUntitledCount": 0,
+  }
+
+ ❯ tests/editorCapture.test.ts:90:27
+     88|     activeEditor: { uri: 'untitled:Untitled-1', cursor: { line: 0, cha…
+     89|   }));
+     90|   expect(result.warnings).toEqual({ excludedTabCount: 3, unsavedUntitl…
+       |                           ^
+     91|   expect(result.snapshot).toEqual({ openFiles: [firstUri], activeFileU…
+     92|   expect(JSON.stringify(result)).not.toContain('private.ts');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 12 skipped (14)
+   Start at  11:23:25
+   Duration  208ms (transform 48%, import 23%, tests 21%, worker 7%)
+

@@ -1,5 +1,6 @@
 import type { Checkpoint, CheckpointCollection } from './checkpoint';
 import { CheckpointError } from './checkpointError';
+import { isFileUri } from './fileUri';
 
 function requireSchema(condition: boolean, field: string): asserts condition {
   if (!condition) {
@@ -49,16 +50,6 @@ function checkpointStructure(value: unknown, field: string): asserts value is Ch
     const changeField = `${field}.git.changes[${index}]`;
     const change = record(value, ['path', 'status'], changeField);
     requireSchema(typeof change.path === 'string' && typeof change.status === 'string', changeField);
-  }
-}
-
-function isFileUri(value: string): boolean {
-  try {
-    const uri = new URL(value);
-    return value.startsWith('file://') && uri.protocol === 'file:'
-      && uri.pathname.startsWith('/') && uri.search === '' && uri.hash === '';
-  } catch {
-    return false;
   }
 }
 

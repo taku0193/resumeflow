@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/editorCapture.test.ts -t P1-07a
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  11:22:06
+   Duration  205ms (transform 52%, import 29%, worker 11%, tests 9%)
+

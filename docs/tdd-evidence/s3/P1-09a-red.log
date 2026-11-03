@@ -1,0 +1,39 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/editorCapture.test.ts -t P1-09a
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/editorCapture.test.ts (12 tests | 1 failed | 11 skipped) 8ms
+   × P1-09a: records dirty eligible file URIs once without reading or retaining document bodies 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-09a: records dirty eligible file URIs once without reading or retaining document bodies
+AssertionError: expected [] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+- [
+-   "file:///projects/example/src/first.ts",
+- ]
++ []
+
+ ❯ tests/editorCapture.test.ts:78:43
+     76|   Object.defineProperty(dirty, 'text', { get: () => { throw new Error(…
+     77|   const result = captureEditors(workspaceUri, editorSnapshot({ tabs: […
+     78|   expect(result.snapshot.unsavedFileUris).toEqual([firstUri]);
+       |                                           ^
+     79|   expect(Object.keys(result.snapshot)).toEqual(['openFiles', 'activeFi…
+     80| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  11:23:10
+   Duration  206ms (transform 49%, import 23%, tests 19%, worker 8%)
+

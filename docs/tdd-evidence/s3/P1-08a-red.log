@@ -1,0 +1,40 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/editorCapture.test.ts -t P1-08a
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/editorCapture.test.ts (3 tests | 1 failed | 2 skipped) 7ms
+   × P1-08a: repeated URIs across editor groups are captured once in first-seen order 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-08a: repeated URIs across editor groups are captured once in first-seen order
+AssertionError: expected [ …(3) ] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+  [
+    "file:///projects/example/src/%E6%97%A5%E6%9C%AC%E8%AA%9E%20file.ts",
+    "file:///projects/example/src/first.ts",
++   "file:///projects/example/src/%E6%97%A5%E6%9C%AC%E8%AA%9E%20file.ts",
+  ]
+
+ ❯ tests/editorCapture.test.ts:40:68
+     38| test('P1-08a: repeated URIs across editor groups are captured once in …
+     39|   const editors = editorSnapshot({ tabs: [textTab(secondUri), textTab(…
+     40|   expect(captureEditors(workspaceUri, editors).snapshot.openFiles).toE…
+       |                                                                    ^
+     41| });
+     42|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  11:22:10
+   Duration  199ms (transform 49%, import 22%, tests 20%, worker 9%)
+

@@ -120,6 +120,18 @@
 - パスは極力 URI で記録し、Windows/macOS/Linux の区切り文字を文字列連結で扱わない。
 - Git の取得に失敗してもチェックポイント作成全体を失敗にしない。
 
+### S3 のエディタ取得契約
+
+- `window.tabGroups.all` の順で全グループのタブを走査し、`TabInputText` のうち `file:` かつ対象ワークスペースに所属するものだけを記録する。現在見えていないタブも含む。単に読み込まれた `workspace.textDocuments` は列挙しない。
+- URI の文字列を作り直さず、VS Code の `Uri.toString()` を使う。所属判定は `workspace.getWorkspaceFolder(uri)` の URI と対象フォルダの URI の一致を用いる。文字列のパス接頭辞判定はしない。同じ URI は最初に現れた順で1回だけ記録する。
+- アクティブグループのタブが通常のテキストタブで、その URI が `activeTextEditor.document.uri` と一致し、取得対象にも含まれる場合だけアクティブ URI と `selection.active` の0始まりの座標を返す。diff / 画像等がアクティブなら、同じファイルが別グループの通常タブにあってもアクティブとみなさない。
+- 対象テキストタブの `isDirty` から `unsavedFileUris` を重複なしで返す。本文取得 API やファイル読込を使わず、編集の保存・破棄もしない。dirty な対象外ファイルの URI も記録しない。
+- 一時的な `warnings.excludedTabCount` は除外したタブ数、`warnings.unsavedUntitledCount` は異なる `untitled:` テキスト URI の数とする。後者は dirty 表示のない新規タブも含む。重複した対象ファイルは除外件数に数えない。untitled の同一 URI が複数タブにある場合、除外タブ数には各タブ、untitled 件数には1件を数える。両件数は重なるため足し合わせない。
+- `snapshot` だけが保存データのエディタ4項目に対応する。`warnings` は UI 向けで永続化しない。スキーマ1に untitled URI や警告用項目を追加しない。通知表示は S5 / S6 で接続する。
+- S3 の所属は URI 上の所属である。本文・実体パスを読み取らず、シンボリックリンクを解決しない。保存 URI の実在・リンク先・現在のワークスペース境界の再検証は、ファイルを開く S8 の対象とする。
+
+API の参照: [TabGroups](https://code.visualstudio.com/api/references/vscode-api#TabGroups)、[TabInputText](https://code.visualstudio.com/api/references/vscode-api#TabInputText)、[getWorkspaceFolder](https://code.visualstudio.com/api/references/vscode-api#workspace.getWorkspaceFolder)。
+
 ## 6. データ保存
 
 - 保存先: `ExtensionContext.globalStorageUri` 配下の `checkpoints.json`。

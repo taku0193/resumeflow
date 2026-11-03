@@ -1,0 +1,41 @@
+GitHub Actions run 41566414977 / integration job 125688952360
+Test-fixture failure, not a new product RED/GREEN cycle. Verbatim test output excerpt:
+2026-11-03T02:29:50.1424650Z   S3: real VS Code editor metadata
+2026-11-03T02:29:50.2550792Z Unknown channel: agentHostClientProxy
+2026-11-03T02:29:50.3569887Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/ODBiZmQwNjMtYzAxMC00Yzc0LTkzZTQtYTU1NmYyYmRlYmMz" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:29:50.3860064Z     ✔ P1-07 API: captures background tabs, omits loaded-only documents, uses selection.active (212ms)
+2026-11-03T02:29:50.4712301Z     ✔ P1-07 API: an empty editor area yields empty metadata
+2026-11-03T02:29:50.6087031Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/ODBiZmQwNjMtYzAxMC00Yzc0LTkzZTQtYTU1NmYyYmRlYmMz" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:29:50.6265275Z     ✔ P1-08 API: deduplicates the same file opened in two groups (113ms)
+2026-11-03T02:29:50.8065912Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/ODBiZmQwNjMtYzAxMC00Yzc0LTkzZTQtYTU1NmYyYmRlYmMz" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:29:50.8138505Z     ✔ P1-08 API: excludes a sibling workspace-prefix directory (79ms)
+2026-11-03T02:29:50.8747658Z     ✔ P1-08 API: excludes virtual text documents (43ms)
+2026-11-03T02:29:50.9851049Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/ODBiZmQwNjMtYzAxMC00Yzc0LTkzZTQtYTU1NmYyYmRlYmMz" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:29:51.1376434Z     ✔ P1-08 API: an active diff is excluded even when its file is a normal tab in another group (205ms)
+2026-11-03T02:29:51.2048953Z [AccountPolicyGate] apply: state=inactive, reason=undefined, isRestricted=false
+2026-11-03T02:29:51.2068300Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/ODBiZmQwNjMtYzAxMC00Yzc0LTkzZTQtYTU1NmYyYmRlYmMz" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:29:51.3168262Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/ODBiZmQwNjMtYzAxMC00Yzc0LTkzZTQtYTU1NmYyYmRlYmMz" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:29:56.2964853Z     1) P1-08 API: excludes a local image opened in the built-in custom image editor
+2026-11-03T02:29:56.3996918Z     ✔ P1-09 API: persists only dirty file metadata and leaves the source bytes unchanged (86ms)
+2026-11-03T02:29:56.4033166Z [ChatModelSelection] event=no-model-at-toolbar-build surface="workbench" sessionKey="local" conversationKey="vscode-chat-session://local/ODBiZmQwNjMtYzAxMC00Yzc0LTkzZTQtYTU1NmYyYmRlYmMz" modelTarget=undefined storageKey="chat.currentLanguageModel.panel" widgetViewKind="view"
+2026-11-03T02:29:56.4718513Z     ✔ P1-09 API: an untitled buffer is counted without exposing its URI or body
+2026-11-03T02:29:56.5050418Z   14 passing (6s)
+2026-11-03T02:29:56.5053676Z 1 test failed.
+2026-11-03T02:29:56.5053924Z   1 failing
+2026-11-03T02:29:56.5054545Z   1) S3: real VS Code editor metadata
+2026-11-03T02:29:56.5055109Z        P1-08 API: excludes a local image opened in the built-in custom image editor:
+2026-11-03T02:29:56.5055532Z 
+2026-11-03T02:29:56.5055848Z       AssertionError [ERR_ASSERTION]: VS Code editor state did not settle
+2026-11-03T02:29:56.5056312Z       + expected - actual
+2026-11-03T02:29:56.5056725Z 
+2026-11-03T02:29:56.5056976Z       -false
+2026-11-03T02:29:56.5057422Z       +true
+2026-11-03T02:29:56.5058157Z       
+2026-11-03T02:29:56.5058557Z   	at waitForState (dist/test/editorCapture.test.js:48:16)
+2026-11-03T02:29:56.5059135Z   	at async Context.<anonymous> (dist/test/editorCapture.test.js:162:9)
+2026-11-03T02:29:56.5059501Z 
+2026-11-03T02:29:56.5075120Z Extension host test runner error 1 test failed.
+2026-11-03T02:29:56.5139131Z Asking native host service to exit with code 1.
+2026-11-03T02:29:56.5206087Z [90m[main 2026-11-03T02:29:56.519Z][0m Extension host with pid 2457 exited with code: 0, signal: unknown.
+2026-11-03T02:29:56.6249403Z Exit code:   1
+2026-11-03T02:29:56.6542659Z ##[error]Process completed with exit code 1.
