@@ -12,3 +12,5 @@ coverage/
 .env.*
 checkpoints.json
 checkpoints.json.*
+
+output/playwright/
