@@ -139,13 +139,16 @@ suite('S3: real VS Code editor metadata', () => {
     assert.equal(result.warnings.excludedTabCount, 1);
   });
 
-  test('P1-08 API: excludes a local image opened in the built-in custom image editor', async () => {
-    console.log('Image fixture provider:', vscode.extensions.getExtension('vscode.media-preview')?.isActive ?? 'not installed');
+  test('P1-08 API: excludes a local image opened in the built-in image editor', async () => {
     const uri = vscode.Uri.joinPath(directory, 'pixel.png');
     await vscode.workspace.fs.writeFile(uri, Buffer.from(
       'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aGtkAAAAASUVORK5CYII=', 'base64'));
     await vscode.commands.executeCommand('vscode.openWith', uri, 'imagePreview.previewEditor', { preview: false });
-    await waitForState(() => vscode.window.tabGroups.activeTabGroup.activeTab?.input instanceof vscode.TabInputCustom);
+    // Stable VS Code currently exposes its native image input as unknown;
+    // older releases expose TabInputCustom. Wait for the actual image tab,
+    // and require that the fixture did not fall back to a normal text editor.
+    await waitForState(() => vscode.window.tabGroups.activeTabGroup.activeTab?.label === 'pixel.png');
+    assert.ok(!(vscode.window.tabGroups.activeTabGroup.activeTab?.input instanceof vscode.TabInputText));
     const result = captureEditors(workspaceUri, readVscodeEditorSnapshot());
     assert.deepEqual(result.snapshot.openFiles, []);
     assert.equal(result.snapshot.activeFileUri, null);
