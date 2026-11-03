@@ -24,6 +24,7 @@ export class CheckpointStore {
       schemaVersion: 1,
       checkpoints: [...current.checkpoints, checkpoint],
     };
+    assertCheckpointCollection(updated);
     await this.storage.writeAtomic(JSON.stringify(updated, null, 2));
   }
 }

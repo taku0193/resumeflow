@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { CheckpointStore } from '../src/services/checkpointStore';
 import { MemoryStorage } from './memoryStorage';
 import { checkpointFixture } from './checkpointFixture';
@@ -122,4 +122,19 @@ test.each([
   });
   const expected = { schemaVersion: 1, checkpoints: [checkpoint] };
   await expect(new CheckpointStore(new MemoryStorage(JSON.stringify(expected))).load()).resolves.toEqual(expected);
+});
+
+const nextCheckpoint = checkpointFixture({ id: 'b9b2c3d4-1111-4222-8333-123456789abc' });
+test.each([
+  ['unknown file body', { ...nextCheckpoint, fileBody: 'private marker' }],
+  ['invalid UUID', checkpointFixture({ id: 'not-a-uuid' })],
+  ['duplicate ID', validCheckpoint],
+])('P1-04d: refuses invalid appends without writing (%s)', async (_description, checkpoint) => {
+  const original = JSON.stringify({ schemaVersion: 1, checkpoints: [validCheckpoint] });
+  const storage = new MemoryStorage(original);
+  const write = vi.spyOn(storage, 'writeAtomic');
+
+  await expect(new CheckpointStore(storage).append(checkpoint)).rejects.toMatchObject({ code: 'INVALID_SCHEMA' });
+  expect(write).not.toHaveBeenCalled();
+  expect(storage.contents).toBe(original);
 });

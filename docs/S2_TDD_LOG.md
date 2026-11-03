@@ -28,3 +28,11 @@
 - REFACTOR: 構造の検証と値の検証を分け、URI・UTC 日時の判定を純粋関数化。P1-04b のテストデータのタプル型も修正し、`npm run verify` が型チェック・全単体59件・ビルドで成功。
 - 証跡: `docs/tdd-evidence/s2/P1-04c-{red,green,regression}.log`。P1-04b の初回型エラーのログは上書きせず保持。
 - 次: 書込直前の検証。
+
+## P1-04d: 追記するデータも検証する
+
+- RED: `npm run test:unit -- tests/checkpointStore.test.ts -t P1-04d`。未知の本文、無効 UUID、既存 ID の再利用の3件で、拒否すべき append が resolve して失敗。
+- GREEN: 追記後のデータを同じスキーマ検証に通し、3件が成功。書込 I/O の呼出し0回と既存データ不変も確認。
+- REFACTOR: 読込と書込で同じ検証を再利用。`npm run verify` の型チェック・全単体62件・ビルドが成功。
+- 証跡: `docs/tdd-evidence/s2/P1-04d-{red,green,regression}.log`。
+- 次: P1-05、破損 JSON の明確なエラーと上書き阻止。
