@@ -1,0 +1,36 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliRun.test.ts -t C9-04b
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliRun.test.ts (2 tests | 1 failed | 1 skipped) 8ms
+   × C9-04b: save waits for persistence and returns one JSON result without running unapproved Git 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliRun.test.ts > C9-04b: save waits for persistence and returns one JSON result without running unapproved Git
+AssertionError: expected '' to contain '"ok":true'
+
+- Expected
++ Received
+
+- "ok":true
+
+ ❯ tests/cliRun.test.ts:17:25
+     15|   expect(result.exitCode).toBe(0);
+     16|   expect(result.stderr).toBe('');
+     17|   expect(result.stdout).toContain('"ok":true');
+       |                         ^
+     18|   const data = JSON.parse(result.stdout).data;
+     19|   expect(data).toMatchObject({ note: 'メモ\n次', editorCapture: 'not-conn…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  13:53:06
+   Duration  208ms (transform 64%, import 20%, tests 12%, worker 4%)
+
