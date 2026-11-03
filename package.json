@@ -17,7 +17,8 @@
     "dist/services/**/*.js",
     "CLI_SPEC.md",
     "dist/cli/**/*.js",
-    "skills/resumeflow-checkpoint/**/*"
+    "skills/resumeflow-checkpoint/**/*",
+    "docs/assets/resumeflow-hero.svg"
   ],
   "engines": {
     "vscode": "^1.100.0"
