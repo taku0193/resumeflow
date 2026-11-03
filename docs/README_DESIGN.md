@@ -30,4 +30,21 @@ ResumeFlowの「中断した作業の続きへ戻る」を、生成りの紙面�
 
 ## Validation
 
-表示・リンク・配布対象の実行結果を、完了時にこの節へ追記する。
+- GitHub Markdown APIのGFM出力を使い、GitHub Markdown CSSを用いたローカルプレビューで確認した。GitHub本体のUIを自動操作した結果ではない。
+- アプリ内ブラウザの1280px幅（明/暗）と390px幅で確認。画像5件の読込成功、ページ全体の横はみ出し0、目次リンクの参照先欠損0。390pxでは縦型の図に切り替わる。
+- READMEのローカルリンク・画像参照11件の実在を確認。
+- `npm run test:cli:e2e` は13件成功、skip/failともに0。配布物の別場所へのオフラインインストールも含む。
+- `npm run test:e2e:package` はVSIXの許可リストと作成に成功。今回の図版4ファイル（SVG原本2件、PNG表示用2件）を許可リストへ明示した。
+- 最初のSVG参照はVSIX作成時に `SVGs are restricted in README.md` で失敗した。SVGを原本として保持し、READMEの表示参照をPNGへ変更して成功した。製品機能のREDとして数えない。
+- Playwright CLIは既定キャッシュの書込制限、続いてローカルChromeのSIGABRTで実行できなかった。ブラウザ表示の検証はアプリ内ブラウザに切り替えた。ローカルVS Codeは起動していない。
+
+## Artwork export
+
+編集用SVGから表示用PNGを2倍の幅で書き出す。日本語を表示できるシステムフォントを用意する。PNGは書き出した結果をリポジトリに含めるため、閲覧時にフォントや変換ツールは不要。以下は図版の編集作業用であり、製品の実行時依存には追加していない。
+
+```bash
+npx --yes --package @resvg/resvg-js-cli@2.6.2-beta.1 resvg-js-cli --fit-width 2400 --language ja docs/assets/resumeflow-hero.svg docs/assets/resumeflow-hero.png
+npx --yes --package @resvg/resvg-js-cli@2.6.2-beta.1 resvg-js-cli --fit-width 1280 --language ja docs/assets/resumeflow-flow-mobile.svg docs/assets/resumeflow-flow-mobile.png
+```
+
+描画ツール: [resvg-js-cli](https://github.com/Zhengqbbb/resvg-js-cli)。プレビュー用CSS: [github-markdown-css](https://github.com/sindresorhus/github-markdown-css)。プレビュー環境と画像出力ツールは製品パッケージに含めない。
