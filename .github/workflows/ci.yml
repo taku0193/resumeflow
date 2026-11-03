@@ -13,6 +13,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run verify
+      - run: npm run test:coverage
   integration:
     runs-on: ubuntu-latest
     steps:
