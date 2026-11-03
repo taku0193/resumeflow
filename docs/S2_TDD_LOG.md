@@ -36,3 +36,12 @@
 - REFACTOR: 読込と書込で同じ検証を再利用。`npm run verify` の型チェック・全単体62件・ビルドが成功。
 - 証跡: `docs/tdd-evidence/s2/P1-04d-{red,green,regression}.log`。
 - 次: P1-05、破損 JSON の明確なエラーと上書き阻止。
+
+## P1-05: 破損 JSON の保存保護
+
+- RED: `npm run test:unit -- tests/checkpointStore.test.ts -t P1-05`。JSON 構文破損4件がネイティブ SyntaxError のままで `CheckpointError / INVALID_JSON` と一致せず失敗。スキーマ破損2件は既に拒否されて成功。
+- 元データ不変・書込0回の保護自体は、構文エラーの場合も既存の JSON.parse の例外伝播で成立していた。今回の RED を「上書きが起きた」とは報告しない。
+- GREEN: JSON 構文エラーを、本文を含まない日本語エラーと INVALID_JSON に変換。6件成功、load 失敗後の append でも元の文字列が完全一致し、書込 I/O は0回。
+- 検証: `npm run verify` の型チェック・全単体68件・ビルドが成功。
+- 証跡: `docs/tdd-evidence/s2/P1-05-{red,green,regression}.log`。
+- 次: 純粋な JSON 読込処理の整理後、P1-06。

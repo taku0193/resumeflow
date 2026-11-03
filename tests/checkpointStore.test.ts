@@ -138,3 +138,24 @@ test.each([
   expect(write).not.toHaveBeenCalled();
   expect(storage.contents).toBe(original);
 });
+
+test.each([
+  ['', 'INVALID_JSON'],
+  ['  ', 'INVALID_JSON'],
+  ['{"schemaVersion":1,"checkpoints":[', 'INVALID_JSON'],
+  ['private-marker is not JSON', 'INVALID_JSON'],
+  ['{"schemaVersion":2,"checkpoints":[]}', 'INVALID_SCHEMA'],
+  ['null', 'INVALID_SCHEMA'],
+])('P1-05: preserves corrupted data after load and append fail (%j)', async (original, code) => {
+  const storage = new MemoryStorage(original);
+  const write = vi.spyOn(storage, 'writeAtomic');
+  const store = new CheckpointStore(storage);
+  const loadError = await store.load().catch(error => error);
+  const appendError = await store.append(nextCheckpoint).catch(error => error);
+
+  expect(write).not.toHaveBeenCalled();
+  expect(storage.contents).toBe(original);
+  expect(loadError).toMatchObject({ name: 'CheckpointError', code });
+  expect(appendError).toMatchObject({ name: 'CheckpointError', code });
+  expect(loadError.message).not.toContain('private-marker');
+});
