@@ -1,0 +1,42 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliArguments.test.ts -t C11-02
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliArguments.test.ts (13 tests | 1 failed | 12 skipped) 10ms
+   × C11-02: accepts an explicit delete approval only for delete with a full UUID 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliArguments.test.ts > C11-02: accepts an explicit delete approval only for delete with a full UUID
+AssertionError: expected [Function] to not throw an error but 'CliError: 引数を確認してください。help で使い方を表示できま…' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"CliError: 引数を確認してください。help で使い方を表示できます。"
+
+ ❯ tests/cliArguments.test.ts:30:64
+     28| test('C11-02: accepts an explicit delete approval only for delete with…
+     29|   const id = 'a9b2c3d4-1111-4222-8333-123456789abc';
+     30|   expect(() => parseCliArguments(['delete', id, '--yes'])).not.toThrow…
+       |                                                                ^
+     31|   expect(parseCliArguments(['delete', id, '--yes'])).toMatchObject({ c…
+     32|   expect(parseCliArguments(['delete', id]).yes).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  14:20:25
+   Duration  577ms (transform 50%, import 24%, tests 18%, worker 8%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

@@ -25,3 +25,11 @@ test('C10-04: parses read commands with exact UUIDs and context default Markdown
   expect(() => parseCliArguments(['context', 'bad-id'])).toThrow();
   expect(() => parseCliArguments(['list', '--allow-git'])).toThrow();
 });
+test('C11-02: accepts an explicit delete approval only for delete with a full UUID', () => {
+  const id = 'a9b2c3d4-1111-4222-8333-123456789abc';
+  expect(() => parseCliArguments(['delete', id, '--yes'])).not.toThrow();
+  expect(parseCliArguments(['delete', id, '--yes'])).toMatchObject({ command: 'delete', id, yes: true });
+  expect(parseCliArguments(['delete', id]).yes).toBe(false);
+  expect(() => parseCliArguments(['save', '--yes'])).toThrow();
+  expect(() => parseCliArguments(['delete', 'bad-id', '--yes'])).toThrow();
+});
