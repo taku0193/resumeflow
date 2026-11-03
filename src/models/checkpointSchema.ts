@@ -1,4 +1,4 @@
-import type { CheckpointCollection } from './checkpoint';
+import type { Checkpoint, CheckpointCollection } from './checkpoint';
 import { CheckpointError } from './checkpointError';
 
 function requireSchema(condition: boolean, field: string): asserts condition {
@@ -21,7 +21,7 @@ function nullableString(value: unknown, field: string): void {
   requireSchema(value === null || typeof value === 'string', field);
 }
 
-function checkpointStructure(value: unknown, field: string): void {
+function checkpointStructure(value: unknown, field: string): asserts value is Checkpoint {
   const checkpoint = record(value, [
     'id', 'schemaVersion', 'createdAt', 'title', 'workspaceUri', 'workspaceName',
     'note', 'nextAction', 'openFiles', 'activeFileUri', 'cursor', 'unsavedFileUris', 'git',
@@ -52,9 +52,52 @@ function checkpointStructure(value: unknown, field: string): void {
   });
 }
 
+function isFileUri(value: string): boolean {
+  try {
+    const uri = new URL(value);
+    return value.startsWith('file://') && uri.protocol === 'file:'
+      && uri.pathname.startsWith('/') && uri.search === '' && uri.hash === '';
+  } catch {
+    return false;
+  }
+}
+
+function isUtcTimestamp(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|\+00:00)$/.test(value)) return false;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 19) === value.slice(0, 19);
+}
+
+function checkpointValues(checkpoint: Checkpoint, field: string): void {
+  requireSchema(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(checkpoint.id), `${field}.id`);
+  requireSchema(isUtcTimestamp(checkpoint.createdAt), `${field}.createdAt`);
+  requireSchema(isFileUri(checkpoint.workspaceUri), `${field}.workspaceUri`);
+  requireSchema(checkpoint.openFiles.every(isFileUri), `${field}.openFiles`);
+  requireSchema(checkpoint.unsavedFileUris.every(isFileUri), `${field}.unsavedFileUris`);
+  requireSchema(new Set(checkpoint.openFiles).size === checkpoint.openFiles.length, `${field}.openFiles`);
+  if (checkpoint.activeFileUri !== null) {
+    requireSchema(checkpoint.openFiles.includes(checkpoint.activeFileUri), `${field}.activeFileUri`);
+  }
+  if (checkpoint.cursor !== null) {
+    for (const coordinate of [checkpoint.cursor.line, checkpoint.cursor.character]) {
+      requireSchema(Number.isSafeInteger(coordinate) && coordinate >= 0, `${field}.cursor`);
+    }
+  }
+  if (checkpoint.git.repoRootUri !== null) {
+    requireSchema(isFileUri(checkpoint.git.repoRootUri), `${field}.git.repoRootUri`);
+  }
+}
+
 export function assertCheckpointCollection(value: unknown): asserts value is CheckpointCollection {
   const collection = record(value, ['schemaVersion', 'checkpoints'], 'data');
   requireSchema(collection.schemaVersion === 1, 'schemaVersion');
   requireSchema(Array.isArray(collection.checkpoints), 'checkpoints');
-  collection.checkpoints.forEach((checkpoint, index) => checkpointStructure(checkpoint, `checkpoints[${index}]`));
+  const ids = new Set<string>();
+  collection.checkpoints.forEach((checkpoint, index) => {
+    const field = `checkpoints[${index}]`;
+    checkpointStructure(checkpoint, field);
+    checkpointValues(checkpoint, field);
+    requireSchema(!ids.has(checkpoint.id), `${field}.id`);
+    ids.add(checkpoint.id);
+  });
 }

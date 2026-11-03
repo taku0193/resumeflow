@@ -58,7 +58,7 @@ test.each([
   ['missing fields', {}],
   ['checkpoint schema', { ...validCheckpoint, schemaVersion: 2 }],
   ...['id', 'createdAt', 'title', 'workspaceUri', 'workspaceName', 'note', 'nextAction']
-    .map(field => [`non-string ${field}`, { ...validCheckpoint, [field]: 17 }]),
+    .map((field): [string, unknown] => [`non-string ${field}`, { ...validCheckpoint, [field]: 17 }]),
   ['non-array openFiles', { ...validCheckpoint, openFiles: '' }],
   ['non-string openFiles entry', { ...validCheckpoint, openFiles: [4] }],
   ['non-array unsavedFileUris', { ...validCheckpoint, unsavedFileUris: null }],
@@ -69,7 +69,7 @@ test.each([
   ['missing Git fields', { ...validCheckpoint, git: {} }],
   ['non-boolean Git availability', { ...validCheckpoint, git: { ...validCheckpoint.git, available: 'true' } }],
   ...['repoRootUri', 'branch', 'headCommit', 'error']
-    .map(field => [`non-string Git ${field}`, { ...validCheckpoint, git: { ...validCheckpoint.git, [field]: 3 } }]),
+    .map((field): [string, unknown] => [`non-string Git ${field}`, { ...validCheckpoint, git: { ...validCheckpoint.git, [field]: 3 } }]),
   ['non-array Git changes', { ...validCheckpoint, git: { ...validCheckpoint.git, changes: {} } }],
   ['non-string Git change path', { ...validCheckpoint, git: { ...validCheckpoint.git, changes: [{ path: 8, status: ' M' }] } }],
   ['non-string Git change status', { ...validCheckpoint, git: { ...validCheckpoint.git, changes: [{ path: 'a.ts', status: null }] } }],
@@ -80,4 +80,46 @@ test.each([
   await expect(new CheckpointStore(storage).load()).rejects.toMatchObject({
     name: 'CheckpointError', code: 'INVALID_SCHEMA',
   });
+});
+
+test.each([
+  ['UUID', { ...validCheckpoint, id: 'not-a-uuid' }],
+  ['non-ISO date', { ...validCheckpoint, createdAt: '2026-11-03' }],
+  ['invalid calendar date', { ...validCheckpoint, createdAt: '2026-02-30T00:00:00.000Z' }],
+  ['non-UTC timestamp', { ...validCheckpoint, createdAt: '2026-11-03T09:00:00+09:00' }],
+  ['malformed URI', { ...validCheckpoint, workspaceUri: 'not-a-uri' }],
+  ['non-file workspace', { ...validCheckpoint, workspaceUri: 'https://example.com/project' }],
+  ['non-file tab', { ...validCheckpoint, openFiles: ['untitled:buffer'] }],
+  ['non-file dirty URI', { ...validCheckpoint, unsavedFileUris: ['untitled:buffer'] }],
+  ['non-file Git root', { ...validCheckpoint, git: { ...validCheckpoint.git, repoRootUri: 'https://example.com/project' } }],
+  ['file URI query', { ...validCheckpoint, workspaceUri: 'file:///projects/my-app?mode=unsafe' }],
+  ['file URI fragment', { ...validCheckpoint, workspaceUri: 'file:///projects/my-app#fragment' }],
+  ['negative line', { ...validCheckpoint, cursor: { line: -1, character: 0 } }],
+  ['fractional character', { ...validCheckpoint, cursor: { line: 0, character: 0.5 } }],
+  ['unsafe integer', { ...validCheckpoint, cursor: { line: Number.MAX_SAFE_INTEGER + 1, character: 0 } }],
+  ['active URI outside open files', { ...validCheckpoint, activeFileUri: 'file:///projects/my-app/other.ts' }],
+  ['duplicate open tabs', { ...validCheckpoint, openFiles: [...validCheckpoint.openFiles, ...validCheckpoint.openFiles] }],
+])('P1-04c: rejects invalid field values (%s)', async (_description, checkpoint) => {
+  const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1, checkpoints: [checkpoint] }));
+  await expect(new CheckpointStore(storage).load()).rejects.toMatchObject({ code: 'INVALID_SCHEMA' });
+});
+
+test('P1-04c: rejects duplicate checkpoint IDs', async () => {
+  const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1, checkpoints: [validCheckpoint, validCheckpoint] }));
+  await expect(new CheckpointStore(storage).load()).rejects.toMatchObject({ code: 'INVALID_SCHEMA' });
+});
+
+test.each([
+  ['Windows', 'file:///C:/projects/my%20app'],
+  ['macOS', 'file:///Users/example/%E9%96%8B%E7%99%BA'],
+  ['Linux', 'file:///home/example/project'],
+  ['UNC', 'file://server/share/project'],
+])('P1-04c: preserves valid nullable metadata and %s file URIs', async (_os, workspaceUri) => {
+  const checkpoint = checkpointFixture({
+    workspaceUri, createdAt: '2026-11-03T00:00:00Z',
+    openFiles: [], activeFileUri: null, cursor: null, unsavedFileUris: [],
+    git: { available: false, repoRootUri: null, branch: null, headCommit: null, changes: [], error: 'NOT_A_REPOSITORY' },
+  });
+  const expected = { schemaVersion: 1, checkpoints: [checkpoint] };
+  await expect(new CheckpointStore(new MemoryStorage(JSON.stringify(expected))).load()).resolves.toEqual(expected);
 });

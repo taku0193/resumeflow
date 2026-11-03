@@ -17,6 +17,14 @@
 
 - RED: `npm run test:unit -- tests/checkpointStore.test.ts -t P1-04b`。必須項目欠落、メモや URI 配列の型、Git・カーソル内部の型、未知の本文・diff 項目など28件が resolve して失敗。
 - GREEN: 同じコマンドで28件成功。
-- REFACTOR: 文字列配列・nullable 文字列と、必須項目の判定を共通化して重複を抑制。`npm run verify` で型チェック・全単体38件・ビルドが成功。
+- REFACTOR: 文字列配列・nullable 文字列と、必須項目の判定を共通化して重複を抑制。初回の `npm run verify` はテストデータ生成の `.map` が可変長配列と推論されたため型チェックで失敗。単体28件の GREEN と、型チェック失敗を混同して成功と記載した点を訂正する。戻り値を2要素タプルとして明示し、後続サイクルで再検証する。
 - 証跡: `docs/tdd-evidence/s2/P1-04b-{red,green,regression}.log`。
 - 次: UUID・日時・URI・カーソル値・ID の重複など、型だけでは判定できないデータ契約。
+
+## P1-04c: フィールドの値と参照関係
+
+- RED: `npm run test:unit -- tests/checkpointStore.test.ts -t P1-04c`。不正な UUID・日時・URI・カーソル値、アクティブ URI の不一致、重複したタブ / ID の17件が resolve して失敗。既存の正しい nullable / OS 別 URI の4件は成功。
+- GREEN: 同じコマンドで21件成功。
+- REFACTOR: 構造の検証と値の検証を分け、URI・UTC 日時の判定を純粋関数化。P1-04b のテストデータのタプル型も修正し、`npm run verify` が型チェック・全単体59件・ビルドで成功。
+- 証跡: `docs/tdd-evidence/s2/P1-04c-{red,green,regression}.log`。P1-04b の初回型エラーのログは上書きせず保持。
+- 次: 書込直前の検証。
