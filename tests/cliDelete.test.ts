@@ -3,6 +3,8 @@ import { CliCheckpointStore } from '../src/services/cliCheckpointStore';
 import { cliCheckpointFixture as fixture } from '../src/test/fixtures/cliCheckpointFixture';
 import { checkpointFixture } from '../src/test/fixtures/checkpointFixture';
 import { MemoryStorage } from './memoryStorage';
+import { runCli } from '../src/cli/run';
+import { cliContextFixture } from './cliContextFixture';
 test('C11-01: removes only the selected project record and preserves every other record', async () => {
   const first = fixture();
   const second = fixture({ id: 'b9b2c3d4-1111-4222-8333-123456789abc' });
@@ -20,4 +22,17 @@ test('C11-01: deletion preserves legacy data rather than migrating it', async ()
   const storage = new MemoryStorage(original);
   await expect(new CliCheckpointStore(storage).remove(record.id, record.workspaceUri)).rejects.toMatchObject({ code: 'LEGACY_READ_ONLY' });
   expect(storage.contents).toBe(original);
+});
+test.each(['unapproved', 'cancel', 'yes'] as const)('C11-03: deletion decision %s controls persistence', async decision => {
+  const context = cliContextFixture();
+  const record = fixture({ workspaceUri: context.project.uri });
+  await context.store.append(record);
+  context.isInteractive = decision === 'cancel';
+  const result = await runCli(['delete', record.id, '--format', 'json', ...(decision === 'yes' ? ['--yes'] : [])], async () => context);
+  expect(result.exitCode).toBe(decision === 'unapproved' ? 2 : 0);
+  expect((await context.store.load()).checkpoints).toEqual(decision === 'yes' ? [] : [record]);
+  if (decision === 'unapproved') expect(JSON.parse(result.stderr).error.code).toBe('CONFIRMATION_REQUIRED');
+  else expect(JSON.parse(result.stdout).data.deleted).toBe(decision === 'yes');
+  expect(context.confirm).toHaveBeenCalledTimes(decision === 'cancel' ? 1 : 0);
+  expect(context.gitRunner.run).not.toHaveBeenCalled();
 });

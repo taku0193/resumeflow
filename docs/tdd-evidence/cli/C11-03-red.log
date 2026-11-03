@@ -1,0 +1,113 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliDelete.test.ts -t C11-03
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliDelete.test.ts (5 tests | 3 failed | 2 skipped) 15ms
+   × C11-03: deletion decision unapproved controls persistence 10ms
+   × C11-03: deletion decision cancel controls persistence 1ms
+   × C11-03: deletion decision yes controls persistence 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliDelete.test.ts > C11-03: deletion decision unapproved controls persistence
+AssertionError: expected +0 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ tests/cliDelete.test.ts:32:27
+     30|   context.isInteractive = decision === 'cancel';
+     31|   const result = await runCli(['delete', record.id, '--format', 'json'…
+     32|   expect(result.exitCode).toBe(decision === 'unapproved' ? 2 : 0);
+       |                           ^
+     33|   expect((await context.store.load()).checkpoints).toEqual(decision ==…
+     34|   if (decision === 'unapproved') expect(JSON.parse(result.stderr).erro…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/cliDelete.test.ts > C11-03: deletion decision cancel controls persistence
+AssertionError: expected undefined to be false // Object.is equality
+
+- Expected:
+false
+
++ Received:
+undefined
+
+ ❯ tests/cliDelete.test.ts:35:55
+     33|   expect((await context.store.load()).checkpoints).toEqual(decision ==…
+     34|   if (decision === 'unapproved') expect(JSON.parse(result.stderr).erro…
+     35|   else expect(JSON.parse(result.stdout).data.deleted).toBe(decision ==…
+       |                                                       ^
+     36|   expect(context.confirm).toHaveBeenCalledTimes(decision === 'cancel' …
+     37|   expect(context.gitRunner.run).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/cliDelete.test.ts > C11-03: deletion decision yes controls persistence
+AssertionError: expected [ { …(14) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "activeFileUri": null,
++     "createdAt": "2026-11-03T00:00:00.000Z",
++     "cursor": null,
++     "editorCapture": "not-connected",
++     "git": {
++       "available": true,
++       "branch": "feature/api",
++       "changes": [
++         {
++           "originalPath": "old name.ts",
++           "path": "new name.ts",
++           "status": "R ",
++         },
++       ],
++       "error": null,
++       "headCommit": "1234567890abcdef1234567890abcdef12345678",
++       "repoRootUri": "file:///projects/my-app",
++     },
++     "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++     "nextAction": "テストの期待値を確認する",
++     "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++     "openFiles": [],
++     "schemaVersion": 2,
++     "title": "my-app — 2026-11-03 09:00",
++     "unsavedFileUris": [],
++     "workspaceName": "my-app",
++     "workspaceUri": "file:///synthetic/project",
++   },
++ ]
+
+ ❯ tests/cliDelete.test.ts:33:52
+     31|   const result = await runCli(['delete', record.id, '--format', 'json'…
+     32|   expect(result.exitCode).toBe(decision === 'unapproved' ? 2 : 0);
+     33|   expect((await context.store.load()).checkpoints).toEqual(decision ==…
+       |                                                    ^
+     34|   if (decision === 'unapproved') expect(JSON.parse(result.stderr).erro…
+     35|   else expect(JSON.parse(result.stdout).data.deleted).toBe(decision ==…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 2 skipped (5)
+   Start at  14:20:33
+   Duration  497ms (transform 54%, import 23%, tests 17%, worker 5%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

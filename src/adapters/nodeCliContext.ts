@@ -10,6 +10,7 @@ import { NodeCheckpointStorage } from './nodeCheckpointStorage';
 import { NodeGitRunner } from './nodeGitRunner';
 import { CliCheckpointStore } from '../services/cliCheckpointStore';
 import { defaultDataDirectory } from '../services/cliPaths';
+import { createInterface } from 'node:readline/promises';
 export async function createNodeCliContext(options: CliOptions): Promise<CliContext> {
   let path: string;
   try {
@@ -22,5 +23,11 @@ export async function createNodeCliContext(options: CliOptions): Promise<CliCont
     project: { path, uri: pathToFileURL(path).toString(), name: basename(path) || path },
     store: new CliCheckpointStore(storage), withLock: action => storage.withLock(action),
     gitRunner: new NodeGitRunner(), clock: () => new Date(), idGenerator: randomUUID,
+    isInteractive: Boolean(process.stdin.isTTY),
+    confirm: async question => {
+      const readline = createInterface({ input: process.stdin, output: process.stderr });
+      try { return /^(?:y|yes|はい)$/i.test((await readline.question(question)).trim()); }
+      finally { readline.close(); }
+    },
   };
 }
