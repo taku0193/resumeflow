@@ -57,6 +57,12 @@ test('P1-08b: special tabs have no captured URI and are counted for a later warn
   expect(result.warnings.excludedTabCount).toBe(1);
 });
 
+test.each(['?view=other', '#L10'])('P1-08d: excludes file URI decorations rejected by the storage schema: %s', suffix => {
+  const result = captureEditors(workspaceUri, editorSnapshot({ tabs: [textTab(firstUri + suffix)] }));
+  expect(result.snapshot.openFiles).toEqual([]);
+  expect(result.warnings.excludedTabCount).toBe(1);
+});
+
 test.each([
   ['a diff or custom tab, even if the same file is open as text elsewhere', null, firstUri],
   ['an editor that does not match the active text tab', secondUri, firstUri],

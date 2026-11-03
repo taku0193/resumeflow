@@ -1,0 +1,25 @@
+
+> resumeflow@0.0.1 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+      Coverage enabled with v8
+
+
+ Test Files  4 passed (4)
+      Tests  93 passed (93)
+   Start at  11:39:59
+   Duration  716ms (import 29%, worker 29%, tests 23%, transform 20%)
+
+ % Coverage report from v8
+No files with missing coverage.
+6 files fully covered.
+2 empty files skipped.
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 91/91 )
+Branches     : 100% ( 55/55 )
+Functions    : 100% ( 23/23 )
+Lines        : 100% ( 85/85 )
+================================================================================

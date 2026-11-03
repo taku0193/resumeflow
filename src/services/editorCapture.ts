@@ -1,8 +1,9 @@
 import type { EditorCapture, EditorSnapshot } from '../models/editorSnapshot';
+import { isFileUri } from '../models/fileUri';
 
 export function captureEditors(workspaceUri: string, editors: EditorSnapshot): EditorCapture {
   const eligibleTabs = editors.tabs.flatMap(tab =>
-    tab.kind === 'text' && tab.scheme === 'file' && tab.workspaceUri === workspaceUri ? [tab] : []);
+    tab.kind === 'text' && tab.scheme === 'file' && tab.workspaceUri === workspaceUri && isFileUri(tab.uri) ? [tab] : []);
   const openFiles = [...new Set(eligibleTabs.map(tab => tab.uri))];
   const candidate = editors.activeEditor;
   const active = candidate && candidate.uri === editors.activeTabUri && openFiles.includes(candidate.uri)
