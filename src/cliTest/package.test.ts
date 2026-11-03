@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { readFile, stat } from 'node:fs/promises';
+import { readFile, stat, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { test } from 'node:test';
 import { cliFixture } from './fixture';
@@ -30,5 +30,9 @@ test('CLI-E2E-package: a packed installation runs outside the checkout without V
     await assert.rejects(stat(join(installation, 'node_modules/vitest')), { code: 'ENOENT' });
     await assert.rejects(stat(join(installation, 'node_modules/vscode')), { code: 'ENOENT' });
     assert.ok((await readFile(join(application, 'skills/resumeflow-checkpoint/SKILL.md'), 'utf8')).includes('resumeflow-checkpoint'));
+    const request = join(fixture.root, 'resume.json');
+    await writeFile(request, JSON.stringify({ action: 'resume', project: fixture.project, dataDirectory: fixture.data, id: JSON.parse(saved.stdout).data.id }));
+    const resumed = spawnSync(process.execPath, [join(application, 'skills/resumeflow-checkpoint/scripts/bridge.mjs'), request], { cwd: fixture.other, encoding: 'utf8' });
+    assert.equal(resumed.status, 0, resumed.stderr); assert.ok(resumed.stdout.includes('未取得'));
   } finally { await fixture.dispose(); }
 });
