@@ -1,0 +1,37 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/nodeGitRunner.test.ts -t C8-N1
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/nodeGitRunner.test.ts (1 test | 1 failed) 4ms
+   × C8-N1: the Node runner uses shell-free bounded Git with fsmonitor and optional locks disabled 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nodeGitRunner.test.ts > C8-N1: the Node runner uses shell-free bounded Git with fsmonitor and optional locks disabled
+AssertionError: expected '' to be 'main\n' // Object.is equality
+
+- Expected
++ Received
+
+- main
+-
+
+ ❯ tests/nodeGitRunner.test.ts:17:61
+     15|   complete(null);
+     16|   const args = ['symbolic-ref', '--quiet', '--short', 'HEAD'];
+     17|   expect(await new NodeGitRunner().run('/synthetic', args)).toBe('main…
+       |                                                             ^
+     18|   expect(execFile).toHaveBeenCalledWith('git', ['--no-optional-locks',…
+     19|     cwd: '/synthetic', shell: false, timeout: 2000, maxBuffer: 1024 * …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  13:33:05
+   Duration  139ms (transform 54%, import 26%, tests 12%, worker 8%)
+

@@ -1,0 +1,130 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/nodeGitRunner.test.ts -t C8-N2
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/nodeGitRunner.test.ts (6 tests | 5 failed | 1 skipped) 8ms
+   × C8-N2: normalizes process/encoding failures without quoting stderr 5ms
+   × C8-N2: normalizes process/encoding failures without quoting stderr 1ms
+   × C8-N2: normalizes process/encoding failures without quoting stderr 0ms
+   × C8-N2: normalizes process/encoding failures without quoting stderr 0ms
+   × C8-N2: normalizes process/encoding failures without quoting stderr 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/nodeGitRunner.test.ts > C8-N2: normalizes process/encoding failures without quoting stderr
+AssertionError: expected { code: 'ENOENT' } to match object { code: 'GIT_NOT_INSTALLED' }
+
+- Expected
++ Received
+
+  {
+-   "code": "GIT_NOT_INSTALLED",
++   "code": "ENOENT",
+  }
+
+ ❯ tests/nodeGitRunner.test.ts:31:18
+     29|   complete(error, bytes);
+     30|   const caught = await new NodeGitRunner().run('/synthetic', ['rev-par…
+     31|   expect(caught).toMatchObject({ code });
+       |                  ^
+     32|   expect(String(caught)).not.toContain('SENSITIVE_NATIVE_STDERR');
+     33| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/nodeGitRunner.test.ts > C8-N2: normalizes process/encoding failures without quoting stderr
+AssertionError: expected { …(2) } to match object { code: 'GIT_OUTPUT_LIMIT' }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "code": "GIT_OUTPUT_LIMIT",
++   "code": "ERR_CHILD_PROCESS_STDIO_MAXBUFFER",
+  }
+
+ ❯ tests/nodeGitRunner.test.ts:31:18
+     29|   complete(error, bytes);
+     30|   const caught = await new NodeGitRunner().run('/synthetic', ['rev-par…
+     31|   expect(caught).toMatchObject({ code });
+       |                  ^
+     32|   expect(String(caught)).not.toContain('SENSITIVE_NATIVE_STDERR');
+     33| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/nodeGitRunner.test.ts > C8-N2: normalizes process/encoding failures without quoting stderr
+AssertionError: expected { killed: true } to match object { code: 'GIT_TIMEOUT' }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "code": "GIT_TIMEOUT",
++   "killed": true,
+  }
+
+ ❯ tests/nodeGitRunner.test.ts:31:18
+     29|   complete(error, bytes);
+     30|   const caught = await new NodeGitRunner().run('/synthetic', ['rev-par…
+     31|   expect(caught).toMatchObject({ code });
+       |                  ^
+     32|   expect(String(caught)).not.toContain('SENSITIVE_NATIVE_STDERR');
+     33| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/nodeGitRunner.test.ts > C8-N2: normalizes process/encoding failures without quoting stderr
+AssertionError: expected { code: 128 } to match object { code: 'GIT_FAILED' }
+
+- Expected
++ Received
+
+  {
+-   "code": "GIT_FAILED",
++   "code": 128,
+  }
+
+ ❯ tests/nodeGitRunner.test.ts:31:18
+     29|   complete(error, bytes);
+     30|   const caught = await new NodeGitRunner().run('/synthetic', ['rev-par…
+     31|   expect(caught).toMatchObject({ code });
+       |                  ^
+     32|   expect(String(caught)).not.toContain('SENSITIVE_NATIVE_STDERR');
+     33| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/nodeGitRunner.test.ts > C8-N2: normalizes process/encoding failures without quoting stderr
+AssertionError: expected TypeError: The encoded data was not valid… { code: '…' } to match object { code: 'INVALID_GIT_OUTPUT' }
+
+- Expected
++ Received
+
+- {
+-   "code": "INVALID_GIT_OUTPUT",
++ TypeError {
++   "code": "ERR_ENCODING_INVALID_ENCODED_DATA",
+  }
+
+ ❯ tests/nodeGitRunner.test.ts:31:18
+     29|   complete(error, bytes);
+     30|   const caught = await new NodeGitRunner().run('/synthetic', ['rev-par…
+     31|   expect(caught).toMatchObject({ code });
+       |                  ^
+     32|   expect(String(caught)).not.toContain('SENSITIVE_NATIVE_STDERR');
+     33| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 1 skipped (6)
+   Start at  13:33:08
+   Duration  167ms (transform 46%, import 26%, tests 21%, worker 6%)
+
