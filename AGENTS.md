@@ -17,7 +17,7 @@
 
 ## Read first
 
-- `ROADMAP.md` defines the current Issue order. `SPEC.md` and `TEST_PLAN.md` describe the implemented S0–S3 baseline and original VS Code flow; Issue #5 must define the revised CLI contract before CLI implementation.
+- `ROADMAP.md` defines the Issue order. `CLI_SPEC.md` defines the CLI contract (Issue #5). `SPEC.md` and `TEST_PLAN.md` retain the S0–S3 baseline and original optional VS Code flow.
 - Prioritize **offline local use through CLI or Codex without requiring an editor**. Preserve the shared core and keep editor adapters optional. The choice of additional editors is on hold. Do not require an AI API, server, cloud sync, or telemetry for the core product.
 - Work only on the agreed Issue / phase / test IDs. Do not silently implement future features or treat roadmap commands as already implemented.
 - If a requirement is ambiguous, prefer the smallest **safe and testable** behavior and document the assumption.
@@ -56,7 +56,7 @@ For **each individual observable behavior**:
 - Do not collect data from untrusted workspaces via Git execution. Validate this path in tests.
 - Use fixed Git argument arrays (no shell interpolation) and never treat saved URI/path strings as commands.
 - Do not overwrite/delete user source files on resume. Do not overwrite corrupted checkpoint data on load failure.
-- Keep checkpoint records in extension-local storage, not in the repo.
+- Keep checkpoint records in application-local storage, not automatically in the repo. Test with dedicated explicit data directories only. Editor integrations retain extension-local storage.
 
 ## Quality and commands
 
