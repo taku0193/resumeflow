@@ -40,7 +40,7 @@ export async function runCli(args: readonly string[], factory: (options: CliOpti
       const data = options.command === 'list' ? listProjectCheckpoints(collection, context.project.uri)
         : findProjectCheckpoint(collection, options.id!, context.project.uri);
       const text = Array.isArray(data) ? data.length === 0 ? 'チェックポイントはありません。\n'
-        : data.map(entry => `${entry.id}\t${entry.createdAt}\t${displayText(entry.workspaceName)}`).join('\n') + '\n'
+        : data.map(entry => `${entry.id}\t${entry.createdAt}\t${displayText(entry.workspaceName).replace(/\n/g, '\\n').replace(/\t/g, '\\t')}`).join('\n') + '\n'
         : renderContext(data);
       return { exitCode: 0, stderr: '', stdout: options.format === 'json' ? `${JSON.stringify({ ok: true, data })}\n` : text };
     }

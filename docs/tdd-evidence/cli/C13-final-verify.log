@@ -1,0 +1,75 @@
+
+> resumeflow@0.0.1 verify
+> npm run typecheck && npm run test:unit && npm run test:node:io && npm run build
+
+
+> resumeflow@0.0.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.unit.json
+
+
+> resumeflow@0.0.1 test:unit
+> node scripts/run-vitest.mjs
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ✓ tests/createCliCheckpoint.test.ts (2 tests) 9ms
+ ✓ tests/gitCapture.test.ts (12 tests) 18ms
+ ✓ tests/checkpointEncoding.test.ts (3 tests) 14ms
+ ✓ tests/cliSchema.test.ts (10 tests) 16ms
+ ✓ tests/checkpointStore.test.ts (72 tests) 38ms
+ ✓ tests/cliRun.test.ts (7 tests) 30ms
+ ✓ tests/cliDelete.test.ts (6 tests) 31ms
+ ✓ tests/cliArguments.test.ts (13 tests) 19ms
+ ✓ tests/gitStatusParser.test.ts (15 tests) 13ms
+ ✓ tests/editorCapture.test.ts (17 tests) 25ms
+ ✓ tests/contextMarkdown.test.ts (2 tests) 8ms
+ ✓ tests/checkpointQueries.test.ts (2 tests) 9ms
+ ✓ tests/cliPaths.test.ts (3 tests) 7ms
+ ✓ tests/nodeGitRunner.test.ts (9 tests) 16ms
+ ✓ tests/setup.test.ts (1 test) 3ms
+
+ Test Files  15 passed (15)
+      Tests  174 passed (174)
+   Start at  14:41:20
+   Duration  1.26s (transform 60%, import 23%, tests 11%, worker 6%)
+
+    Isolate  15 workers spawned · ~329ms startup each (spawn + environment, per file)
+             at least ~376ms faster with isolate: false — reuses workers across files instead of one per file
+
+JSON report written to /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow/.test-data/vitest-dTGvWS/result.json
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+> resumeflow@0.0.1 test:node:io
+> node scripts/run-vitest.mjs --config vitest.io.config.mts
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ✓ tests/nodeCliContext.test.ts (1 test) 8ms
+ ✓ tests/nodeCheckpointStorage.test.ts (7 tests) 32ms
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  14:41:22
+   Duration  447ms (transform 60%, import 22%, tests 13%, worker 5%)
+
+JSON report written to /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow/.test-data/vitest-QefZYj/result.json
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

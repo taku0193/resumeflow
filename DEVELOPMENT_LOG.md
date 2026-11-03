@@ -131,3 +131,11 @@ S0 / S1 では JSON を型アサーションで読み込んでいましたが、
 7つの単体 RED/GREEN、実 VS Code API のスタブからの RED/GREEN、画像タブの型に関するテスト準備失敗、取得 / 保存間の URI 規則の共通化を [S3 の記録](docs/S3_TDD_LOG.md) に残した。[最終の製品コードの CI](https://github.com/taku0193/resumeflow/actions/runs/41567531558) は型チェック・単体93件・ビルド・API統合15件・UI E2E 1件が成功した。ローカル GUI は起動していない。保存操作の画面 E2E はまだ未実装である。
 
 作業中のユーザー指示で、今後は CLI / Codex だけで使える入口を優先し、Issue → 機能別ブランチ → 細かい検証済みコミット → PR / CI で進めることになった。[親 Issue #4](https://github.com/taku0193/resumeflow/issues/4) と [仕様 Issue #5](https://github.com/taku0193/resumeflow/issues/5) に引き継ぐ。エディタ対応先の選定は保留。CLI と Codex skill は現時点では未実装。
+
+## CLI / Codex MVP（Issue #4〜13）
+
+その後、機能ごとのブランチ・小さな検証済みコミット・PRでCLI保存/一覧/詳細/再開Markdown/確認付き削除、Node保存、許可された読み取り専用Git、任意のCodex skillを実装した。既存PR #1〜3と、#15〜23はCI成功を確認してmainへマージした。最終E2E/配布のPRは #24。エディタの選定は保留のままで、ローカルGUIは起動していない。
+
+純粋単体174件、Node実I/O8件、実Git2件、CLI実プロセス13件、実TTY2件、ゲート3件を層ごとに分けた。CLI/Node I/O/GitはLinux/macOS/WindowsのCI、TTYと既存API15件/UIスモーク1件はLinuxで成功した。配布tgzを別場所へofflineでインストールし、VS Codeや開発用依存なしのCLIと同梱skillも確認した。実行時のAI API・外部サーバー・ネットワーク接続は不要。
+
+assertion RED/GREENの実出力、C9-04cの手順逸脱と補正、skill検証の準備失敗、CIのheadとジョブ結果は [CLI TDD記録](docs/CLI_TDD_LOG.md) にまとめた。古い記録を上書きせず、未実装UIを完成扱いにしていない。現在の操作方法・制約はREADME / CLI_SPECを参照。

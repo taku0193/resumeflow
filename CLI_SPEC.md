@@ -4,7 +4,7 @@
 
 ## 操作と出力
 
-ビルド後に `node dist/cli/main.js`、または `npm run cli --` に続けて以下を指定する。これは実装基準であり、実装・検証の進捗は各 Issue / ROADMAP.md に記す。
+ビルド後に `node dist/cli/main.js`、または `npm run cli --` に続けて以下を指定する。CLI MVPは実装済みで、検証結果は docs/CLI_TDD_LOG.md に記す。ローカル配布パッケージのbin名は `resumeflow`。
 
 | 操作 | 引数 | 成功時の data |
 | --- | --- | --- |

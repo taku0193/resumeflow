@@ -32,7 +32,7 @@ API 統合テストは API / サービスを直接呼んでいるため、UI E2E
 | E2E-13 | 記録0件の一覧を開き、空状態を案内して正常終了する | P2-02 | S7。未実装 |
 | E2E-14 | 未信頼ワークスペースで保存操作を行い、Git 情報なしで安全に処理される。Git 未実行自体は P1-13 の境界テストでも保証する | P1-13 | S6。未実装 |
 
-保存・再開の機能はまだ実装していないため、今回そのシナリオの成功を主張しません。未実装ケースはこの表で追跡し、`.skip` や空のテストを置いて件数を増やしません。
+VS Code UIの保存・再開はまだ実装していないため、今回そのシナリオの成功を主張しません。未実装ケースはこの表で追跡し、`.skip` や空のテストを置いて件数を増やしません。
 
 ## 実行環境と証跡
 
@@ -52,7 +52,7 @@ API 統合テストは API / サービスを直接呼んでいるため、UI E2E
 - 機能の実装では、まず小さなふるまいを TDD で固め、対応する統合・UI E2E を追加します。テスト環境整備や既存動作への保護テストは、製品機能の RED/GREEN 証跡に数えません。
 - 保存機能の完成には E2E-01〜04・11・12・14、Phase 2 の完成には E2E-05〜10・13 の成功も必要とします。
 - テストが実行できなかった場合は「未実行」、失敗した場合は「失敗」と記録します。API 統合の成功だけで UI E2E の成功を代用しません。
-- PR / push の確認では単体・統合・E2E の各ジョブを確認します。リリース前には Windows / macOS の実機確認も行い、Linux E2E だけで全 OS の確認完了としません。
+- PR / pushでは各層のジョブを確認します。CLIは3OSのCIで検証します。VS Code UIのWindows / macOS実機確認は未実施で、LinuxのUI E2Eだけで全OSのUI確認完了としません。
 
 実行コマンド:
 
@@ -64,3 +64,25 @@ xvfb-run -a npm run test:e2e
 ```
 
 参考: [ExTester 公式ドキュメント](https://redhat-developer.github.io/vscode-extension-tester/)。
+
+## CLI MVPの通し検証（Issue #13）
+
+公開されたCLIをNodeの別プロセスとして実行する。内部サービスで操作を置き換えない。saveを終了してから新しいプロセスでlist / show / contextを呼び、確認付き削除まで検証する。CLI_E2Eは既存のVS Code UI E2Eとは別の層である。
+
+| 層 | 件数と検証範囲 |
+| --- | --- |
+| 純粋単体 | 174件。偽I/O、引数、スキーマ、Git解析、取得規則、削除判断 |
+| Node I/O | 8件。専用実ファイル、破損保護、lock、旧形式、プロジェクト解決 |
+| 実Git統合 | 2件。架空repoのunborn / rename / detached / 非Git / ソースとindex不変 |
+| CLI E2E | 13件。保存、別プロセス取得、空状態、分離、非TTY未承認/承認、破損、不正UTF8、書込失敗、lock、許可Git/未導入、旧形式、skill、オフライン配布物 |
+| 実TTY | 2件。取消時の元バイト列維持、承認時の選択対象削除 |
+| テスト基盤 | 3件。0件・失敗・skip・todo・cancel・only等のゲート |
+| VS Code API / UI | 15件 / 1件。既存基盤の回帰。保存・再開UIは未実装 |
+
+CLI/Node I/O/実Git/ゲートはLinux・macOS・WindowsのCI、実TTYはLinuxのCIで実行する。実TTYスクリプトはPOSIX ptyを使うためWindowsの端末操作は未検証で、skipとして混ぜない。全OS共通のCLI E2Eでは非TTY経路を実行する。ローカルmacOSでもGUI以外を確認済み。
+
+パッケージテストはnpm packから生成したtgzを別ディレクトリにoffline / omit=dev / ignore-scriptsでインストールし、インストール先のCLIと同梱skillを実行する。VS Codeと開発用依存が不要であることと、配布物にテスト・保存データ・プロファイルが含まれないことを検査する。npm公開・グローバルインストールは行わない。
+
+各CLI/NodeスイートのTAPまたはVitest JSON要約を検査し、0件・失敗・skip/todo/cancelを拒否する。ソースのonly/skip/todoも検査する。MochaのAPI/UIはforbidOnly / forbidPending / failZeroを設定する。TDDの明示的な名前絞込では未選択ケースを除外する。
+
+[PR #24](https://github.com/taku0193/resumeflow/pull/24) の [受入CI](https://github.com/taku0193/resumeflow/actions/runs/41585586691) は全6ジョブ成功。製品機能の追加ではない通し保護テストやパッケージ検査に、架空の製品REDを付けない。詳細と実ログは [CLI TDD記録](docs/CLI_TDD_LOG.md) に残す。

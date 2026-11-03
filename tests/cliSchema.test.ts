@@ -32,3 +32,7 @@ test('C6-04: reads schema1 as legacy-unknown without changing the original repre
     git: { ...checkpoint.git, changes: checkpoint.git.changes.map(change => ({ ...change, originalPath: null })) },
   });
 });
+test('C13-01: portable UUID uniqueness follows case-insensitive lookup identity', () => {
+  const first = cliFixture();
+  expect(() => parseCliCollection(JSON.stringify({ schemaVersion: 2, checkpoints: [first, { ...first, id: first.id.toUpperCase() }] }))).toThrow();
+});

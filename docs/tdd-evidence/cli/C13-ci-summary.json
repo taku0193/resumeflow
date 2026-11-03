@@ -1,0 +1,114 @@
+{
+  "run_id": 41585586691,
+  "url": "https://github.com/taku0193/resumeflow/actions/runs/41585586691",
+  "head_sha": "71e32fc8c65f72d01f21393f3906fa22c6dc3b54",
+  "note": "Executed CI log excerpts, not full logs. The POSIX TTY step ran only on Ubuntu in this run; final workflow moves it into the dedicated Linux unit job. Windows terminal TTY is unverified.",
+  "jobs": [
+    {
+      "name": "integration",
+      "id": 125750172922,
+      "conclusion": "success",
+      "excerpts": [
+        "2026-11-03T05:44:29.6792693Z   15 passing (6s)"
+      ]
+    },
+    {
+      "name": "e2e",
+      "id": 125750173155,
+      "conclusion": "success",
+      "excerpts": [
+        "2026-11-03T05:44:23.4563772Z   1 passing (10s)"
+      ]
+    },
+    {
+      "name": "node-integration (ubuntu-latest)",
+      "id": 125750173179,
+      "conclusion": "success",
+      "excerpts": [
+        "2026-11-03T05:43:56.9539603Z # tests 3",
+        "2026-11-03T05:43:56.9540532Z # pass 3",
+        "2026-11-03T05:43:56.9540986Z # fail 0",
+        "2026-11-03T05:43:56.9541452Z # cancelled 0",
+        "2026-11-03T05:43:56.9541944Z # skipped 0",
+        "2026-11-03T05:43:56.9542415Z # todo 0",
+        "2026-11-03T05:43:58.7038123Z       Tests  8 passed (8)",
+        "2026-11-03T05:43:59.6695227Z # tests 2",
+        "2026-11-03T05:43:59.6697388Z # pass 2",
+        "2026-11-03T05:43:59.6704943Z # fail 0",
+        "2026-11-03T05:43:59.6707991Z # cancelled 0",
+        "2026-11-03T05:43:59.6708845Z # skipped 0",
+        "2026-11-03T05:43:59.6720848Z # todo 0",
+        "2026-11-03T05:44:03.9986963Z # tests 13",
+        "2026-11-03T05:44:03.9987603Z # pass 13",
+        "2026-11-03T05:44:03.9987934Z # fail 0",
+        "2026-11-03T05:44:03.9988272Z # cancelled 0",
+        "2026-11-03T05:44:03.9988616Z # skipped 0",
+        "2026-11-03T05:44:03.9988929Z # todo 0",
+        "2026-11-03T05:44:04.2428010Z TTY-E2E-cancel: PASS (real terminal, original bytes retained)",
+        "2026-11-03T05:44:04.2429558Z TTY-E2E-approve: PASS (real terminal, selected record removed)",
+        "2026-11-03T05:44:04.2437079Z TTY summary: 2 passed, 0 failed, 0 skipped"
+      ]
+    },
+    {
+      "name": "node-integration (windows-latest)",
+      "id": 125750173199,
+      "conclusion": "success",
+      "excerpts": [
+        "2026-11-03T05:44:20.4636887Z # tests 3\r",
+        "2026-11-03T05:44:20.4637560Z # pass 3\r",
+        "2026-11-03T05:44:20.4637897Z # fail 0\r",
+        "2026-11-03T05:44:20.4638227Z # cancelled 0\r",
+        "2026-11-03T05:44:20.4638576Z # skipped 0\r",
+        "2026-11-03T05:44:20.4638907Z # todo 0\r",
+        "2026-11-03T05:44:22.2618549Z       Tests  8 passed (8)\r",
+        "2026-11-03T05:44:24.8706215Z # tests 2\r",
+        "2026-11-03T05:44:24.8706827Z # pass 2\r",
+        "2026-11-03T05:44:24.8707037Z # fail 0\r",
+        "2026-11-03T05:44:24.8707256Z # cancelled 0\r",
+        "2026-11-03T05:44:24.8707497Z # skipped 0\r",
+        "2026-11-03T05:44:24.8707708Z # todo 0\r",
+        "2026-11-03T05:44:31.7922539Z # tests 13\r",
+        "2026-11-03T05:44:31.7924402Z # pass 13\r",
+        "2026-11-03T05:44:31.7924721Z # fail 0\r",
+        "2026-11-03T05:44:31.7925089Z # cancelled 0\r",
+        "2026-11-03T05:44:31.7925440Z # skipped 0\r",
+        "2026-11-03T05:44:31.7925770Z # todo 0\r"
+      ]
+    },
+    {
+      "name": "unit",
+      "id": 125750173205,
+      "conclusion": "success",
+      "excerpts": [
+        "2026-11-03T05:43:58.3959878Z       Tests  174 passed (174)",
+        "2026-11-03T05:43:59.4377984Z       Tests  8 passed (8)"
+      ]
+    },
+    {
+      "name": "node-integration (macos-latest)",
+      "id": 125750173284,
+      "conclusion": "success",
+      "excerpts": [
+        "2026-11-03T05:43:49.6969100Z # tests 3",
+        "2026-11-03T05:43:49.6969390Z # pass 3",
+        "2026-11-03T05:43:49.6969530Z # fail 0",
+        "2026-11-03T05:43:49.6969680Z # cancelled 0",
+        "2026-11-03T05:43:49.6969850Z # skipped 0",
+        "2026-11-03T05:43:49.6969970Z # todo 0",
+        "2026-11-03T05:43:50.3456780Z       Tests  8 passed (8)",
+        "2026-11-03T05:43:51.1588660Z # tests 2",
+        "2026-11-03T05:43:51.1588890Z # pass 2",
+        "2026-11-03T05:43:51.1589150Z # fail 0",
+        "2026-11-03T05:43:51.1589330Z # cancelled 0",
+        "2026-11-03T05:43:51.1589480Z # skipped 0",
+        "2026-11-03T05:43:51.1589620Z # todo 0",
+        "2026-11-03T05:43:52.4335100Z # tests 13",
+        "2026-11-03T05:43:52.4335400Z # pass 13",
+        "2026-11-03T05:43:52.4335510Z # fail 0",
+        "2026-11-03T05:43:52.4335630Z # cancelled 0",
+        "2026-11-03T05:43:52.4335740Z # skipped 0",
+        "2026-11-03T05:43:52.4335860Z # todo 0"
+      ]
+    }
+  ]
+}

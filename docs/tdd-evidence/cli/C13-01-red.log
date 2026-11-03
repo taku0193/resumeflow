@@ -1,0 +1,45 @@
+
+> resumeflow@0.0.1 test:unit
+> node scripts/run-vitest.mjs tests/cliSchema.test.ts -t C13-01
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliSchema.test.ts (10 tests | 1 failed | 9 skipped) 8ms
+   ↓ C6-03: schema2 retains rename metadata and explicit unavailable editor state
+   ↓ C6-03: rejects syntax without quoting saved input
+   ↓ C6-03: rejects version without quoting saved input
+   ↓ C6-03: rejects extra payload without quoting saved input
+   ↓ C6-03: rejects unknown editor state without quoting saved input
+   ↓ C6-03: rejects false editor claim without quoting saved input
+   ↓ C6-03: rejects invalid rename field without quoting saved input
+   ↓ C6-03: rejects duplicate ID without quoting saved input
+   ↓ C6-04: reads schema1 as legacy-unknown without changing the original representation
+   × C13-01: portable UUID uniqueness follows case-insensitive lookup identity 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliSchema.test.ts > C13-01: portable UUID uniqueness follows case-insensitive lookup identity
+AssertionError: expected [Function] to throw an error
+ ❯ tests/cliSchema.test.ts:37:138
+     35| test('C13-01: portable UUID uniqueness follows case-insensitive lookup…
+     36|   const first = cliFixture();
+     37|   expect(() => parseCliCollection(JSON.stringify({ schemaVersion: 2, c…
+       |                                                                                                                                          ^
+     38| });
+     39|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  14:35:21
+   Duration  224ms (transform 51%, import 25%, tests 16%, worker 8%)
+
+JSON report written to /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow/.test-data/vitest-X5nrLV/result.json
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

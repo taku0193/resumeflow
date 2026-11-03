@@ -1,0 +1,3 @@
+TTY-E2E-cancel: PASS (real terminal, original bytes retained)
+TTY-E2E-approve: PASS (real terminal, selected record removed)
+TTY summary: 2 passed, 0 failed, 0 skipped

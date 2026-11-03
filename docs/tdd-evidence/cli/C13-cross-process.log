@@ -1,0 +1,95 @@
+
+> resumeflow@0.0.1 test:cli:e2e
+> npm run build && node scripts/run-node-suite.mjs cli
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: CLI-E2E-delete: refusal preserves bytes and approval removes only the selected record
+ok 1 - CLI-E2E-delete: refusal preserves bytes and approval removes only the selected record
+  ---
+  duration_ms: 1428.567917
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-delete-corrupt: deletion cannot overwrite a damaged collection
+ok 2 - CLI-E2E-delete-corrupt: deletion cannot overwrite a damaged collection
+  ---
+  duration_ms: 379.539375
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-read: save exits, then fresh processes list/show/context with project separation
+ok 3 - CLI-E2E-read: save exits, then fresh processes list/show/context with project separation
+  ---
+  duration_ms: 1411.450125
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-empty: a read-only empty list creates no storage directory
+ok 4 - CLI-E2E-empty: a read-only empty list creates no storage directory
+  ---
+  duration_ms: 213.9925
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-git: explicit permission collects actual Git metadata; missing Git is nonfatal
+ok 5 - CLI-E2E-git: explicit permission collects actual Git metadata; missing Git is nonfatal
+  ---
+  duration_ms: 668.690834
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-destination: a blocked storage path and an occupied lock preserve data
+ok 6 - CLI-E2E-destination: a blocked storage path and an occupied lock preserve data
+  ---
+  duration_ms: 744.822583
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-legacy: old checkpoints display unknown availability and remain read-only
+ok 7 - CLI-E2E-legacy: old checkpoints display unknown availability and remain read-only
+  ---
+  duration_ms: 659.046458
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-save: a real CLI process saves Japanese metadata without any editor
+ok 8 - CLI-E2E-save: a real CLI process saves Japanese metadata without any editor
+  ---
+  duration_ms: 264.013334
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-help: help and invalid arguments need no project or storage
+ok 9 - CLI-E2E-help: help and invalid arguments need no project or storage
+  ---
+  duration_ms: 435.428542
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-corrupt: corrupted data bytes survive a real save failure
+ok 10 - CLI-E2E-corrupt: corrupted data bytes survive a real save failure
+  ---
+  duration_ms: 225.443542
+  type: 'test'
+  ...
+# Subtest: C12-01: the skill bridge preserves literal memo data and retrieves CLI context
+ok 11 - C12-01: the skill bridge preserves literal memo data and retrieves CLI context
+  ---
+  duration_ms: 1736.93375
+  type: 'test'
+  ...
+# Subtest: C12-02: a memo beginning with dashes remains literal option data
+ok 12 - C12-02: a memo beginning with dashes remains literal option data
+  ---
+  duration_ms: 288.766791
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2263.204084
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
