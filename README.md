@@ -41,6 +41,8 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 
 コード編集と単体検証は、このチャットとワークスペース内で進めます。ローカルの VS Code 起動は開発の前提にしません。GitHub では [taku0193/resumeflow](https://github.com/taku0193/resumeflow) を非公開で管理し、GitHub Actions で型チェック・単体テスト・ビルド・Xvfb 上の拡張統合テストを実行します。`main` への push と pull request が CI の実行対象です。
 
+機能・実装スライスごとに `codex/<feature>` ブランチを切り、PR 単位で変更と CI の結果を確認します。機能の変更を `main` へ直接コミットしません。テスト1件の GREEN と回帰確認、独立したリファクタリング、関連する文書更新など、小さな完了単位でこまめにコミットします。
+
 ## 開発用拡張の起動（後日、手動確認が必要な場合）
 
 1. この `resumeflow` フォルダを VS Code で開きます。
