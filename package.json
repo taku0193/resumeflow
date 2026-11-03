@@ -45,7 +45,7 @@
     "test:integration": "npm run build && vscode-test",
     "test:node:integration": "npm run build && node --test dist/nodeTest/git.test.js",
     "cli": "node dist/cli/main.js",
-    "test:cli:e2e": "npm run build && node --test --test-reporter=tap dist/cliTest/save.test.js dist/cliTest/read.test.js",
+    "test:cli:e2e": "npm run build && node --test --test-reporter=tap dist/cliTest/save.test.js dist/cliTest/read.test.js dist/cliTest/delete.test.js",
     "test:e2e": "npm run build && node scripts/run-e2e.mjs",
     "test:e2e:package": "npm run build && node scripts/package-e2e.mjs",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.unit.json",

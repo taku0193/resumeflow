@@ -22,7 +22,7 @@ export interface CliResult { exitCode: number; stdout: string; stderr: string }
 export async function runCli(args: readonly string[], factory: (options: CliOptions) => Promise<CliContext>): Promise<CliResult> {
   try {
     const options = parseCliArguments(args);
-    if (options.command === 'help') return { exitCode: 0, stderr: '', stdout: 'ResumeFlow\n  save [--note TEXT] [--next TEXT] [--allow-git]\n  list\n  show UUID\n  context UUID\n  help\n共通: --project DIR --data-dir DIR --format text|json\n' };
+    if (options.command === 'help') return { exitCode: 0, stderr: '', stdout: 'ResumeFlow\n  save [--note TEXT] [--next TEXT] [--allow-git]\n  list\n  show UUID\n  context UUID\n  delete UUID [--yes]\n  help\n共通: --project DIR --data-dir DIR --format text|json\n' };
     const context = await factory(options);
     if (options.command === 'delete') {
       const collection = await context.store.load();

@@ -1,0 +1,65 @@
+
+> resumeflow@0.0.1 test:cli:e2e
+> npm run build && node --test --test-reporter=tap dist/cliTest/save.test.js dist/cliTest/read.test.js dist/cliTest/delete.test.js
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: CLI-E2E-delete: refusal preserves bytes and approval removes only the selected record
+ok 1 - CLI-E2E-delete: refusal preserves bytes and approval removes only the selected record
+  ---
+  duration_ms: 908.074875
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-delete-corrupt: deletion cannot overwrite a damaged collection
+ok 2 - CLI-E2E-delete-corrupt: deletion cannot overwrite a damaged collection
+  ---
+  duration_ms: 233.178291
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-read: save exits, then fresh processes list/show/context with project separation
+ok 3 - CLI-E2E-read: save exits, then fresh processes list/show/context with project separation
+  ---
+  duration_ms: 906.361209
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-empty: a read-only empty list creates no storage directory
+ok 4 - CLI-E2E-empty: a read-only empty list creates no storage directory
+  ---
+  duration_ms: 119.388917
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-save: a real CLI process saves Japanese metadata without any editor
+ok 5 - CLI-E2E-save: a real CLI process saves Japanese metadata without any editor
+  ---
+  duration_ms: 122.517084
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-help: help and invalid arguments need no project or storage
+ok 6 - CLI-E2E-help: help and invalid arguments need no project or storage
+  ---
+  duration_ms: 233.487667
+  type: 'test'
+  ...
+# Subtest: CLI-E2E-corrupt: corrupted data bytes survive a real save failure
+ok 7 - CLI-E2E-corrupt: corrupted data bytes survive a real save failure
+  ---
+  duration_ms: 241.414916
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1261.488292
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

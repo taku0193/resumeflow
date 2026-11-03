@@ -36,3 +36,11 @@ test.each(['unapproved', 'cancel', 'yes'] as const)('C11-03: deletion decision %
   expect(context.confirm).toHaveBeenCalledTimes(decision === 'cancel' ? 1 : 0);
   expect(context.gitRunner.run).not.toHaveBeenCalled();
 });
+test('C11 regression: a failed delete write leaves the existing collection intact', async () => {
+  const record = fixture();
+  const original = JSON.stringify({ schemaVersion: 2, checkpoints: [record] });
+  const storage = new MemoryStorage(original);
+  storage.writeAtomic = vi.fn(async () => { throw new Error('synthetic write failure'); });
+  await expect(new CliCheckpointStore(storage).remove(record.id, record.workspaceUri)).rejects.toMatchObject({ code: 'WRITE_FAILED' });
+  expect(storage.contents).toBe(original);
+});
