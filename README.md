@@ -1,8 +1,10 @@
 # ResumeFlow
 
-開発作業を中断するときの文脈をチェックポイントに保存し、再開を助けるローカル専用 VS Code 拡張機能です。仕様は `SPEC.md`、開発順序は `TEST_PLAN.md` を参照してください。
+開発作業を中断するときの文脈をチェックポイントに保存し、再開を助けるローカルツールを開発しています。現在は VS Code 拡張の基盤があります。今後は **CLI / Codex だけでも使える入口**を優先し、エディタ連携を追加機能として扱います。[Issue ロードマップ](ROADMAP.md) と [親 Issue #4](https://github.com/taku0193/resumeflow/issues/4) を参照してください。
 
 現在は **S0〜S3 の開発用基盤・保存層・エディタ取得**です。完成した拡張機能ではありません。コマンドパレットからの保存・一覧・再開・削除は、後続の開発スライスで追加します。
+
+CLI と Codex 用 skill はまだ未実装です。次は [Issue #5](https://github.com/taku0193/resumeflow/issues/5) で CLI のコマンド・データ契約・受入テストを定義します。エディタ対応先の選定は保留しています。`SPEC.md` と `TEST_PLAN.md` は S0〜S3 と従来の VS Code 操作の基準で、CLI 向けの改訂は Issue で追跡します。
 
 ## 開発環境
 
@@ -41,7 +43,7 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 
 コード編集と単体検証は、このチャットとワークスペース内で進めます。ローカルの VS Code 起動は開発の前提にしません。GitHub では [taku0193/resumeflow](https://github.com/taku0193/resumeflow) を非公開で管理し、GitHub Actions で型チェック・単体テスト・ビルド・Xvfb 上の拡張統合テストを実行します。`main` への push と pull request が CI の実行対象です。
 
-機能・実装スライスごとに `codex/<feature>` ブランチを切り、PR 単位で変更と CI の結果を確認します。機能の変更を `main` へ直接コミットしません。テスト1件の GREEN と回帰確認、独立したリファクタリング、関連する文書更新など、小さな完了単位でこまめにコミットします。
+新規作業は受入条件のある Issue を起点にします。機能ごとに `codex/issue-<番号>-<feature>` などのブランチを切り、PR に Issue を関連付けます。機能の変更を `main` へ直接コミットしません。テスト1件の GREEN と回帰確認、リファクタリング、文書更新など、小さな完了単位でコミットします。必要な検証が完了した Issue は PR・証跡・統合状態を残して適宜閉じ、未完了の Issue は開いたままにします。
 
 ## 開発用拡張の起動（後日、手動確認が必要な場合）
 
