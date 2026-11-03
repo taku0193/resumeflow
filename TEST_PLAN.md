@@ -1,6 +1,6 @@
 # ResumeFlow — TDD テスト計画 v0.2
 
-> 方針更新（2026-11-03）: S0〜S3 の実行済み結果は保持する。今後の実装順は [ROADMAP.md](ROADMAP.md) と各 Issue の依存に従い、CLI 向けの新規テスト ID・受入条件は [Issue #5](https://github.com/taku0193/resumeflow/issues/5) で定義する。以下の S4〜S9 は従来の VS Code 向け計画であり、その順に自動着手しない。
+> 方針更新（2026-11-03）: S0〜S3 の実行済み結果は保持する。今後の実装順は [ROADMAP.md](ROADMAP.md) と各 Issue の依存に従い、CLI向けの契約は [CLI_SPEC.md](CLI_SPEC.md)、実行結果は [CLI TDD記録](docs/CLI_TDD_LOG.md) を参照。CLI保存・取得・削除とskillは実装済み。以下の S4〜S9 は従来の VS Code 向け計画であり、その順に自動着手しない。
 
 ## 1. 目的と原則
 
