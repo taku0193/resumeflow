@@ -72,6 +72,19 @@ HTTPS 認証では workflow スコープ不足により Actions 定義を含む 
 
 ## 残課題と次のスライス
 
+### UI E2E 基盤の追加（2026-11-03）
+
+ユーザーの追加依頼を受け、`E2E_PLAN.md` と実画面テスト用の `src/e2e/installedExtension.test.ts` を追加しました。既存の統合2件は直接 API を呼ぶ検証として維持し、UI E2E には数えていません。
+
+- 実装: E2E-00（インストールした VSIX を拡張ビューから選び、詳細を確認するスモークテスト）。機能の追加順は変更せず、保存・再開・削除の E2E は対応するスライスで追加します。
+- 基盤: `vscode-extension-tester@8.28.1` / Selenium、テスト専用プロファイル、固定 VS Code 1.144.1、GitHub Actions / Xvfb の `e2e` ジョブ。
+- 配布: `package.json` の files を許可リストにし、`scripts/package-e2e.mjs` で実際の配布対象も検査します。`@vscode/vsce` は直接利用するため開発依存として明示しました。
+- 証跡: スクリーンショットと必要なログを artifact に7日保存。0件・skip・only は失敗、リトライ0回です。
+- ローカル: 型チェック・単体テスト4件・ビルドと VSIX 作成に成功。ローカル GUI は起動しません。
+- TDD の扱い: 今回はテスト基盤の整備と既存動作への保護テストであり、製品機能の新しい RED/GREEN サイクルとしては数えません。
+
+実画面 E2E の最新結果と画像は [GitHub Actions](https://github.com/taku0193/resumeflow/actions/workflows/ci.yml) で確認します。製品の保存・再開シナリオはまだ未実装であり、今回のスモークテストでその検証完了を意味しません。
+
 次は **S2 / P1-04 → P1-05 → P1-06** です。
 
 1. P1-04: JSON の構造・schemaVersion・各チェックポイントのランタイム検証と、明確なエラー。

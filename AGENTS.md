@@ -6,6 +6,9 @@
 - Run type checks, unit tests and builds here. Run Extension Development Host integration tests headlessly in GitHub Actions using Xvfb; do not launch local GUI tests.
 - The user has requested GitHub version control. Development-time Git initialization, branches, commits and pushes for this project are authorized. The ban on Git mutations below applies to the extension's runtime behavior, not to development-time repository management.
 - Keep the repository private unless the user requests a visibility change. Commit source, specifications and TDD evidence; exclude dependencies, generated build output, test profiles, checkpoint data and credentials.
+- The user explicitly requires E2E testing. Follow `E2E_PLAN.md` and its release gates. Keep unit, Extension Host integration, and real UI E2E results separate. A direct service/API call is not a UI E2E test.
+- Add the applicable real command-palette/input/confirmation journeys as each user-facing feature becomes usable. Do not add future product features solely to make an E2E case pass. Unimplemented journeys remain documented as pending, never silently skipped or reported as passing.
+- Run real VS Code UI E2E only in GitHub Actions / Xvfb with isolated test profiles and synthetic workspaces. Save screenshots and logs, fail on skipped or zero-test suites, and investigate flaky tests without automatically retrying them into a green result.
 
 ## Read first
 
@@ -57,6 +60,8 @@ For **each individual observable behavior**:
   - `npm run test:unit:watch`
   - `npm run test:coverage`
   - `npm run test:integration`
+  - `npm run test:e2e` (GitHub Actions only)
+  - `npm run test:e2e:package` (package check without GUI)
   - `npm run typecheck`
   - `npm run build`
 - Include `npm test` or `npm run verify` that runs at least typecheck, unit tests and build.

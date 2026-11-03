@@ -23,3 +23,34 @@ jobs:
           cache: npm
       - run: npm ci
       - run: xvfb-run -a npm run test:integration
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RESUMEFLOW_VSCODE_VERSION: '1.144.1'
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Exercise installed VSIX through the VS Code UI
+        run: |
+          set -o pipefail
+          mkdir -p .test-data/e2e
+          xvfb-run -a npm run test:e2e 2>&1 | tee .test-data/e2e/runner.log
+      - name: Save E2E screenshots and logs
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: e2e-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          include-hidden-files: true
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            .test-data/e2e/runner.log
+            .test-data/e2e/**/screenshots/**/*.png
+            .test-data/e2e/**/chromedriver.log
+            .test-data/e2e/**/test.log
+            .test-data/e2e/**/settings/logs/**

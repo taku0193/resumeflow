@@ -5,6 +5,17 @@
   "version": "0.0.1",
   "publisher": "resumeflow-local",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taku0193/resumeflow.git"
+  },
+  "files": [
+    "README.md",
+    "dist/extension.js",
+    "dist/adapters/**/*.js",
+    "dist/models/**/*.js",
+    "dist/services/**/*.js"
+  ],
   "engines": {
     "vscode": "^1.100.0"
   },
@@ -32,6 +43,8 @@
     "test:unit:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:integration": "npm run build && vscode-test",
+    "test:e2e": "npm run build && node scripts/run-e2e.mjs",
+    "test:e2e:package": "npm run build && node scripts/package-e2e.mjs",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.unit.json",
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -p tsconfig.json --watch",
@@ -45,7 +58,9 @@
     "@vitest/coverage-v8": "5.1.0",
     "@vscode/test-cli": "0.0.15",
     "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "4.1.0",
     "typescript": "7.0.2",
-    "vitest": "5.1.0"
+    "vitest": "5.1.0",
+    "vscode-extension-tester": "8.28.1"
   }
 }

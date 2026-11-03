@@ -18,6 +18,10 @@ npm run test:coverage
 
 `package-lock.json` で依存関係を固定しています。単体テストは Vitest、統合テストは `@vscode/test-cli` / `@vscode/test-electron` と Mocha を使用します。
 
+UI E2E は ExTester / Selenium で、インストールした VSIX を実画面から操作します。`npm run test:e2e` はローカル起動を拒否し、GitHub Actions の Xvfb 上でのみ実行します。CI の `e2e` ジョブではスクリーンショット・実行ログを artifact として7日間保存します。[E2E 計画とシナリオ一覧](E2E_PLAN.md)
+
+現在の UI E2E はパッケージのインストールと拡張詳細画面のスモークテスト（E2E-00）です。保存・再開・削除はまだ未実装のため、それらの E2E は機能実装に合わせて追加します。API 統合テスト2件とは区別して結果を報告します。[最新の CI 結果](https://github.com/taku0193/resumeflow/actions/workflows/ci.yml)
+
 検証済みの環境は macOS arm64 / Node.js 26.13.0 / npm 11.20.0 です。型チェック・単体テスト4件・ビルドは成功しました。単体テストのうち3件が P1-01〜03、1件が基盤のスモークテストです。保存サービスのみのカバレッジは statements / branches ともに 100% です。
 
 **GitHub Actions で単体テスト4件と拡張統合テスト2件が成功しました。** 統合テストは Ubuntu 26.04.1 / Node.js 22.23.4 / VS Code 1.144.1 の Xvfb 上で実行し、拡張起動と実ファイル保存・再読込を確認しました。[CI の実行結果](https://github.com/taku0193/resumeflow/actions/runs/41556242212)
@@ -52,6 +56,8 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 | `npm run test:unit:watch` | 単体テストの継続実行 |
 | `npm run test:coverage` | コアサービスのカバレッジ |
 | `npm run test:integration` | ビルド後、専用 VS Code で統合テスト |
+| `npm run test:e2e` | CI / Xvfb 上で VSIX をインストールし、実画面を操作 |
+| `npm run test:e2e:package` | GUI を使わず VSIX の作成・配布対象の検査 |
 | `npm run typecheck` | 拡張コード・テストの型チェック |
 | `npm run build` | TypeScript から `dist/` にコンパイル |
 | `npm run verify` / `npm test` | 型チェック → 単体テスト → ビルド |
@@ -64,7 +70,9 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 - `src/adapters/`: VS Code のストレージ I/O
 - `tests/`: メモリ上の偽 I/O を使う単体テスト
 - `src/test/`: VS Code Extension Development Host 内の統合テスト
-- `.github/workflows/ci.yml`: 型・単体・ビルドと Linux GUI 統合テスト
+- `src/e2e/`: ExTester / Selenium による実画面 E2E
+- `scripts/`: VSIX パッケージの検査、CI 専用 E2E 起動
+- `.github/workflows/ci.yml`: 型・単体・ビルド、Linux GUI 統合、実画面 E2E と証跡保存
 
 ## 保存データとプライバシー
 

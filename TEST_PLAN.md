@@ -9,6 +9,7 @@
 - 1つの TDD サイクルにつき、原則テストケース1件。必要なら同じふるまいのパラメータ化テストをまとめてよい。
 - **単体テスト**: Vitest。外部依存をスタブ/フェイクに差し替える。
 - **統合テスト**: `@vscode/test-cli` + `@vscode/test-electron`。コマンド登録、実際の VS Code API との接続を確認する。
+- **UI E2E**: VSIX をインストールした実 VS Code を ExTester / Selenium で操作する。対象シナリオ、機能との対応、追加時期、CI 証跡は `E2E_PLAN.md` を参照する。既存の API 統合テストとは件数・結果を分ける。
 - 各 RED は「未実装のふるまいによるアサーション失敗」を確認する。単なる `Cannot find module` は無効。
 - Git を含むテストでユーザーの実プロジェクトに書き込みを行わない。Git出力解析テストは文字列 fixture で行う。
 
@@ -78,6 +79,8 @@ npm run test:unit          # Vitest 一回実行
 npm run test:unit:watch    # Vitest watch
 npm run test:coverage      # カバレッジ
 npm run test:integration   # VS Code Extension Development Host内のテスト
+npm run test:e2e           # GitHub Actions / Xvfb 上の実 UI テスト
+npm run test:e2e:package   # GUI を使わない VSIX 作成・配布対象の検査
 npm run typecheck          # tsc --noEmit等
 npm run build              # 拡張機能のビルド
 npm run verify             # typecheck + unit + build
