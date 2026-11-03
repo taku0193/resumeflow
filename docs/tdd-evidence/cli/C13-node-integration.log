@@ -1,0 +1,30 @@
+
+> resumeflow@0.0.1 test:node:integration
+> npm run build && node scripts/run-node-suite.mjs integration
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: real Git: unborn, rename metadata, unchanged index/source and detached HEAD
+ok 1 - real Git: unborn, rename metadata, unchanged index/source and detached HEAD
+  ---
+  duration_ms: 190.499875
+  type: 'test'
+  ...
+# Subtest: real Git: nonrepository and disabled collection remain nonfatal
+ok 2 - real Git: nonrepository and disabled collection remain nonfatal
+  ---
+  duration_ms: 8.822042
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 322.118459
