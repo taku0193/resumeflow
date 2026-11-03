@@ -6,6 +6,7 @@ export default defineConfig({
     allowOnly: false,
     passWithNoTests: false,
     include: ['tests/**/*.test.ts'],
+    exclude: ['tests/nodeCheckpointStorage.test.ts', 'tests/nodeCliContext.test.ts'],
     coverage: {
       provider: 'v8',
       include: ['src/services/**/*.ts', 'src/models/**/*.ts'],

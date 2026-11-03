@@ -33,5 +33,5 @@ export default defineConfig({
     `--user-data-dir=${userData}`,
     `--extensions-dir=${join(runRoot, 'extensions')}`,
   ],
-  mocha: { ui: 'tdd', timeout: 15000 },
+  mocha: { ui: 'tdd', timeout: 15000, forbidOnly: true, forbidPending: true, failZero: true },
 });

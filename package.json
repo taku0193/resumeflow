@@ -1,7 +1,7 @@
 {
   "name": "resumeflow",
   "displayName": "ResumeFlow",
-  "description": "作業の文脈をローカルに保存する VS Code 拡張機能（開発中）。",
+  "description": "作業の文脈をローカルに保存・取得する CLI と任意のエディタ連携。",
   "version": "0.0.1",
   "publisher": "resumeflow-local",
   "private": true,
@@ -58,8 +58,9 @@
     "typecheck": "tsc --noEmit && tsc -p tsconfig.unit.json",
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -p tsconfig.json --watch",
-    "verify": "npm run typecheck && npm run test:unit && npm run build",
-    "vscode:prepublish": "npm run build"
+    "verify": "npm run typecheck && npm run test:unit && npm run test:node:io && npm run build",
+    "vscode:prepublish": "npm run build",
+    "test:node:io": "node scripts/run-vitest.mjs --config vitest.io.config.mts"
   },
   "devDependencies": {
     "@types/mocha": "10.0.10",
