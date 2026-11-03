@@ -52,7 +52,7 @@ API アダプタを空のメタデータを返すスタブとして追加し、�
 
 レビュー時に、scheme と所属だけでは query / fragment 付き URI を取得し、S2 の保存スキーマに違反し得る点を P1-08d の RED で確認した。REFACTOR として既存の URI 検証を `models/fileUri.ts` へ移し、取得と保存で同じ規則を使うようにした。既存の保存規則は変えていない。[最終回帰](tdd-evidence/s3/P1-08d-verify.log) と [最終 coverage](tdd-evidence/s3/final-coverage.log) は93件成功。models / services の実行コード6ファイルで statements / branches / functions / lines は100%。アダプタ・UI の網羅率を表す数字ではない。
 
-[配布対象検査](tdd-evidence/s3/package.log) では実 VSIX を作成し、runtime / README / package の12ファイルのみを許可した（VSIX メタデータ込み14ファイル）。テスト、架空本文、プロファイル、依存ツールは含まれない。
+[最終の配布対象検査](tdd-evidence/s3/final-package.log) では実 VSIX を作成し、runtime / README / package の13ファイルのみを許可した（VSIX メタデータ込み15ファイル）。テスト、架空本文、プロファイル、依存ツールは含まれない。
 
 所属判定は URI 上の所属であり、S3 ではシンボリックリンクの実体を解決しない。ファイルを開く際の再検証は S8。保存コマンド・UI の警告表示は S5 / S6、未保存警告の UI E2E は E2E-04 として追跡する。今回の UI E2E は E2E-00 の回帰であり、保存・再開操作の完成ではない。
 
