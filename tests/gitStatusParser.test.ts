@@ -9,3 +9,14 @@ test('P1-10a: parses ordinary, staged and untracked NUL records', () => {
   ]);
   expect(parseGitStatus('')).toEqual([]);
 });
+
+test('P1-10b: rename and copy preserve destination and original as separate paths', () => {
+  expect(parseGitStatus('R  new name.ts\0old name.ts\0C  copied.ts\0source.ts\0')).toEqual([
+    { path: 'new name.ts', status: 'R ', originalPath: 'old name.ts' },
+    { path: 'copied.ts', status: 'C ', originalPath: 'source.ts' },
+  ]);
+});
+
+test.each(['日本語 file.ts', ' leading and trailing ', 'two\nlines.ts', '"quoted".ts', '--name;$(nothing).ts'])('P1-11 regression: preserves the literal path %j', path => {
+  expect(parseGitStatus(`?? ${path}\0`)).toEqual([{ path, status: '??', originalPath: null }]);
+});
