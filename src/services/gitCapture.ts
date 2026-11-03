@@ -14,10 +14,14 @@ export async function captureGit(directory: string, allowed: boolean, runner: Gi
   let detected = false;
   try {
   const line = (value: string) => value.endsWith('\n') ? value.slice(0, -1) : value;
+  const optional = async (args: readonly string[]): Promise<string | null> => {
+    try { return line(await runner.run(directory, args)); }
+    catch (error) { if (error instanceof GitCommandError && error.exitCode === 1) return null; throw error; }
+  };
   const root = line(await runner.run(directory, ['rev-parse', '--show-toplevel']));
   detected = true;
-  const branch = line(await runner.run(directory, ['symbolic-ref', '--quiet', '--short', 'HEAD']));
-  const headCommit = line(await runner.run(directory, ['rev-parse', '--verify', '--quiet', 'HEAD']));
+  const branch = await optional(['symbolic-ref', '--quiet', '--short', 'HEAD']);
+  const headCommit = await optional(['rev-parse', '--verify', '--quiet', 'HEAD']);
   const changes = parseGitStatus(await runner.run(directory, ['status', '--porcelain=v1', '-z', '--untracked-files=all']));
   return { available: true, repoRootUri: pathToFileURL(root).toString(), branch, headCommit, changes, error: null };
   } catch (error) {

@@ -1,0 +1,73 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitCapture.test.ts -t P1-12c
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/gitCapture.test.ts (9 tests | 2 failed | 7 skipped) 7ms
+   × P1-12c: represents detached without failing the capture 6ms
+   × P1-12c: represents unborn without failing the capture 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gitCapture.test.ts > P1-12c: represents detached without failing the capture
+AssertionError: expected { available: false, …(5) } to match object { available: true, branch: null, …(2) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "available": true,
++   "available": false,
+    "branch": null,
+-   "error": null,
+-   "headCommit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
++   "error": "GIT_FAILED",
++   "headCommit": null,
+  }
+
+ ❯ tests/gitCapture.test.ts:52:45
+     50|     return original(directory, args);
+     51|   });
+     52|   expect(await captureGit(root, true, git)).toMatchObject({
+       |                                             ^
+     53|     available: true, branch: state === 'detached' ? null : 'main', hea…
+     54|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/gitCapture.test.ts > P1-12c: represents unborn without failing the capture
+AssertionError: expected { available: false, …(5) } to match object { available: true, …(3) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "available": true,
+-   "branch": "main",
+-   "error": null,
++   "available": false,
++   "branch": null,
++   "error": "GIT_FAILED",
+    "headCommit": null,
+  }
+
+ ❯ tests/gitCapture.test.ts:52:45
+     50|     return original(directory, args);
+     51|   });
+     52|   expect(await captureGit(root, true, git)).toMatchObject({
+       |                                             ^
+     53|     available: true, branch: state === 'detached' ? null : 'main', hea…
+     54|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 skipped (9)
+   Start at  13:31:29
+   Duration  144ms (transform 46%, import 23%, tests 23%, worker 7%)
+

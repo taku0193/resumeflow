@@ -39,3 +39,17 @@ test.each([
   git.run.mockRejectedValueOnce(error);
   await expect(captureGit(root, true, git)).resolves.toMatchObject({ available: false, error: code, changes: [] });
 });
+
+test.each(['detached', 'unborn'])('P1-12c: represents %s without failing the capture', async state => {
+  const git = runner();
+  const original = git.run.getMockImplementation()!;
+  git.run.mockImplementation(async (directory, args) => {
+    if ((state === 'detached' && args[0] === 'symbolic-ref') || (state === 'unborn' && args.includes('--verify'))) {
+      throw new GitCommandError('GIT_FAILED', 1);
+    }
+    return original(directory, args);
+  });
+  expect(await captureGit(root, true, git)).toMatchObject({
+    available: true, branch: state === 'detached' ? null : 'main', headCommit: state === 'unborn' ? null : sha, error: null,
+  });
+});
