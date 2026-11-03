@@ -2,6 +2,9 @@
 
 ## Collaboration and repository workflow
 
+- Start new work from a GitHub Issue with a concrete goal, acceptance criteria and dependencies. Search for an existing matching Issue before creating one. The current roadmap is `ROADMAP.md` / parent Issue #4; the next product task is specification Issue #5.
+- Work on a dedicated branch per feature or coherent task, preferably `codex/issue-<number>-<feature>`. Link the Issue from its PR. Do not accumulate unrelated features in one branch.
+- Use `Closes #<number>` only when the PR fully resolves that Issue; use `Refs #<number>` for partial work. After the required implementation, tests and CI succeed, record the PR and evidence and close resolved Issues as appropriate. Do not close unresolved dependencies or a parent roadmap merely because work has started. Record whether the linked PR is merged or awaiting integration.
 - Develop in the current chat and workspace. Do not open or launch local VS Code unless the user explicitly asks. The product remains a VS Code extension.
 - Run type checks, unit tests and builds here. Run Extension Development Host integration tests headlessly in GitHub Actions using Xvfb; do not launch local GUI tests.
 - The user has requested GitHub version control. Development-time Git initialization, branches, commits and pushes for this project are authorized. The ban on Git mutations below applies to the extension's runtime behavior, not to development-time repository management.
@@ -14,9 +17,9 @@
 
 ## Read first
 
-- `SPEC.md` is the product specification; `TEST_PLAN.md` is the test-case inventory and execution order.
-- Build an **offline-first local VS Code extension**. No browser integration, AI, server, cloud sync, or telemetry in MVP.
-- Work only on the phase / test IDs explicitly requested. Do not silently implement future features.
+- `ROADMAP.md` defines the current Issue order. `SPEC.md` and `TEST_PLAN.md` describe the implemented S0–S3 baseline and original VS Code flow; Issue #5 must define the revised CLI contract before CLI implementation.
+- Prioritize **offline local use through CLI or Codex without requiring an editor**. Preserve the shared core and keep editor adapters optional. The choice of additional editors is on hold. Do not require an AI API, server, cloud sync, or telemetry for the core product.
+- Work only on the agreed Issue / phase / test IDs. Do not silently implement future features or treat roadmap commands as already implemented.
 - If a requirement is ambiguous, prefer the smallest **safe and testable** behavior and document the assumption.
 
 ## Non-negotiable TDD workflow
