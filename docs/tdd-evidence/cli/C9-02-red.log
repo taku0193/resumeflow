@@ -1,0 +1,102 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliArguments.test.ts -t C9-02
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliArguments.test.ts (11 tests | 10 failed | 1 skipped) 9ms
+   × C9-02: rejects invalid or ambiguous arguments "erase" as usage errors 5ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 0ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 1ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 0ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 0ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 0ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 0ms
+   × C9-02: rejects invalid or ambiguous arguments "help" as usage errors 0ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 0ms
+   × C9-02: rejects invalid or ambiguous arguments "save" as usage errors 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "erase" as usage errors
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "help" as usage errors
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+AssertionError: expected undefined to match object { code: 'USAGE', usage: true }
+
+- Expected:
+{
+  "code": "USAGE",
+  "usage": true,
+}
+
++ Received:
+undefined
+
+ ❯ tests/cliArguments.test.ts:17:17
+     15|   let error: unknown;
+     16|   try { parseCliArguments(args); } catch (caught) { error = caught; }
+     17|   expect(error).toMatchObject({ code: 'USAGE', usage: true });
+       |                 ^
+     18| });
+     19|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+AssertionError: expected TypeError: Unknown option '--unknown'. To… { code: '…' } to match object { code: 'USAGE', usage: true }
+
+- Expected
++ Received
+
+- {
+-   "code": "USAGE",
+-   "usage": true,
++ TypeError {
++   "code": "ERR_PARSE_ARGS_UNKNOWN_OPTION",
+  }
+
+ ❯ tests/cliArguments.test.ts:17:17
+     15|   let error: unknown;
+     16|   try { parseCliArguments(args); } catch (caught) { error = caught; }
+     17|   expect(error).toMatchObject({ code: 'USAGE', usage: true });
+       |                 ^
+     18| });
+     19|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/cliArguments.test.ts > C9-02: rejects invalid or ambiguous arguments "save" as usage errors
+AssertionError: expected TypeError: Option '--note <value>' argume… { code: '…' } to match object { code: 'USAGE', usage: true }
+
+- Expected
++ Received
+
+- {
+-   "code": "USAGE",
+-   "usage": true,
++ TypeError {
++   "code": "ERR_PARSE_ARGS_INVALID_OPTION_VALUE",
+  }
+
+ ❯ tests/cliArguments.test.ts:17:17
+     15|   let error: unknown;
+     16|   try { parseCliArguments(args); } catch (caught) { error = caught; }
+     17|   expect(error).toMatchObject({ code: 'USAGE', usage: true });
+       |                 ^
+     18| });
+     19|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  10 failed | 1 skipped (11)
+   Start at  13:39:49
+   Duration  180ms (transform 41%, tests 29%, import 22%, worker 7%)
+
