@@ -1,0 +1,59 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitStatusParser.test.ts -t P1-10b
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/gitStatusParser.test.ts (7 tests | 1 failed | 6 skipped) 5ms
+   × P1-10b: rename and copy preserve destination and original as separate paths 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gitStatusParser.test.ts > P1-10b: rename and copy preserve destination and original as separate paths
+AssertionError: expected [ { path: 'new name.ts', …(2) }, …(3) ] to deeply equal [ { path: 'new name.ts', …(2) }, …(1) ]
+
+- Expected
++ Received
+
+  [
+    {
+-     "originalPath": "old name.ts",
++     "originalPath": null,
+      "path": "new name.ts",
+      "status": "R ",
+    },
+    {
+-     "originalPath": "source.ts",
++     "originalPath": null,
++     "path": " name.ts",
++     "status": "ol",
++   },
++   {
++     "originalPath": null,
+      "path": "copied.ts",
+      "status": "C ",
++   },
++   {
++     "originalPath": null,
++     "path": "rce.ts",
++     "status": "so",
+    },
+  ]
+
+ ❯ tests/gitStatusParser.test.ts:14:84
+     12|
+     13| test('P1-10b: rename and copy preserve destination and original as sep…
+     14|   expect(parseGitStatus('R  new name.ts\0old name.ts\0C  copied.ts\0so…
+       |                                                                                    ^
+     15|     { path: 'new name.ts', status: 'R ', originalPath: 'old name.ts' },
+     16|     { path: 'copied.ts', status: 'C ', originalPath: 'source.ts' },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  13:29:08
+   Duration  155ms (transform 49%, import 23%, tests 19%, worker 9%)
+
