@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, expect, test } from 'vitest';
@@ -22,4 +22,39 @@ test('C6-01: the Node adapter persists through the shared CheckpointStore withou
   await store.append(checkpoint);
   expect(await new CheckpointStore(new NodeCheckpointStorage(root)).load()).toEqual({ schemaVersion: 1, checkpoints: [checkpoint] });
   expect(JSON.parse(await readFile(join(root, 'checkpoints.json'), 'utf8')).checkpoints).toEqual([checkpoint]);
+});
+
+test('C6-02: a competing writer cannot enter the read-modify-write transaction', async () => {
+  const root = await directory();
+  const first = new NodeCheckpointStorage(root);
+  const second = new NodeCheckpointStorage(root);
+  await first.withLock(async () => {
+    await expect(second.withLock(async () => 'entered')).rejects.toMatchObject({ code: 'DATA_BUSY' });
+  });
+  expect(await second.withLock(async () => 'released')).toBe('released');
+  const failure = new Error('synthetic operation failure');
+  await expect(first.withLock(async () => { throw failure; })).rejects.toBe(failure);
+  expect(await readdir(root)).toEqual([]);
+});
+
+test.each([
+  ['json', Buffer.from('{ broken'), 'INVALID_JSON'],
+  ['utf8', Buffer.from([0xff]), 'READ_FAILED'],
+])('C6 regression: keeps corrupt %s bytes unchanged', async (_name, bytes, code) => {
+  const root = await directory();
+  const path = join(root, 'checkpoints.json');
+  await writeFile(path, bytes);
+  const store = new CheckpointStore(new NodeCheckpointStorage(root));
+  await expect(store.append(checkpointFixture())).rejects.toMatchObject({ code });
+  expect(await readFile(path)).toEqual(bytes);
+});
+
+test('C6 regression: failed replacement preserves a nonempty target directory and cleans temporary files', async () => {
+  const root = await directory();
+  const path = join(root, 'checkpoints.json');
+  await mkdir(path);
+  await writeFile(join(path, 'marker'), 'untouched');
+  await expect(new NodeCheckpointStorage(root).writeAtomic('{}')).rejects.toBeDefined();
+  expect(await readFile(join(path, 'marker'), 'utf8')).toBe('untouched');
+  expect(await readdir(root)).toEqual(['checkpoints.json']);
 });
