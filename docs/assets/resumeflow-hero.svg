@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title description">
+  <title id="title">ResumeFlow — 作業の区切りを、次の始まりへ。</title>
+  <desc id="description">1. saveで進捗と次の行動を記録。2. checkpoints.jsonとしてPC内に保存。3. contextでMarkdownを取り出し、新しい開発チャットへ渡す。実画面ではなく、実装済みの流れを説明する図。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#b8492d"/></marker>
+  </defs>
+  <rect width="1200" height="560" fill="#f8f3e7"/>
+  <path d="M32 32H1168V528H32Z" fill="none" stroke="#d7cdbb"/>
+  <g fill="#292b25" font-family="-apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Noto Sans CJK JP', 'Yu Gothic', sans-serif">
+    <text x="57" y="99" font-family="Georgia, 'Times New Roman', serif" font-size="64" letter-spacing="-2">ResumeFlow</text>
+    <text x="1141" y="65" text-anchor="end" font-size="12" letter-spacing="2.3" fill="#777365">A FIELD GUIDE TO PICKING UP YOUR WORK</text>
+    <text x="1141" y="99" text-anchor="end" font-size="22">作業の区切りを、次の始まりへ。</text>
+    <path d="M57 124H1143" stroke="#292b25" stroke-width="2"/>
+
+    <text x="57" y="171" fill="#b8492d" font-family="Georgia, serif" font-size="28">01</text>
+    <text x="105" y="171" font-size="23" font-weight="650">中断するとき</text>
+    <text x="455" y="171" fill="#b8492d" font-family="Georgia, serif" font-size="28">02</text>
+    <text x="504" y="171" font-size="23" font-weight="650">手元に残す</text>
+    <text x="868" y="171" fill="#b8492d" font-family="Georgia, serif" font-size="28">03</text>
+    <text x="917" y="171" font-size="23" font-weight="650">続きを始める</text>
+
+    <path d="M59 212H305M59 212V233" stroke="#a99e89" fill="none"/>
+    <text x="74" y="246" font-size="13" font-family="'SFMono-Regular', Consolas, monospace" fill="#777365">npm run cli --</text>
+    <text x="74" y="288" font-size="36" font-family="'SFMono-Regular', Consolas, monospace" font-weight="650">save</text>
+    <g font-size="18">
+      <text x="76" y="329">ここまでの進捗</text>
+      <text x="76" y="359">次にすること</text>
+    </g>
+    <path d="M62 321 65 329 69 316M62 351 65 359 69 346" fill="none" stroke="#687457" stroke-width="2"/>
+    <text x="75" y="408" font-size="16" fill="#777365">メモにして、作業を離れる。</text>
+
+    <path d="M324 300H417" fill="none" stroke="#b8492d" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="369" y="283" text-anchor="middle" font-size="12" fill="#b8492d">保存</text>
+
+    <path d="M468 204H683L725 246V439H468Z" fill="#fffdf7" stroke="#292b25" stroke-width="1.6"/>
+    <path d="M683 204V246H725" fill="#ece3d1" stroke="#292b25" stroke-width="1.6"/>
+    <text x="488" y="276" font-size="20" font-family="'SFMono-Regular', Consolas, monospace" font-weight="650">checkpoints.json</text>
+    <path d="M488 291H704" stroke="#d7cdbb"/>
+    <g font-size="18">
+      <text x="489" y="323">進捗メモ</text>
+      <text x="489" y="353">次の行動</text>
+      <text x="489" y="383">プロジェクト</text>
+      <text x="489" y="413">Gitの状態</text>
+    </g>
+    <text x="584" y="413" font-size="13" fill="#777365">（許可した場合）</text>
+    <text x="596" y="465" text-anchor="middle" font-size="15" fill="#687457">PC内のアプリ用保存領域</text>
+
+    <path d="M755 300H847" fill="none" stroke="#b8492d" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="800" y="283" text-anchor="middle" font-size="12" fill="#b8492d">取り出す</text>
+
+    <text x="873" y="246" font-size="13" font-family="'SFMono-Regular', Consolas, monospace" fill="#777365">npm run cli --</text>
+    <text x="871" y="285" font-size="27" font-family="'SFMono-Regular', Consolas, monospace" font-weight="650">context UUID</text>
+    <path d="M872 311H1133M872 311V417M872 417H1133" fill="none" stroke="#a99e89"/>
+    <text x="888" y="340" font-size="16" fill="#687457">再開用Markdown</text>
+    <text x="888" y="374" font-size="18">新しいチャットへ渡す。</text>
+    <text x="888" y="400" font-size="15" fill="#777365">いまの状態を確認して、続きへ。</text>
+    <text x="873" y="465" font-size="15" fill="#687457">Codex / 開発用チャット</text>
+
+    <path d="M57 489H1143" stroke="#d7cdbb"/>
+    <text x="57" y="514" font-size="13" fill="#777365">ローカル保存 · 実行時オフライン · Git取得は任意</text>
+    <text x="1143" y="514" text-anchor="end" font-size="11" letter-spacing="1.6" fill="#777365">WORKFLOW / NOT AN APP SCREENSHOT</text>
+  </g>
+</svg>

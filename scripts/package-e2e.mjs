@@ -14,7 +14,7 @@ export async function packageForE2e(packagePath) {
     skipLicense: true, // Internal test artifact; not a Marketplace publication.
   };
   const files = await listFiles(options);
-  const allowed = /^(?:package\.json|README\.md|CLI_SPEC\.md|skills\/resumeflow-checkpoint\/(?:SKILL\.md|scripts\/bridge\.mjs)|dist\/extension\.js|dist\/(?:adapters|models|services|cli)\/.+\.js)$/;
+  const allowed = /^(?:package\.json|README\.md|CLI_SPEC\.md|docs\/assets\/resumeflow-(?:hero|flow-mobile)\.(?:svg|png)|skills\/resumeflow-checkpoint\/(?:SKILL\.md|scripts\/bridge\.mjs)|dist\/extension\.js|dist\/(?:adapters|models|services|cli)\/.+\.js)$/;
   assert.ok(files.includes('dist/extension.js'), 'VSIX must contain the extension entry point');
   for (const file of files) {
     assert.match(file, allowed, `Unexpected file in VSIX: ${file}`);
