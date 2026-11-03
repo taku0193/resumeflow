@@ -1,0 +1,55 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitCapture.test.ts -t P1-12a
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/gitCapture.test.ts (2 tests | 1 failed | 1 skipped) 5ms
+   × P1-12a: captures only root, branch, HEAD and porcelain metadata 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gitCapture.test.ts > P1-12a: captures only root, branch, HEAD and porcelain metadata
+AssertionError: expected { available: false, …(5) } to deeply equal { available: true, …(5) }
+
+- Expected
++ Received
+
+  {
+-   "available": true,
+-   "branch": "main",
+-   "changes": [
+-     {
+-       "originalPath": null,
+-       "path": "file.ts",
+-       "status": " M",
+-     },
+-   ],
+-   "error": null,
+-   "headCommit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+-   "repoRootUri": "file:///synthetic/repo",
++   "available": false,
++   "branch": null,
++   "changes": [],
++   "error": "NOT_ALLOWED",
++   "headCommit": null,
++   "repoRootUri": null,
+  }
+
+ ❯ tests/gitCapture.test.ts:16:45
+     14| test('P1-12a: captures only root, branch, HEAD and porcelain metadata'…
+     15|   const git = runner();
+     16|   expect(await captureGit(root, true, git)).toEqual({
+       |                                             ^
+     17|     available: true, repoRootUri: pathToFileURL(root).toString(), bran…
+     18|     changes: [{ path: 'file.ts', status: ' M', originalPath: null }], …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  13:30:37
+   Duration  148ms (transform 51%, import 22%, tests 19%, worker 8%)
+
