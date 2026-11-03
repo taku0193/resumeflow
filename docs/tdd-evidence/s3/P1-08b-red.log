@@ -1,0 +1,125 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/editorCapture.test.ts -t P1-08b
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/editorCapture.test.ts (8 tests | 5 failed | 3 skipped) 10ms
+   × P1-08b: excludes outside workspace and counts its tab for a later UI warning 6ms
+   × P1-08b: excludes another workspace and counts its tab for a later UI warning 1ms
+   × P1-08b: excludes virtual URI and counts its tab for a later UI warning 0ms
+   × P1-08b: excludes remote URI and counts its tab for a later UI warning 0ms
+   × P1-08b: special tabs have no captured URI and are counted for a later warning 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-08b: excludes outside workspace and counts its tab for a later UI warning
+AssertionError: expected [ …(2) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+    "file:///projects/example/src/first.ts",
++   "file:///projects/example-other/private.ts",
+  ]
+
+ ❯ tests/editorCapture.test.ts:50:37
+     48| ])('P1-08b: excludes %s and counts its tab for a later UI warning', (_…
+     49|   const result = captureEditors(workspaceUri, editorSnapshot({ tabs: […
+     50|   expect(result.snapshot.openFiles).toEqual([firstUri]);
+       |                                     ^
+     51|   expect(result.warnings.excludedTabCount).toBe(1);
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-08b: excludes another workspace and counts its tab for a later UI warning
+AssertionError: expected [ …(2) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+    "file:///projects/example/src/first.ts",
++   "file:///projects/other/private.ts",
+  ]
+
+ ❯ tests/editorCapture.test.ts:50:37
+     48| ])('P1-08b: excludes %s and counts its tab for a later UI warning', (_…
+     49|   const result = captureEditors(workspaceUri, editorSnapshot({ tabs: […
+     50|   expect(result.snapshot.openFiles).toEqual([firstUri]);
+       |                                     ^
+     51|   expect(result.warnings.excludedTabCount).toBe(1);
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-08b: excludes virtual URI and counts its tab for a later UI warning
+AssertionError: expected [ …(2) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+    "file:///projects/example/src/first.ts",
++   "git:/projects/example/first.ts",
+  ]
+
+ ❯ tests/editorCapture.test.ts:50:37
+     48| ])('P1-08b: excludes %s and counts its tab for a later UI warning', (_…
+     49|   const result = captureEditors(workspaceUri, editorSnapshot({ tabs: […
+     50|   expect(result.snapshot.openFiles).toEqual([firstUri]);
+       |                                     ^
+     51|   expect(result.warnings.excludedTabCount).toBe(1);
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-08b: excludes remote URI and counts its tab for a later UI warning
+AssertionError: expected [ …(2) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+    "file:///projects/example/src/first.ts",
++   "vscode-remote://ssh-remote+host/project/first.ts",
+  ]
+
+ ❯ tests/editorCapture.test.ts:50:37
+     48| ])('P1-08b: excludes %s and counts its tab for a later UI warning', (_…
+     49|   const result = captureEditors(workspaceUri, editorSnapshot({ tabs: […
+     50|   expect(result.snapshot.openFiles).toEqual([firstUri]);
+       |                                     ^
+     51|   expect(result.warnings.excludedTabCount).toBe(1);
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/editorCapture.test.ts > P1-08b: special tabs have no captured URI and are counted for a later warning
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/editorCapture.test.ts:57:44
+     55|   const result = captureEditors(workspaceUri, editorSnapshot({ tabs: […
+     56|   expect(result.snapshot.openFiles).toEqual([firstUri]);
+     57|   expect(result.warnings.excludedTabCount).toBe(1);
+       |                                            ^
+     58| });
+     59|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 3 skipped (8)
+   Start at  11:22:27
+   Duration  213ms (transform 45%, tests 25%, import 23%, worker 7%)
+
