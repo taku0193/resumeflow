@@ -69,3 +69,12 @@ test.each([
   expect(result.snapshot.activeFileUri).toBeNull();
   expect(result.snapshot.cursor).toBeNull();
 });
+
+test('P1-09a: records dirty eligible file URIs once without reading or retaining document bodies', () => {
+  const dirty = textTab(firstUri, { isDirty: true });
+  Object.defineProperty(dirty, 'getText', { get: () => { throw new Error('Body access is forbidden'); } });
+  Object.defineProperty(dirty, 'text', { get: () => { throw new Error('Body access is forbidden'); } });
+  const result = captureEditors(workspaceUri, editorSnapshot({ tabs: [dirty, textTab(secondUri), dirty] }));
+  expect(result.snapshot.unsavedFileUris).toEqual([firstUri]);
+  expect(Object.keys(result.snapshot)).toEqual(['openFiles', 'activeFileUri', 'cursor', 'unsavedFileUris']);
+});
