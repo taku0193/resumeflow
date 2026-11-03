@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { decodeCheckpointText } from '../src/models/checkpointEncoding';
 import { CheckpointStore } from '../src/services/checkpointStore';
-import { checkpointFixture } from './checkpointFixture';
+import { checkpointFixture } from '../src/test/fixtures/checkpointFixture';
 
 test('P1-05-UTF8: malformed bytes cannot be decoded and overwritten', async () => {
   const checkpoint = checkpointFixture({ note: 'UTF8_MARKER' });

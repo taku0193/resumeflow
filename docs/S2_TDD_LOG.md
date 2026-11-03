@@ -65,3 +65,12 @@ JSON の構文解析とスキーマ検証を `parseCheckpointCollection` にま�
 - GREEN: fatal な UTF-8 復号に変更。読み取りを READ_FAILED として拒否し、元バイト列を保持。3件成功。
 - REFACTOR: 復号を VS Code に依存しない純粋な境界関数に維持。BOM は除去せず、JSON の厳密な構文検査も維持。`npm run verify` の型チェック・全単体73件・ビルドが成功。
 - 証跡: `docs/tdd-evidence/s2/P1-05-utf8-{red,green,regression}.log`。
+
+## 補完検証
+
+- 単体と拡張統合テストで架空のチェックポイント fixture を共有するよう配置を整理。
+- 実 VS Code I/O に対し、JSON 構文破損・不正 UTF-8 のバイト保持と、置換失敗時の一時ファイル削除・既存対象保持の3件を追加。既存2件と合わせて統合テストは5件。実行は CI のみ。
+- `npm run verify`: 型チェック・全単体73件・ビルドが成功。`final-verify.log` に保存。
+- `npm run test:coverage`: models / services の4ファイルで statements / branches / functions / lines が100%。アダプタや UI の網羅率を意味しない。`final-coverage.log` に保存。
+- `npm run test:e2e:package`: 9個の配布対象ファイルを検査して VSIX 作成が成功。テスト fixture や開発用データは含まない。`final-package.log` に保存。
+- 保存 UI が未実装のため、E2E-11 / 12 は引き続き S6 で接続する。今回の CI は既存のパッケージ・画面表示 E2E-00 の回帰確認も実行する。

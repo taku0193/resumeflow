@@ -1,4 +1,4 @@
-import type { Checkpoint } from '../src/models/checkpoint';
+import type { Checkpoint } from '../../models/checkpoint';
 
 export function checkpointFixture(overrides: Partial<Checkpoint> = {}): Checkpoint {
   return {

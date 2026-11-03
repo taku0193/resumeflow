@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { CheckpointStore } from '../src/services/checkpointStore';
 import { MemoryStorage } from './memoryStorage';
-import { checkpointFixture } from './checkpointFixture';
+import { checkpointFixture } from '../src/test/fixtures/checkpointFixture';
 
 test('P1-01: missing storage returns an empty versioned collection', async () => {
   const storage = new MemoryStorage();
