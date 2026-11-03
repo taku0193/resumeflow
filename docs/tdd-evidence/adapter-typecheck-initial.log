@@ -1,0 +1,9 @@
+
+> resumeflow@0.0.1 verify
+> npm run typecheck && npm run test:unit && npm run build
+
+
+> resumeflow@0.0.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.unit.json
+
+src/adapters/vscodeCheckpointStorage.ts(33,76): error TS2339: Property 'catch' does not exist on type 'Thenable<void>'.

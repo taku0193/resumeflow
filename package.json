@@ -1,0 +1,51 @@
+{
+  "name": "resumeflow",
+  "displayName": "ResumeFlow",
+  "description": "作業の文脈をローカルに保存する VS Code 拡張機能（開発中）。",
+  "version": "0.0.1",
+  "publisher": "resumeflow-local",
+  "private": true,
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": false
+    }
+  },
+  "scripts": {
+    "test": "npm run verify",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "npm run build && vscode-test",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.unit.json",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch",
+    "verify": "npm run typecheck && npm run test:unit && npm run build",
+    "vscode:prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@types/mocha": "10.0.10",
+    "@types/node": "26.6.6",
+    "@types/vscode": "1.100.0",
+    "@vitest/coverage-v8": "5.1.0",
+    "@vscode/test-cli": "0.0.15",
+    "@vscode/test-electron": "3.1.0",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  }
+}

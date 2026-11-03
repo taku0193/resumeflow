@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  09:42:45
+   Duration  269ms (import 42%, worker 25%, transform 21%, tests 12%, environment 1%)
+

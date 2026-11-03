@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.vitest/
+.vscode-test/
+.test-data/
+*.vsix
+*.log
+!docs/tdd-evidence/*.log
+.DS_Store
+.env
+.env.*
+checkpoints.json
+checkpoints.json.*

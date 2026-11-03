@@ -1,0 +1,9 @@
+
+> resumeflow@0.0.1 test:integration
+> npm run build && vscode-test
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+
+Exit code:   SIGABRT

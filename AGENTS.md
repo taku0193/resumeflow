@@ -1,0 +1,77 @@
+# ResumeFlow — Codex repository instructions
+
+## Collaboration and repository workflow
+
+- Develop in the current chat and workspace. Do not open or launch local VS Code unless the user explicitly asks. The product remains a VS Code extension.
+- Run type checks, unit tests and builds here. Run Extension Development Host integration tests headlessly in GitHub Actions using Xvfb; do not launch local GUI tests.
+- The user has requested GitHub version control. Development-time Git initialization, branches, commits and pushes for this project are authorized. The ban on Git mutations below applies to the extension's runtime behavior, not to development-time repository management.
+- Keep the repository private unless the user requests a visibility change. Commit source, specifications and TDD evidence; exclude dependencies, generated build output, test profiles, checkpoint data and credentials.
+
+## Read first
+
+- `SPEC.md` is the product specification; `TEST_PLAN.md` is the test-case inventory and execution order.
+- Build an **offline-first local VS Code extension**. No browser integration, AI, server, cloud sync, or telemetry in MVP.
+- Work only on the phase / test IDs explicitly requested. Do not silently implement future features.
+- If a requirement is ambiguous, prefer the smallest **safe and testable** behavior and document the assumption.
+
+## Non-negotiable TDD workflow
+
+For **each individual observable behavior**:
+
+1. **RED**: Write a focused automated test **before** the production implementation. Run the smallest relevant test. Verify failure is due to the expected behavior (failed assertion), not a test-runner or import error. If needed, first add only a type/interface and minimal stub.
+2. **GREEN**: Implement the smallest production change that makes that test pass. Run the focused test, then existing unit tests.
+3. **REFACTOR**: Improve naming, separation, duplication, and error handling without changing behavior. Rerun all relevant tests.
+4. Record evidence in the final response: test ID, red command/failure, green command/result, refactor, tests run, and next case.
+
+### Never
+
+- Implement multiple functions first and generate tests afterward.
+- Skip the RED run or fake/redact test output to make the cycle appear complete.
+- Change an expected assertion just to match an incorrect implementation.
+- Combine many unrelated test cases into one oversized TDD cycle.
+- Declare an unexecuted test successful. If GUI integration tests are blocked by the environment, explain why and provide the exact command for a developer machine.
+
+## Architecture boundaries
+
+- TypeScript and VS Code Extension API; VS Code runtime dependencies live in thin adapters.
+- Unit tests: **Vitest**. Unit-test the schema, business rules, Git status parsing, comparisons, and storage via fake interfaces; do not require VS Code UI or a live Git process.
+- Extension integration tests: `@vscode/test-cli` + `@vscode/test-electron` (runs inside Extension Development Host; Mocha-based toolchain).
+- Inject dependencies for `clock`, `idGenerator`, `storage`, `gitRunner`, `editorSnapshot`, and `ui` where practical.
+- Keep command registration (`extension.ts`), editor capture, Git capture/parsing, persistence, and restore logic separate.
+- Add positive, negative, and cancellation tests. Use dedicated temporary storage and fake repositories in tests; never touch a developer's real workspace state.
+- For Phase 1, implement `P1-*` cases in the order specified in `TEST_PLAN.md`.
+
+## Security and data constraints
+
+- Never execute Git mutations (`checkout`, `reset`, `stash`, `commit`, etc.) from the extension's runtime code.
+- Never read/persist file bodies, unsaved buffer contents, secrets, terminal history, clipboard, or environment variables.
+- Do not collect data from untrusted workspaces via Git execution. Validate this path in tests.
+- Use fixed Git argument arrays (no shell interpolation) and never treat saved URI/path strings as commands.
+- Do not overwrite/delete user source files on resume. Do not overwrite corrupted checkpoint data on load failure.
+- Keep checkpoint records in extension-local storage, not in the repo.
+
+## Quality and commands
+
+- Include these scripts (names fixed for CI and reviewer):
+  - `npm run test:unit`
+  - `npm run test:unit:watch`
+  - `npm run test:coverage`
+  - `npm run test:integration`
+  - `npm run typecheck`
+  - `npm run build`
+- Include `npm test` or `npm run verify` that runs at least typecheck, unit tests and build.
+- Test setup, VS Code downloads, and npm installs are setup prerequisites; they are not a completed RED/GREEN cycle for a product behavior.
+- Aim for >=80% unit-test statement and branch coverage of core logic once Phase 1 is complete; do not weaken meaningful assertions to improve the percentage.
+- Update README with setup, running tests, manual validation, saved data handling, and known limitations.
+
+## Reporting after every requested slice
+
+```text
+Implemented: [test IDs and requirements]
+RED: [actual command, meaningful failed assertion]
+GREEN: [actual command, pass summary]
+REFACTOR: [changes, regression result]
+Verification: [typecheck/build/unit/integration status; explicit not-run reasons]
+Changed files: [...]
+Next: [next test ID and remaining issues]
+```

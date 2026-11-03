@@ -1,0 +1,76 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-02
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (2 tests | 1 failed | 1 skipped) 6ms
+   × P1-02: a saved checkpoint survives reading from a new store instance 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-02: a saved checkpoint survives reading from a new store instance
+AssertionError: expected { schemaVersion: 1, checkpoints: [] } to deeply equal { schemaVersion: 1, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "checkpoints": [
+-     {
+-       "activeFileUri": "file:///projects/my-app/src/api.ts",
+-       "createdAt": "2026-11-03T00:00:00.000Z",
+-       "cursor": {
+-         "character": 8,
+-         "line": 42,
+-       },
+-       "git": {
+-         "available": true,
+-         "branch": "feature/api",
+-         "changes": [
+-           {
+-             "path": "src/api.ts",
+-             "status": " M",
+-           },
+-         ],
+-         "error": null,
+-         "headCommit": "1234567890abcdef1234567890abcdef12345678",
+-         "repoRootUri": "file:///projects/my-app",
+-       },
+-       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+-       "nextAction": "テストの期待値を確認する",
+-       "note": "API レスポンス形式を調査中
+- 期待値の確認が必要",
+-       "openFiles": [
+-         "file:///projects/my-app/src/api.ts",
+-       ],
+-       "schemaVersion": 1,
+-       "title": "my-app — 2026-11-03 09:00",
+-       "unsavedFileUris": [
+-         "file:///projects/my-app/src/api.ts",
+-       ],
+-       "workspaceName": "my-app",
+-       "workspaceUri": "file:///projects/my-app",
+-     },
+-   ],
++   "checkpoints": [],
+    "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:21:53
+     19|   await new CheckpointStore(storage).append(checkpoint);
+     20|
+     21|   expect(await new CheckpointStore(storage).load()).toEqual(expected);
+       |                                                     ^
+     22|   expect(JSON.parse(storage.contents!)).toEqual(expected);
+     23| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  09:41:58
+   Duration  176ms (transform 55%, import 20%, tests 18%, worker 7%)
+

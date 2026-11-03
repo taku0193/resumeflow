@@ -1,0 +1,86 @@
+# ResumeFlow
+
+開発作業を中断するときの文脈をチェックポイントに保存し、再開を助けるローカル専用 VS Code 拡張機能です。仕様は `SPEC.md`、開発順序は `TEST_PLAN.md` を参照してください。
+
+現在は **S0 / S1 の開発用基盤**です。完成した拡張機能ではありません。コマンドパレットからの保存・一覧・再開・削除は、後続の開発スライスで追加します。
+
+## 開発環境
+
+- Node.js 22.12 以降（22系・24系・26以降）、npm
+- VS Code 1.100 以降
+- 統合テストには GUI のある環境が必要です。Linux CI は `xvfb-run` を使用します。
+
+```bash
+npm ci
+npm run verify
+npm run test:coverage
+npm run test:integration
+```
+
+`package-lock.json` で依存関係を固定しています。単体テストは Vitest、統合テストは `@vscode/test-cli` / `@vscode/test-electron` と Mocha を使用します。
+
+検証済みの環境は macOS arm64 / Node.js 26.13.0 / npm 11.20.0 です。型チェック・単体テスト4件・ビルドは成功しました。単体テストのうち3件が P1-01〜03、1件が基盤のスモークテストです。保存サービスのみのカバレッジは statements / branches ともに 100% です。
+
+**GUI 統合テストは未完了です。** この実行環境では VS Code 1.144.0 の起動時、macOS のアプリ登録処理で `SIGABRT` が発生し、テスト本体に到達しませんでした。F5 起動も未検証です。詳細な証跡と制約は [開発記録](DEVELOPMENT_LOG.md) を参照してください。
+
+統合テストは毎回 `.test-data/run-*` に専用ワークスペース・ユーザーデータ・拡張領域を作ります。通常の VS Code 設定や保存領域は使いません。初回はテスト用 VS Code をダウンロードします。インストール済みの実行ファイルを指定することもできます。
+
+```bash
+# macOS: インストール済み VS Code を使用する場合
+VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code' npm run test:integration
+```
+
+テスト終了後、不要になった `.test-data/` と `.vscode-test/` は削除可能です。
+
+## このプロジェクトの開発方法
+
+コード編集と単体検証は、このチャットとワークスペース内で進めます。ローカルの VS Code 起動は開発の前提にしません。GitHub では `taku0193/resumeflow` を非公開で管理し、GitHub Actions で型チェック・単体テスト・ビルド・Xvfb 上の拡張統合テストを実行します。
+
+## 開発用拡張の起動（後日、手動確認が必要な場合）
+
+1. この `resumeflow` フォルダを VS Code で開きます。
+2. `npm ci` を実行します。
+3. F5 で `Run ResumeFlow Extension` を起動します。
+4. Extension Development Host が開きます。現段階では起動の確認のみ可能です。操作コマンドはまだありません。
+
+## npm scripts
+
+| コマンド | 用途 |
+| --- | --- |
+| `npm run test:unit` | VS Code 実体を使用しない単体テスト |
+| `npm run test:unit:watch` | 単体テストの継続実行 |
+| `npm run test:coverage` | コアサービスのカバレッジ |
+| `npm run test:integration` | ビルド後、専用 VS Code で統合テスト |
+| `npm run typecheck` | 拡張コード・テストの型チェック |
+| `npm run build` | TypeScript から `dist/` にコンパイル |
+| `npm run verify` / `npm test` | 型チェック → 単体テスト → ビルド |
+
+## 構成
+
+- `src/extension.ts`: 拡張の起動と依存関係の接続
+- `src/models/`: バージョン付きチェックポイントの型
+- `src/services/`: VS Code に依存しない保存ロジック
+- `src/adapters/`: VS Code のストレージ I/O
+- `tests/`: メモリ上の偽 I/O を使う単体テスト
+- `src/test/`: VS Code Extension Development Host 内の統合テスト
+- `.github/workflows/ci.yml`: 型・単体・ビルドと Linux GUI 統合テスト
+
+## 保存データとプライバシー
+
+保存先は `ExtensionContext.globalStorageUri` 配下の `checkpoints.json` です。チェックポイントは `schemaVersion: 1` を使用します。製品コードはネットワーク通信、Git 操作、ソースや未保存バッファの本文取得を行いません。npm のインストールおよび統合テスト用 VS Code の取得にはネットワーク接続が必要です。
+
+今は型付きチェックポイントを受け取るストレージ層のみです。実データを使った運用は、S2 のスキーマ検証・破損保護・書込異常テストと S5 の保存 UI が完成してから行ってください。テストは専用保存領域で実行します。
+
+## 開発範囲
+
+| スライス | 内容 | 状態 |
+| --- | --- | --- |
+| S0 | 雛形・単体／統合テスト基盤 | 実装済み。GUI 起動は未検証 |
+| S1 | P1-01 初期化、P1-02 保存・再読込、P1-03 追記 | 単体検証済み。実 VS Code I/O は統合テスト待ち |
+| S2 | P1-04〜06 スキーマ検証・破損保護・書込失敗 | 次回 |
+| S3〜S6 | エディタ取得・Git取得・保存 UI・保存コマンド統合 | 未着手 |
+| S7〜S9 | 一覧・再開・削除 | 未着手 |
+
+資料内で MVP の v0.1 / v0.2 表記が混在していますが、v0.2 を開発手順の改定、保存スキーマを 1 と解釈しています。初回の作業範囲には `CODEX_START_PROMPT.md` の S0 / S1 を採用しています。
+
+参考: [VS Code 公式の拡張統合テスト手順](https://code.visualstudio.com/api/working-with-extensions/testing-extension)、[Vitest 公式ガイド](https://vitest.dev/guide/)。
