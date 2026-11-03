@@ -1,5 +1,7 @@
 # ResumeFlow — 初期仕様書 (MVP v0.2 / TDD対応)
 
+> 方針更新（2026-11-03）: 今後は CLI / Codex だけでも使える入口を優先する。本文は実装済み S0〜S3 と従来の VS Code 操作の基準として保持する。改訂するコマンド・データ契約・互換方針は [Issue #5](https://github.com/taku0193/resumeflow/issues/5)、作業順は [ROADMAP.md](ROADMAP.md) で追跡する。CLI と skill は未実装。エディタ対応先の選定は保留。
+
 - ステータス: TDD 開発用仕様案（Codex 実装ベースライン）
 - 作成日: 2026-11-03
 - 製品名: ResumeFlow（仮称）
