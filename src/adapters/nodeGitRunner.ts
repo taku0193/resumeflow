@@ -4,6 +4,13 @@ import { decodeCheckpointText } from '../models/checkpointEncoding';
 import { GitCommandError } from '../services/gitCapture';
 export class NodeGitRunner implements GitRunner {
   async run(directory: string, args: readonly string[]): Promise<string> {
+    const allowed = [
+      ['rev-parse', '--show-toplevel'], ['symbolic-ref', '--quiet', '--short', 'HEAD'],
+      ['rev-parse', '--verify', '--quiet', 'HEAD'], ['status', '--porcelain=v1', '-z', '--untracked-files=all'],
+    ];
+    if (!allowed.some(command => command.length === args.length && command.every((arg, index) => arg === args[index]))) {
+      throw new GitCommandError('GIT_COMMAND_NOT_ALLOWED');
+    }
     return new Promise((resolve, reject) => {
       execFile('git', ['--no-optional-locks', '-c', 'core.fsmonitor=false', ...args], {
         cwd: directory, shell: false, timeout: 2000, maxBuffer: 1024 * 1024, encoding: 'buffer', windowsHide: true,

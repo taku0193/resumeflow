@@ -31,3 +31,8 @@ test.each([
   expect(caught).toMatchObject({ code });
   expect(String(caught)).not.toContain('SENSITIVE_NATIVE_STDERR');
 });
+test.each([['reset', '--hard'], ['status', '--', ';bad'], ['commit']])('C8-N3: refuses an unapproved argument array %j before spawning', async (...args) => {
+  complete(null);
+  await expect(new NodeGitRunner().run('/synthetic', args)).rejects.toMatchObject({ code: 'GIT_COMMAND_NOT_ALLOWED' });
+  expect(execFile).not.toHaveBeenCalled();
+});
