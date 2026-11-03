@@ -1,5 +1,6 @@
 import { mkdtemp, mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { ExTester, ReleaseQuality } from 'vscode-extension-tester';
 import { packageForE2e, projectRoot } from './package-e2e.mjs';
 
@@ -12,14 +13,14 @@ if (process.env.GITHUB_ACTIONS !== 'true') {
 const testRoot = join(projectRoot, '.test-data/e2e');
 await mkdir(testRoot, { recursive: true });
 const runRoot = await mkdtemp(join(testRoot, 'run-'));
-const workspace = join(runRoot, 'workspace');
-await mkdir(workspace);
+// Keep non-Git fixtures outside the source checkout and its parent repository.
+const workspace = await mkdtemp(join(tmpdir(), 'resumeflow-e2e-workspace-'));
 await writeFile(join(workspace, 'README.txt'), 'ResumeFlow E2E: synthetic test workspace only.\n');
 const settingsPath = join(runRoot, 'settings.json');
 await writeFile(settingsPath, JSON.stringify({
   'telemetry.telemetryLevel': 'off',
   'update.mode': 'none',
-  'extensions.autoUpdate': false,
+  'extensions.autoUpdate': 'off',
   'extensions.autoCheckUpdates': false,
   'workbench.startupEditor': 'none',
   'security.workspace.trust.enabled': false,

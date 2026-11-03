@@ -35,6 +35,8 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Install Japanese fonts for UI evidence
+        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends fonts-noto-cjk
       - name: Exercise installed VSIX through the VS Code UI
         run: |
           set -o pipefail

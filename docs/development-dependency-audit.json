@@ -18,6 +18,26 @@
       ],
       "fixAvailable": false
     },
+    "@vscode/vsce": {
+      "name": "@vscode/vsce",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "minimatch"
+      ],
+      "effects": [
+        "vscode-extension-tester"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@vscode/vsce"
+      ],
+      "fixAvailable": {
+        "name": "vscode-extension-tester",
+        "version": "5.9.1",
+        "isSemVerMajor": true
+      }
+    },
     "c8": {
       "name": "c8",
       "severity": "moderate",
@@ -26,11 +46,13 @@
         "test-exclude"
       ],
       "effects": [
-        "@vscode/test-cli"
+        "@vscode/test-cli",
+        "vscode-extension-tester"
       ],
       "range": ">=10.0.0",
       "nodes": [
-        "node_modules/c8"
+        "node_modules/c8",
+        "node_modules/vscode-extension-tester/node_modules/c8"
       ],
       "fixAvailable": false
     },
@@ -92,7 +114,8 @@
       "effects": [
         "@vscode/test-cli",
         "mocha",
-        "test-exclude"
+        "test-exclude",
+        "vscode-extension-tester"
       ],
       "range": "3.0.0 - 14.0.1",
       "nodes": [
@@ -125,6 +148,7 @@
       ],
       "effects": [
         "@vscode/test-cli",
+        "@vscode/vsce",
         "glob",
         "mocha",
         "test-exclude"
@@ -235,24 +259,44 @@
         "node_modules/test-exclude"
       ],
       "fixAvailable": false
+    },
+    "vscode-extension-tester": {
+      "name": "vscode-extension-tester",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@vscode/vsce",
+        "c8",
+        "glob"
+      ],
+      "effects": [],
+      "range": ">=5.3.0",
+      "nodes": [
+        "node_modules/vscode-extension-tester"
+      ],
+      "fixAvailable": {
+        "name": "vscode-extension-tester",
+        "version": "5.9.1",
+        "isSemVerMajor": true
+      }
     }
   },
   "metadata": {
     "vulnerabilities": {
       "info": 0,
       "low": 1,
-      "moderate": 6,
+      "moderate": 8,
       "high": 1,
       "critical": 0,
-      "total": 8
+      "total": 10
     },
     "dependencies": {
       "prod": 1,
-      "dev": 254,
-      "optional": 48,
+      "dev": 474,
+      "optional": 69,
       "peer": 35,
       "peerOptional": 0,
-      "total": 254
+      "total": 474
     }
   }
 }
