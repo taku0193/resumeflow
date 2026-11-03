@@ -2,7 +2,7 @@
 
 親タスク: [Issue #4](https://github.com/taku0193/resumeflow/issues/4)。CLI または Codex だけで中断の文脈を保存し、再開時に取り出せる入口を追加する。エディタ対応先の選定は保留。
 
-CLIの保存・一覧・詳細・再開用Markdown・確認付き削除とCodex skillを実装した。既存S0〜S3も保持している。#5〜12と#14はマージ済み、#13は最終CI確認中。使い方は README.md / CLI_SPEC.md を参照。
+CLIの保存・一覧・詳細・再開用Markdown・確認付き削除とCodex skillを実装した。既存S0〜S3も保持している。#5〜13と#14の実装・受入検証を完了。使い方は README.md / CLI_SPEC.md を参照。
 
 ## 目指す利用の流れ
 
@@ -25,7 +25,7 @@ CLIの保存・一覧・詳細・再開用Markdown・確認付き削除とCodex 
 | [#10](https://github.com/taku0193/resumeflow/issues/10) | CLI の一覧・詳細・再開用 Markdown | #9 | 完了・PR #21 マージ済み |
 | [#11](https://github.com/taku0193/resumeflow/issues/11) | CLI での確認付き削除 | #6、#9 | 完了・PR #22 マージ済み |
 | [#12](https://github.com/taku0193/resumeflow/issues/12) | Codex の依頼を CLI へ接続する skill | #9、#10 | 完了・PR #23 マージ済み |
-| [#13](https://github.com/taku0193/resumeflow/issues/13) | 別プロセスでの再開を含む CLI E2E / CI | #9、#10、#11 | 実装済み・PR #24 CI確認中 |
+| [#13](https://github.com/taku0193/resumeflow/issues/13) | 別プロセスでの再開を含む CLI E2E / CI | #9、#10、#11 | 完了・PR #24（受入CI成功） |
 
 各機能の単体テストと該当 CLI E2E は、その機能の PR で追加する。#13 はテストの後回しではなく、終了・再起動を含む通しの完了ゲートを整備する作業である。実ファイル I/O 統合、CLI 実プロセス E2E、既存の VS Code UI E2E は結果を分ける。
 

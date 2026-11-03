@@ -52,7 +52,7 @@ VS Code UIの保存・再開はまだ実装していないため、今回その�
 - 機能の実装では、まず小さなふるまいを TDD で固め、対応する統合・UI E2E を追加します。テスト環境整備や既存動作への保護テストは、製品機能の RED/GREEN 証跡に数えません。
 - 保存機能の完成には E2E-01〜04・11・12・14、Phase 2 の完成には E2E-05〜10・13 の成功も必要とします。
 - テストが実行できなかった場合は「未実行」、失敗した場合は「失敗」と記録します。API 統合の成功だけで UI E2E の成功を代用しません。
-- PR / push の確認では単体・統合・E2E の各ジョブを確認します。リリース前には Windows / macOS の実機確認も行い、Linux E2E だけで全 OS の確認完了としません。
+- PR / pushでは各層のジョブを確認します。CLIは3OSのCIで検証します。VS Code UIのWindows / macOS実機確認は未実施で、LinuxのUI E2Eだけで全OSのUI確認完了としません。
 
 実行コマンド:
 
@@ -85,4 +85,4 @@ CLI/Node I/O/実Git/ゲートはLinux・macOS・WindowsのCI、実TTYはLinuxの
 
 各CLI/NodeスイートのTAPまたはVitest JSON要約を検査し、0件・失敗・skip/todo/cancelを拒否する。ソースのonly/skip/todoも検査する。MochaのAPI/UIはforbidOnly / forbidPending / failZeroを設定する。TDDの明示的な名前絞込では未選択ケースを除外する。
 
-[PR #24](https://github.com/taku0193/resumeflow/pull/24) の複数OS CIは確認中。製品機能の追加ではない通し保護テストやパッケージ検査に、架空の製品REDを付けない。詳細と実ログは [CLI TDD記録](docs/CLI_TDD_LOG.md) に残す。
+[PR #24](https://github.com/taku0193/resumeflow/pull/24) の [受入CI](https://github.com/taku0193/resumeflow/actions/runs/41585586691) は全6ジョブ成功。製品機能の追加ではない通し保護テストやパッケージ検査に、架空の製品REDを付けない。詳細と実ログは [CLI TDD記録](docs/CLI_TDD_LOG.md) に残す。

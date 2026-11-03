@@ -1,6 +1,6 @@
 # ResumeFlow
 
-中断時のメモ・次の行動・プロジェクト・任意のGit状態をローカルに保存し、別のCLIプロセスから再開用Markdownを取得できます。エディタ、AI API、サーバー、ネットワーク接続を実行時に必要としません。CLI MVPは実装済みで、[最終E2EのPR #24](https://github.com/taku0193/resumeflow/pull/24) の複数OS CIを確認中です。
+中断時のメモ・次の行動・プロジェクト・任意のGit状態をローカルに保存し、別のCLIプロセスから再開用Markdownを取得できます。エディタ、AI API、サーバー、ネットワーク接続を実行時に必要としません。CLI MVPは実装済みで、[受入CI](https://github.com/taku0193/resumeflow/actions/runs/41585586691) がLinux・macOS・Windowsで成功しました。最終E2Eと配布の変更は [PR #24](https://github.com/taku0193/resumeflow/pull/24) にまとめています。
 
 ## 使い始める
 
