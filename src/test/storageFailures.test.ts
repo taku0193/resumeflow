@@ -38,6 +38,21 @@ suite('S2: real storage failure protection', () => {
     });
   }
 
+  test('replaces an existing JSON file while preserving both checkpoint records', async () => {
+    await inTestDirectory('s2-successful-replacement', async directory => {
+      const first = checkpointFixture();
+      const second = checkpointFixture({ id: 'b9b2c3d4-1111-4222-8333-123456789abc' });
+      const store = new CheckpointStore(new VscodeCheckpointStorage(directory));
+      await store.append(first);
+      await store.append(second);
+
+      const reloaded = await new CheckpointStore(new VscodeCheckpointStorage(directory)).load();
+      assert.deepEqual(reloaded, { schemaVersion: 1, checkpoints: [first, second] });
+      const entries = await vscode.workspace.fs.readDirectory(directory);
+      assert.deepEqual(entries.map(([name]) => name), ['checkpoints.json']);
+    });
+  });
+
   test('cleans up a temporary file and preserves the target when replacement fails', async () => {
     await inTestDirectory('s2-failed-replacement', async directory => {
       const target = vscode.Uri.joinPath(directory, 'checkpoints.json');

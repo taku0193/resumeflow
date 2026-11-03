@@ -1,0 +1,30 @@
+
+> resumeflow@0.0.1 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+      Coverage enabled with v8
+
+
+ Test Files  3 passed (3)
+      Tests  76 passed (76)
+   Start at  11:04:57
+   Duration  626ms (tests 40%, worker 25%, import 22%, transform 13%)
+
+ % Coverage report from v8
+No files with missing coverage.
+4 files fully covered.
+1 empty file skipped.
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 81/81 )
+Branches     : 100% ( 36/36 )
+Functions    : 100% ( 17/17 )
+Lines        : 100% ( 77/77 )
+================================================================================
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
