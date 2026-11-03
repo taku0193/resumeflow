@@ -22,7 +22,7 @@ npm run cli -- context UUID
 npm run cli -- delete UUID
 ```
 
-削除は端末で確認し、キャンセルできます。非対話実行では明示の `--yes` が必要です。保存先はカレントディレクトリのプロジェクトで、別の場所を対象にする場合は、各操作へ `--project /absolute/path/to/project` を追加します。Gitメタデータは `save --allow-git` を指定したときだけ取得します。
+削除は端末で確認し、キャンセルできます。非対話実行では明示の `--yes` が必要です。操作対象はカレントディレクトリのプロジェクトで、別の場所を対象にする場合は、各操作へ `--project /absolute/path/to/project` を追加します。Gitメタデータは `save --allow-git` を指定したときだけ取得します。
 
 機械処理には `--format json` を使います。成功はstdout、エラーはstderrのJSONと非0終了コードです。`context` の既定はMarkdownです。詳細な引数、エラー、スキーマは [CLI_SPEC.md](CLI_SPEC.md) を参照してください。
 

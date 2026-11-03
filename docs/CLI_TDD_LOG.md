@@ -55,3 +55,5 @@ skill構造検証は初回PythonにPyYAMLがなく失敗し、次にuvの既定�
 [CI run 41585586691](https://github.com/taku0193/resumeflow/actions/runs/41585586691) の全6ジョブが成功。headは `71e32fc8c65f72d01f21393f3906fa22c6dc3b54`。各層の実ログ抜粋は `C13-ci-summary.json` に残す。POSIX TTYはLinux専用にし、Windows/macOSのCIテストへskipケースとして混ぜない。最終ワークフローではLinux unitジョブにTTYを配置する。
 
 VS Codeの保存・再開UI、ファイル/カーソル復元、追加エディタ対応は今回のCLI MVPに含まれない。既存S0〜S3とUI E2E-00は保持し、未実装UIの成功として報告しない。詳細はREADME / E2E_PLANを参照。
+
+その後、coverage閾値とLinux専用TTY配置を含むhead `38fbdf1deff2b81d6168d71a4e918ddcf0281ad5` の [CI run 41586286963](https://github.com/taku0193/resumeflow/actions/runs/41586286963) でも全6ジョブが成功した。
