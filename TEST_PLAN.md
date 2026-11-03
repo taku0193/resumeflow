@@ -106,11 +106,11 @@ NEXT: P1-02 保存して再読込する
 
 | 対象 | 状況 | 証跡 |
 | --- | --- | --- |
-| S0 | 雛形とテスト基盤を実装。GUI 起動は未検証 | `DEVELOPMENT_LOG.md` |
+| S0 | 雛形とテスト基盤を実装。CI で Extension Host の起動確認成功 | `DEVELOPMENT_LOG.md` |
 | P1-01 | RED → GREEN → 回帰確認済み | `tests/checkpointStore.test.ts` / `docs/tdd-evidence/P1-01-*.log` |
 | P1-02 | RED → GREEN → 回帰確認済み | `tests/checkpointStore.test.ts` / `docs/tdd-evidence/P1-02-*.log` |
 | P1-03 | RED → GREEN → REFACTOR → 回帰確認済み | `tests/checkpointStore.test.ts` / `docs/tdd-evidence/P1-03-*.log` |
-| S1 の VS Code I/O 補完テスト | テストを配置。ホスト起動が SIGABRT のためテスト本体は未実行 | `src/test/extension.test.ts` / `docs/tdd-evidence/final-integration.log` |
+| S1 の VS Code I/O 補完テスト | CI の Linux / Xvfb 上で2件成功。macOS ローカルの初回起動失敗は過去ログに保持 | `src/test/extension.test.ts` / GitHub Actions run `41556242212` |
 | P1-04〜P1-18 / P2-* | 未着手 | 次の対象は S2 / P1-04〜06 |
 
 S1 の補完統合テストは、未実装の保存コマンドに関する P1-17 / P1-18 の代替にはしていない。

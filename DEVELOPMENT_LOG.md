@@ -36,7 +36,7 @@ P1-01 は空のコレクションを返す最小実装とし、整理時も不�
 
 [S0 基盤確認](docs/tdd-evidence/S0-setup.log)と[S1 リファクタリング後の検証](docs/tdd-evidence/S1-refactor.log)も保存しました。S0 の設定作業は製品機能の RED/GREEN として数えていません。
 
-## 最終検証
+## S0 / S1 初回のローカル検証
 
 | 項目 | 実行結果 |
 | --- | --- |
@@ -44,14 +44,31 @@ P1-01 は空のコレクションを返す最小実装とし、整理時も不�
 | `npm run test:coverage` | 成功。保存サービスの statements / branches / functions / lines はすべて 100%。 [ログ](docs/tdd-evidence/final-coverage.log) |
 | `VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code' npm run test:integration` | ビルド成功後、VS Code 起動が `SIGABRT`。Mocha の2件は実行されていない。 [ログ](docs/tdd-evidence/final-integration.log) |
 | F5 手動起動 | 未検証 |
-| GitHub Actions | ワークフローを配置済み。リモート実行は未実施 |
-| Windows / Linux / 最小 VS Code バージョン | 未検証 |
+| GitHub Actions | この初回確認時点では未実施。その後の成功結果は次節を参照 |
+| Windows / Linux / 最小 VS Code バージョン | この初回確認時点では未検証。Linux はその後 CI で検証済み |
 
-VS Code 1.144.0 のクラッシュ診断には `EXC_CRASH / SIGABRT` と `_RegisterApplication` / `___RegisterApplication_block_invoke` が記録されていました。拡張テスト本体の成否は判断できません。GUI が利用できる開発環境で上記の統合テストを実行し、F5 で起動を確認してください。既定の `npm run test:integration` はテスト用 VS Code を取得して実行できます。
+VS Code 1.144.0 のクラッシュ診断には `EXC_CRASH / SIGABRT` と `_RegisterApplication` / `___RegisterApplication_block_invoke` が記録されていました。このローカル試行では拡張テスト本体の成否は判断できませんでした。ユーザーの希望により、以後ローカルの VS Code は開かず、統合テストを GitHub Actions の Xvfb 上で実行する方針に変更しました。
 
 最初の起動試行では実行ファイル名を `Electron` と指定したため `ENOENT` になり、インストール内容を確認して `Code` に修正しました。最初のアダプタ型チェックでは VS Code の `Thenable` に `.catch` がないため失敗し、`try/catch` に修正して最終検証は成功しました。この失敗は製品機能の RED に数えていません。[型チェック初回ログ](docs/tdd-evidence/adapter-typecheck-initial.log)
 
-カバレッジの対象は `src/services/` の1ファイルだけです。VS Code アダプタ、エラー経路、UI の検証完了を意味しません。統合テストは拡張起動と、専用ワークスペース内での実ファイル I/O 往復を検証する内容を用意しています。P1-17 / P1-18 の保存コマンド統合テストは S6 で追加予定です。
+カバレッジの対象は `src/services/` の1ファイルだけです。アダプタのエラー経路や UI の検証完了を意味しません。統合テストは拡張起動と、専用ワークスペース内での実ファイル I/O 往復を検証する内容で、次節の CI で実行済みです。P1-17 / P1-18 の保存コマンド統合テストは S6 で追加予定です。
+
+## GitHub 管理と CI の実行結果
+
+ユーザーの追加依頼に基づき、`taku0193/resumeflow` を非公開リポジトリとして作成しました。初期コミット `79d574393c4064700fbfa648dc1ab3fb349996e0` にソース、仕様書、TDD の実行記録を登録し、`main` を push 済みです。
+
+HTTPS 認証では workflow スコープ不足により Actions 定義を含む push が拒否されました。既存の SSH 認証を利用して解決し、origin は `git@github.com:taku0193/resumeflow.git` に設定しています。認証情報をソースや Git 設定に保存していません。
+
+[GitHub Actions 実行 41556242212](https://github.com/taku0193/resumeflow/actions/runs/41556242212) は以下の結果で成功しました。
+
+| ジョブ | 環境・内容 | 結果 |
+| --- | --- | --- |
+| unit | `npm ci` → `npm run verify`（型チェック・単体4件・ビルド） | 成功 |
+| integration | Ubuntu 26.04.1 / Node.js 22.23.4 / VS Code 1.144.1、`xvfb-run -a npm run test:integration` | 2件成功、exit 0 |
+
+統合テストの成功項目は `the extension activates in VS Code` と `stores JSON and reloads it using a fresh adapter and service` です。ローカルで未確認だった基本の VS Code I/O が CI 上で確認できました。Windows と最小 VS Code バージョンは引き続き未検証です。
+
+初回 CI で Actions v4 の Node.js 20 実行基盤に非推奨警告が出たため、公式のリリース情報・action.yml を確認し、`actions/checkout@v7.0.1` と `actions/setup-node@v7.1.0`（Node.js 24 実行基盤）に更新しました。製品の TypeScript コードは変更していません。以後の開発方針は `AGENTS.md` に記録しました。
 
 ## 残課題と次のスライス
 

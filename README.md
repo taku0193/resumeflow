@@ -14,14 +14,15 @@
 npm ci
 npm run verify
 npm run test:coverage
-npm run test:integration
 ```
 
 `package-lock.json` で依存関係を固定しています。単体テストは Vitest、統合テストは `@vscode/test-cli` / `@vscode/test-electron` と Mocha を使用します。
 
 検証済みの環境は macOS arm64 / Node.js 26.13.0 / npm 11.20.0 です。型チェック・単体テスト4件・ビルドは成功しました。単体テストのうち3件が P1-01〜03、1件が基盤のスモークテストです。保存サービスのみのカバレッジは statements / branches ともに 100% です。
 
-**GUI 統合テストは未完了です。** この実行環境では VS Code 1.144.0 の起動時、macOS のアプリ登録処理で `SIGABRT` が発生し、テスト本体に到達しませんでした。F5 起動も未検証です。詳細な証跡と制約は [開発記録](DEVELOPMENT_LOG.md) を参照してください。
+**GitHub Actions で単体テスト4件と拡張統合テスト2件が成功しました。** 統合テストは Ubuntu 26.04.1 / Node.js 22.23.4 / VS Code 1.144.1 の Xvfb 上で実行し、拡張起動と実ファイル保存・再読込を確認しました。[CI の実行結果](https://github.com/taku0193/resumeflow/actions/runs/41556242212)
+
+初回の macOS ローカル実行では VS Code 起動時に `SIGABRT` が発生しました。以後、ローカル VS Code の起動は行わず、GUI が必要な検証は CI で実行します。F5 手動起動は未検証です。詳細な証跡と制約は [開発記録](DEVELOPMENT_LOG.md) を参照してください。
 
 統合テストは毎回 `.test-data/run-*` に専用ワークスペース・ユーザーデータ・拡張領域を作ります。通常の VS Code 設定や保存領域は使いません。初回はテスト用 VS Code をダウンロードします。インストール済みの実行ファイルを指定することもできます。
 
@@ -34,7 +35,7 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 
 ## このプロジェクトの開発方法
 
-コード編集と単体検証は、このチャットとワークスペース内で進めます。ローカルの VS Code 起動は開発の前提にしません。GitHub では `taku0193/resumeflow` を非公開で管理し、GitHub Actions で型チェック・単体テスト・ビルド・Xvfb 上の拡張統合テストを実行します。
+コード編集と単体検証は、このチャットとワークスペース内で進めます。ローカルの VS Code 起動は開発の前提にしません。GitHub では [taku0193/resumeflow](https://github.com/taku0193/resumeflow) を非公開で管理し、GitHub Actions で型チェック・単体テスト・ビルド・Xvfb 上の拡張統合テストを実行します。`main` への push と pull request が CI の実行対象です。
 
 ## 開発用拡張の起動（後日、手動確認が必要な場合）
 
@@ -75,8 +76,8 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 
 | スライス | 内容 | 状態 |
 | --- | --- | --- |
-| S0 | 雛形・単体／統合テスト基盤 | 実装済み。GUI 起動は未検証 |
-| S1 | P1-01 初期化、P1-02 保存・再読込、P1-03 追記 | 単体検証済み。実 VS Code I/O は統合テスト待ち |
+| S0 | 雛形・単体／統合テスト基盤 | 実装済み。CI の Extension Host 起動も成功 |
+| S1 | P1-01 初期化、P1-02 保存・再読込、P1-03 追記 | 単体検証と CI の実 VS Code I/O 検証が成功 |
 | S2 | P1-04〜06 スキーマ検証・破損保護・書込失敗 | 次回 |
 | S3〜S6 | エディタ取得・Git取得・保存 UI・保存コマンド統合 | 未着手 |
 | S7〜S9 | 一覧・再開・削除 | 未着手 |
