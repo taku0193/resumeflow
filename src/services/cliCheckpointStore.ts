@@ -3,6 +3,7 @@ import { assertCliCollection, parseCliCollection } from '../models/cliSchema';
 import type { CheckpointStorage } from './checkpointStore';
 import { JsonCollectionStore } from './jsonCollectionStore';
 import { CliError } from '../models/cliError';
+import { findProjectCheckpoint } from './checkpointQueries';
 
 export class CliCheckpointStore extends JsonCollectionStore<CliCollection> {
   constructor(storage: CheckpointStorage) {
@@ -12,6 +13,12 @@ export class CliCheckpointStore extends JsonCollectionStore<CliCollection> {
     const current = await this.load();
     requireWritable(current);
     await this.save({ schemaVersion: 2, checkpoints: [...current.checkpoints, checkpoint] });
+  }
+  async remove(id: string, workspaceUri: string): Promise<void> {
+    const current = await this.load();
+    requireWritable(current);
+    const target = findProjectCheckpoint(current, id, workspaceUri);
+    await this.save({ schemaVersion: 2, checkpoints: current.checkpoints.filter(record => record.id !== target.id) });
   }
 }
 
