@@ -33,6 +33,7 @@ export function assertCliCollection(collection: CliCollection): void {
   });
   // Reuse all v1 field, value, URI and uniqueness constraints.
   assertCheckpointCollection({ schemaVersion: 1, checkpoints: legacy });
+  requireFormat(new Set(collection.checkpoints.map(checkpoint => checkpoint.id.toLowerCase())).size === collection.checkpoints.length);
 }
 
 export function parseCliCollection(contents: string): CliCollection {
