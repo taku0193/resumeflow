@@ -5,6 +5,8 @@ import { afterEach, expect, test } from 'vitest';
 import { NodeCheckpointStorage } from '../src/adapters/nodeCheckpointStorage';
 import { CheckpointStore } from '../src/services/checkpointStore';
 import { checkpointFixture } from '../src/test/fixtures/checkpointFixture';
+import { cliCheckpointFixture } from '../src/test/fixtures/cliCheckpointFixture';
+import { CliCheckpointStore } from '../src/services/cliCheckpointStore';
 
 const roots: string[] = [];
 async function directory(): Promise<string> {
@@ -57,4 +59,24 @@ test('C6 regression: failed replacement preserves a nonempty target directory an
   await expect(new NodeCheckpointStorage(root).writeAtomic('{}')).rejects.toBeDefined();
   expect(await readFile(join(path, 'marker'), 'utf8')).toBe('untouched');
   expect(await readdir(root)).toEqual(['checkpoints.json']);
+});
+
+test('C6-05: portable store appends schema2 through the common JSON store', async () => {
+  const storage = new NodeCheckpointStorage(await directory());
+  const first = cliCheckpointFixture();
+  const second = cliCheckpointFixture({ id: 'b9b2c3d4-1111-4222-8333-123456789abc', note: 'second' });
+  const store = new CliCheckpointStore(storage);
+  await store.append(first);
+  await store.append(second);
+  expect((await new CliCheckpointStore(storage).load()).checkpoints).toEqual([first, second]);
+});
+
+test('C6-05: schema1 is readable but append refuses to alter its bytes', async () => {
+  const root = await directory();
+  const original = JSON.stringify({ schemaVersion: 1, checkpoints: [checkpointFixture()] });
+  await writeFile(join(root, 'checkpoints.json'), original);
+  const store = new CliCheckpointStore(new NodeCheckpointStorage(root));
+  expect((await store.load()).checkpoints[0]?.editorCapture).toBe('legacy-unknown');
+  await expect(store.append(cliCheckpointFixture())).rejects.toMatchObject({ code: 'LEGACY_READ_ONLY' });
+  expect(await readFile(join(root, 'checkpoints.json'), 'utf8')).toBe(original);
 });
