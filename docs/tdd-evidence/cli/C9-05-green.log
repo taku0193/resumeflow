@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/nodeCliContext.test.ts -t C9-05
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  13:55:10
+   Duration  149ms (transform 55%, import 30%, tests 9%, worker 5%)
+

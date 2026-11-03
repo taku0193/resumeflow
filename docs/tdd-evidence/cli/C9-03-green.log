@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/createCliCheckpoint.test.ts -t C9-03
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  13:40:31
+   Duration  137ms (transform 50%, import 29%, tests 12%, worker 9%)
+
