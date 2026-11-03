@@ -1,0 +1,25 @@
+
+> resumeflow@0.0.1 verify
+> npm run typecheck && npm run test:unit && npm run build
+
+
+> resumeflow@0.0.1 typecheck
+> tsc --noEmit && tsc -p tsconfig.unit.json
+
+
+> resumeflow@0.0.1 test:unit
+> vitest run
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  2 passed (2)
+      Tests  10 passed (10)
+   Start at  10:40:18
+   Duration  204ms (transform 45%, import 30%, tests 14%, worker 10%)
+
+
+> resumeflow@0.0.1 build
+> tsc -p tsconfig.json
+

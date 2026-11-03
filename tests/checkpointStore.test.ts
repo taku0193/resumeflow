@@ -39,3 +39,15 @@ test('P1-03: appending a new ID preserves existing checkpoints and their content
   expect(reloaded).toEqual({ schemaVersion: 1, checkpoints: [first, second] });
   expect(reloaded.checkpoints.map(checkpoint => checkpoint.id)).toEqual([first.id, second.id]);
 });
+
+test.each([
+  ['null', null],
+  ['array', []],
+  ['missing checkpoints', { schemaVersion: 1 }],
+  ['unknown schema version', { schemaVersion: 2, checkpoints: [] }],
+  ['non-array checkpoints', { schemaVersion: 1, checkpoints: {} }],
+  ['unexpected data', { schemaVersion: 1, checkpoints: [], fileBody: 'must not be accepted' }],
+])('P1-04a: rejects an invalid collection (%s)', async (_description, value) => {
+  const store = new CheckpointStore(new MemoryStorage(JSON.stringify(value)));
+  await expect(store.load()).rejects.toMatchObject({ name: 'CheckpointError', code: 'INVALID_SCHEMA' });
+});

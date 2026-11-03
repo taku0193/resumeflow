@@ -1,0 +1,162 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-04a
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (9 tests | 6 failed | 3 skipped) 12ms
+   × P1-04a: rejects an invalid collection (null) 6ms
+   × P1-04a: rejects an invalid collection (array) 1ms
+   × P1-04a: rejects an invalid collection (missing checkpoints) 2ms
+   × P1-04a: rejects an invalid collection (unknown schema version) 1ms
+   × P1-04a: rejects an invalid collection (non-array checkpoints) 0ms
+   × P1-04a: rejects an invalid collection (unexpected data) 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04a: rejects an invalid collection (null)
+AssertionError: promise resolved "null" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+null
+
+ ❯ tests/checkpointStore.test.ts:52:29
+     50| ])('P1-04a: rejects an invalid collection (%s)', async (_description, …
+     51|   const store = new CheckpointStore(new MemoryStorage(JSON.stringify(v…
+     52|   await expect(store.load()).rejects.toMatchObject({ name: 'Checkpoint…
+       |                             ^
+     53| });
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04a: rejects an invalid collection (array)
+AssertionError: promise resolved "[]" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+[]
+
+ ❯ tests/checkpointStore.test.ts:52:29
+     50| ])('P1-04a: rejects an invalid collection (%s)', async (_description, …
+     51|   const store = new CheckpointStore(new MemoryStorage(JSON.stringify(v…
+     52|   await expect(store.load()).rejects.toMatchObject({ name: 'Checkpoint…
+       |                             ^
+     53| });
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04a: rejects an invalid collection (missing checkpoints)
+AssertionError: promise resolved "{ schemaVersion: 1 }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:52:29
+     50| ])('P1-04a: rejects an invalid collection (%s)', async (_description, …
+     51|   const store = new CheckpointStore(new MemoryStorage(JSON.stringify(v…
+     52|   await expect(store.load()).rejects.toMatchObject({ name: 'Checkpoint…
+       |                             ^
+     53| });
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04a: rejects an invalid collection (unknown schema version)
+AssertionError: promise resolved "{ schemaVersion: 2, checkpoints: [] }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [],
++   "schemaVersion": 2,
+  }
+
+ ❯ tests/checkpointStore.test.ts:52:29
+     50| ])('P1-04a: rejects an invalid collection (%s)', async (_description, …
+     51|   const store = new CheckpointStore(new MemoryStorage(JSON.stringify(v…
+     52|   await expect(store.load()).rejects.toMatchObject({ name: 'Checkpoint…
+       |                             ^
+     53| });
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04a: rejects an invalid collection (non-array checkpoints)
+AssertionError: promise resolved "{ schemaVersion: 1, checkpoints: {} }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": {},
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:52:29
+     50| ])('P1-04a: rejects an invalid collection (%s)', async (_description, …
+     51|   const store = new CheckpointStore(new MemoryStorage(JSON.stringify(v…
+     52|   await expect(store.load()).rejects.toMatchObject({ name: 'Checkpoint…
+       |                             ^
+     53| });
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04a: rejects an invalid collection (unexpected data)
+AssertionError: promise resolved "{ schemaVersion: 1, …(2) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [],
++   "fileBody": "must not be accepted",
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:52:29
+     50| ])('P1-04a: rejects an invalid collection (%s)', async (_description, …
+     51|   const store = new CheckpointStore(new MemoryStorage(JSON.stringify(v…
+     52|   await expect(store.load()).rejects.toMatchObject({ name: 'Checkpoint…
+       |                             ^
+     53| });
+     54|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 3 skipped (9)
+   Start at  10:39:44
+   Duration  271ms (transform 52%, tests 21%, import 20%, worker 7%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice
