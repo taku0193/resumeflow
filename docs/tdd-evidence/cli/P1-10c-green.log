@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitStatusParser.test.ts -t P1-10c
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed | 7 skipped (15)
+   Start at  13:29:13
+   Duration  134ms (transform 51%, import 28%, tests 12%, worker 9%)
+

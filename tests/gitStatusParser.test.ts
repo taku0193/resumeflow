@@ -20,3 +20,7 @@ test('P1-10b: rename and copy preserve destination and original as separate path
 test.each(['日本語 file.ts', ' leading and trailing ', 'two\nlines.ts', '"quoted".ts', '--name;$(nothing).ts'])('P1-11 regression: preserves the literal path %j', path => {
   expect(parseGitStatus(`?? ${path}\0`)).toEqual([{ path, status: '??', originalPath: null }]);
 });
+
+test.each([' M truncated', 'XX bad\0', ' M \0', ' M good\0\0', 'R  new\0', 'R  new\0\0', '  unchanged\0', '??missing-space\0'])('P1-10c: rejects malformed or truncated porcelain %j', output => {
+  expect(() => parseGitStatus(output)).toThrow();
+});

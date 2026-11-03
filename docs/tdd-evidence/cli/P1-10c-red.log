@@ -1,0 +1,44 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitStatusParser.test.ts -t P1-10c
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/gitStatusParser.test.ts (15 tests | 8 failed | 7 skipped) 6ms
+   × P1-10c: rejects malformed or truncated porcelain " M truncated" 4ms
+   × P1-10c: rejects malformed or truncated porcelain "XX bad\u0000" 0ms
+   × P1-10c: rejects malformed or truncated porcelain " M \u0000" 0ms
+   × P1-10c: rejects malformed or truncated porcelain " M good\u0000\u0000" 0ms
+   × P1-10c: rejects malformed or truncated porcelain "R  new\u0000" 0ms
+   × P1-10c: rejects malformed or truncated porcelain "R  new\u0000\u0000" 0ms
+   × P1-10c: rejects malformed or truncated porcelain "  unchanged\u0000" 0ms
+   × P1-10c: rejects malformed or truncated porcelain "??missing-space\u0000" 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain " M truncated"
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain "XX bad\u0000"
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain " M \u0000"
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain " M good\u0000\u0000"
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain "R  new\u0000"
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain "R  new\u0000\u0000"
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain "  unchanged\u0000"
+ FAIL  tests/gitStatusParser.test.ts > P1-10c: rejects malformed or truncated porcelain "??missing-space\u0000"
+AssertionError: expected [Function] to throw an error
+ ❯ tests/gitStatusParser.test.ts:25:40
+     23|
+     24| test.each([' M truncated', 'XX bad\0', ' M \0', ' M good\0\0', 'R  new…
+     25|   expect(() => parseGitStatus(output)).toThrow();
+       |                                        ^
+     26| });
+     27|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 7 skipped (15)
+   Start at  13:29:12
+   Duration  177ms (transform 46%, import 26%, tests 21%, worker 8%)
+
