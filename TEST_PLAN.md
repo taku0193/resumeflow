@@ -115,6 +115,8 @@ NEXT: P1-02 保存して再読込する
 | P1-03 | RED → GREEN → REFACTOR → 回帰確認済み | `tests/checkpointStore.test.ts` / `docs/tdd-evidence/P1-03-*.log` |
 | S1 の VS Code I/O 補完テスト | CI の Linux / Xvfb 上で2件成功。macOS ローカルの初回起動失敗は過去ログに保持 | `src/test/extension.test.ts` / GitHub Actions run `41556242212` |
 | E2E-00 | VSIX を実インストールして拡張ビューと詳細画面を操作し、UI E2E 1件成功 | `src/e2e/installedExtension.test.ts` / GitHub Actions run `41558662439` |
-| P1-04〜P1-18 / P2-* | 未着手 | 次の対象は S2 / P1-04〜06 |
+| P1-04〜P1-06 | スキーマ検証、構文・UTF-8 破損保護、read / write 失敗を TDD で実装。単体73件・型チェック・ビルドが成功 | `docs/S2_TDD_LOG.md` / `docs/tdd-evidence/s2/` |
+| S2 の VS Code I/O 補完テスト | 破損 JSON、不正 UTF-8、置換失敗時の保護の3件を追加。実行は CI | `src/test/storageFailures.test.ts` |
+| P1-07〜P1-18 / P2-* | 未着手 | 次の対象は S3 / P1-07〜09 |
 
 S1 の補完統合テストは、未実装の保存コマンドに関する P1-17 / P1-18 の代替にはしていない。
