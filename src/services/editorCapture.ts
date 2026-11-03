@@ -1,7 +1,7 @@
 import type { EditorCapture, EditorSnapshot } from '../models/editorSnapshot';
 
 export function captureEditors(workspaceUri: string, editors: EditorSnapshot): EditorCapture {
-  const openFiles = editors.tabs.flatMap(tab => tab.kind === 'text' ? [tab.uri] : []);
+  const openFiles = [...new Set(editors.tabs.flatMap(tab => tab.kind === 'text' ? [tab.uri] : []))];
   const active = editors.activeEditor;
   return {
     snapshot: {

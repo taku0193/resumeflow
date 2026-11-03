@@ -27,3 +27,15 @@ test('P1-07a: captures two text tabs and the active selection endpoint as zero-b
     warnings: { excludedTabCount: 0, unsavedUntitledCount: 0 },
   });
 });
+
+test('P1-07b: an empty editor area has no active file or cursor', () => {
+  expect(captureEditors(workspaceUri, editorSnapshot({ tabs: [] }))).toEqual({
+    snapshot: { openFiles: [], activeFileUri: null, cursor: null, unsavedFileUris: [] },
+    warnings: { excludedTabCount: 0, unsavedUntitledCount: 0 },
+  });
+});
+
+test('P1-08a: repeated URIs across editor groups are captured once in first-seen order', () => {
+  const editors = editorSnapshot({ tabs: [textTab(secondUri), textTab(firstUri), textTab(secondUri)] });
+  expect(captureEditors(workspaceUri, editors).snapshot.openFiles).toEqual([secondUri, firstUri]);
+});
