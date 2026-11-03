@@ -14,6 +14,10 @@ export function captureEditors(workspaceUri: string, editors: EditorSnapshot): E
       cursor: active ? { line: active.cursor.line, character: active.cursor.character } : null,
       unsavedFileUris: [...new Set(eligibleTabs.filter(tab => tab.isDirty).map(tab => tab.uri))],
     },
-    warnings: { excludedTabCount: editors.tabs.length - eligibleTabs.length, unsavedUntitledCount: 0 },
+    warnings: {
+      excludedTabCount: editors.tabs.length - eligibleTabs.length,
+      unsavedUntitledCount: new Set(editors.tabs.flatMap(tab =>
+        tab.kind === 'text' && tab.scheme === 'untitled' ? [tab.uri] : [])).size,
+    },
   };
 }

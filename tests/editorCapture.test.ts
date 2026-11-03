@@ -78,3 +78,17 @@ test('P1-09a: records dirty eligible file URIs once without reading or retaining
   expect(result.snapshot.unsavedFileUris).toEqual([firstUri]);
   expect(Object.keys(result.snapshot)).toEqual(['openFiles', 'activeFileUri', 'cursor', 'unsavedFileUris']);
 });
+
+test.each([true, false])('P1-09b: an untitled tab (dirty=%s) yields only a distinct warning count', isDirty => {
+  const untitled = textTab('untitled:Untitled-1', { scheme: 'untitled', workspaceUri: null, isDirty });
+  const outside = textTab('file:///outside/private.ts', { workspaceUri: null, isDirty: true });
+  const result = captureEditors(workspaceUri, editorSnapshot({
+    tabs: [textTab(firstUri), untitled, untitled, outside],
+    activeTabUri: 'untitled:Untitled-1',
+    activeEditor: { uri: 'untitled:Untitled-1', cursor: { line: 0, character: 4 } },
+  }));
+  expect(result.warnings).toEqual({ excludedTabCount: 3, unsavedUntitledCount: 1 });
+  expect(result.snapshot).toEqual({ openFiles: [firstUri], activeFileUri: null, cursor: null, unsavedFileUris: [] });
+  expect(JSON.stringify(result)).not.toContain('private.ts');
+  expect(JSON.stringify(result)).not.toContain('Untitled-1');
+});
