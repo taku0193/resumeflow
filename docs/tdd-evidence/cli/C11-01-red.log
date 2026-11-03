@@ -1,0 +1,103 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliDelete.test.ts -t C11-01
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliDelete.test.ts (2 tests | 2 failed) 27ms
+   × C11-01: removes only the selected project record and preserves every other record 24ms
+   × C11-01: deletion preserves legacy data rather than migrating it 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliDelete.test.ts > C11-01: removes only the selected project record and preserves every other record
+AssertionError: expected [ { …(14) }, { …(14) } ] to deeply equal [ { …(14) } ]
+
+- Expected
++ Received
+
+@@ -16,10 +16,40 @@
+        ],
+        "error": null,
+        "headCommit": "1234567890abcdef1234567890abcdef12345678",
+        "repoRootUri": "file:///projects/my-app",
+      },
++     "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++     "nextAction": "テストの期待値を確認する",
++     "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++     "openFiles": [],
++     "schemaVersion": 2,
++     "title": "my-app — 2026-11-03 09:00",
++     "unsavedFileUris": [],
++     "workspaceName": "my-app",
++     "workspaceUri": "file:///projects/my-app",
++   },
++   {
++     "activeFileUri": null,
++     "createdAt": "2026-11-03T00:00:00.000Z",
++     "cursor": null,
++     "editorCapture": "not-connected",
++     "git": {
++       "available": true,
++       "branch": "feature/api",
++       "changes": [
++         {
++           "originalPath": "old name.ts",
++           "path": "new name.ts",
++           "status": "R ",
++         },
++       ],
++       "error": null,
++       "headCommit": "1234567890abcdef1234567890abcdef12345678",
++       "repoRootUri": "file:///projects/my-app",
++     },
+      "id": "b9b2c3d4-1111-4222-8333-123456789abc",
+      "nextAction": "テストの期待値を確認する",
+      "note": "API レスポンス形式を調査中
+  期待値の確認が必要",
+      "openFiles": [],
+
+ ❯ tests/cliDelete.test.ts:12:44
+     10|   const store = new CliCheckpointStore(storage);
+     11|   await store.remove(first.id.toUpperCase(), first.workspaceUri);
+     12|   expect((await store.load()).checkpoints).toEqual([second]);
+       |                                            ^
+     13|   const before = storage.contents;
+     14|   await expect(store.remove(second.id, 'file:///other')).rejects.toMat…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/cliDelete.test.ts > C11-01: deletion preserves legacy data rather than migrating it
+AssertionError: promise resolved "undefined" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+undefined
+
+ ❯ tests/cliDelete.test.ts:21:87
+     19|   const original = JSON.stringify({ schemaVersion: 1, checkpoints: [re…
+     20|   const storage = new MemoryStorage(original);
+     21|   await expect(new CliCheckpointStore(storage).remove(record.id, recor…
+       |                                                                                       ^
+     22|   expect(storage.contents).toBe(original);
+     23| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  14:20:18
+   Duration  310ms (transform 44%, tests 34%, import 17%, worker 5%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

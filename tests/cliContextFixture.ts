@@ -10,5 +10,6 @@ export function cliContextFixture(): CliContext {
     gitRunner: { run: vi.fn(async () => { throw new Error('Git must not run without permission'); }) },
     clock: () => new Date('2026-11-03T00:00:00Z'),
     idGenerator: () => 'a9b2c3d4-1111-4222-8333-123456789abc',
+    isInteractive: false, confirm: vi.fn(async () => false),
   };
 }

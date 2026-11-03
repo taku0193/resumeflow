@@ -10,16 +10,17 @@ export function parseCliArguments(args: readonly string[]): CliOptions {
   try {
     const { values, positionals, tokens } = parseArgs({ args: [...args], allowPositionals: true, tokens: true, options: {
       help: { type: 'boolean' }, project: { type: 'string' }, 'data-dir': { type: 'string' },
-      format: { type: 'string' }, note: { type: 'string' }, next: { type: 'string' }, 'allow-git': { type: 'boolean' },
+      format: { type: 'string' }, note: { type: 'string' }, next: { type: 'string' }, 'allow-git': { type: 'boolean' }, yes: { type: 'boolean' },
     } });
     const names = tokens.filter(token => token.kind === 'option').map(token => token.name);
     const command = values.help ? 'help' : positionals[0] ?? 'help';
-    const needsId = command === 'show' || command === 'context';
-    if (!['help', 'save', 'list', 'show', 'context'].includes(command)
+    const needsId = command === 'show' || command === 'context' || command === 'delete';
+    if (!['help', 'save', 'list', 'show', 'context', 'delete'].includes(command)
       || (needsId ? positionals.length !== 2 || !/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(positionals[1]!) : positionals.length > 1)
       || new Set(names).size !== names.length || values.project === '' || values['data-dir'] === ''
       || (values.format !== undefined && !['text', 'json', ...(command === 'context' ? ['markdown'] : [])].includes(values.format))
       || (command !== 'save' && names.some(name => ['note', 'next', 'allow-git'].includes(name)))
+      || (command !== 'delete' && values.yes !== undefined)
       || (command === 'help' && names.some(name => name !== 'help'))) {
       throw new CliError('USAGE', '引数を確認してください。help で使い方を表示できます。', true);
     }
@@ -27,7 +28,7 @@ export function parseCliArguments(args: readonly string[]): CliOptions {
       command: command as CliCommand,
       project: values.project ?? null, dataDirectory: values['data-dir'] ?? null,
       format: (values.format ?? (command === 'context' ? 'markdown' : 'text')) as CliOptions['format'], note: values.note ?? '', nextAction: values.next ?? '',
-      allowGit: values['allow-git'] === true, id: positionals[1] ?? null, yes: false,
+      allowGit: values['allow-git'] === true, id: positionals[1] ?? null, yes: values.yes === true,
     };
   } catch (error) {
     if (error instanceof CliError) throw error;
