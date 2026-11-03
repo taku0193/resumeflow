@@ -22,7 +22,7 @@ UI E2E は ExTester / Selenium で、インストールした VSIX を実画面�
 
 現在の UI E2E はパッケージのインストールと拡張詳細画面のスモークテスト（E2E-00）です。保存・再開・削除はまだ未実装のため、それらの E2E は機能実装に合わせて追加します。API 統合テスト2件とは区別して結果を報告します。[最新の CI 結果](https://github.com/taku0193/resumeflow/actions/workflows/ci.yml)
 
-ローカルの検証済み環境は macOS arm64 / Node.js 26.13.0 / npm 11.20.0 です。S2 では型チェック・単体テスト73件・ビルド・VSIX の配布対象検査が成功しました。models / services の4ファイルの単体カバレッジは statements / branches ともに 100% です。詳細は [S2 の TDD 記録](docs/S2_TDD_LOG.md) を参照してください。
+ローカルの検証済み環境は macOS arm64 / Node.js 26.13.0 / npm 11.20.0 です。S2 では型チェック・単体テスト76件・ビルド・VSIX の配布対象検査が成功しました。models / services の4ファイルの単体カバレッジは statements / branches ともに 100% です。詳細は [S2 の TDD 記録](docs/S2_TDD_LOG.md) を参照してください。
 
 **GitHub Actions で単体テスト4件と拡張統合テスト2件が成功しました。** 統合テストは Ubuntu 26.04.1 / Node.js 22.23.4 / VS Code 1.144.1 の Xvfb 上で実行し、拡張起動と実ファイル保存・再読込を確認しました。[CI の実行結果](https://github.com/taku0193/resumeflow/actions/runs/41556242212)
 
@@ -88,7 +88,7 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 | --- | --- | --- |
 | S0 | 雛形・単体／統合テスト基盤 | 実装済み。CI の Extension Host 起動も成功 |
 | S1 | P1-01 初期化、P1-02 保存・再読込、P1-03 追記 | 単体検証と CI の実 VS Code I/O 検証が成功 |
-| S2 | P1-04〜06 スキーマ検証・破損保護・書込失敗 | 実装・単体検証済み。実 I/O の3件を追加して CI で検証 |
+| S2 | P1-04〜06 スキーマ検証・破損保護・書込失敗 | 実装・単体検証済み。実 I/O の4件を追加して CI で検証 |
 | S3〜S6 | エディタ取得・Git取得・保存 UI・保存コマンド統合 | 未着手 |
 | S7〜S9 | 一覧・再開・削除 | 未着手 |
 

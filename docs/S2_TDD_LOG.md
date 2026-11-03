@@ -88,3 +88,7 @@ JSON の構文解析とスキーマ検証を `parseCheckpointCollection` にま�
 - RED: CI [41563238410](https://github.com/taku0193/resumeflow/actions/runs/41563238410) の `npm run test:integration` は4件成功・1件失敗。既存の非空ディレクトリを置換せず拒否するはずが、workspace.fs.rename の overwrite が成功してしまい `Missing expected rejection` で失敗した。
 - 修正: ローカル一時ファイルの置換を `node:fs/promises.rename` へ変更。通常ファイルを置換でき、ディレクトリ対象ではエラーになる [Node.js の仕様](https://nodejs.org/api/fs.html#fsrenameoldpath-newpath-callback) に従う。一時ファイルの後始末と元の例外の伝播は維持。
 - 補完: 既存の正しい JSON ファイルへの再保存でも2件の記録が残るテストを追加。統合は合計6件。ローカル GUI は起動せず、修正版の GREEN は CI で確認する。
+
+## 追加レビュー後のローカル検証
+
+`npm run verify` は型チェック・単体76件・ビルドで成功。`npm run test:coverage` は models / services の statements / branches ともに100%。`review-verify.log` / `review-coverage.log` に保存しました。実 FS の置換を含む統合6件と、既存の画面 E2E 1件の最終結果は [PR #2](https://github.com/taku0193/resumeflow/pull/2) の CI で確認します。
