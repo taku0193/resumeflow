@@ -40,6 +40,16 @@ export function parseCliCollection(contents: string): CliCollection {
   try { value = JSON.parse(contents); }
   catch { throw new CheckpointError('INVALID_JSON', 'チェックポイントの JSON を読み込めません。元データは変更していません。'); }
   object(value);
+  if (value.schemaVersion === 1) {
+    assertCheckpointCollection(value);
+    return {
+      schemaVersion: 1,
+      checkpoints: value.checkpoints.map(checkpoint => ({
+        ...checkpoint, schemaVersion: 2, editorCapture: 'legacy-unknown',
+        git: { ...checkpoint.git, changes: checkpoint.git.changes.map(change => ({ ...change, originalPath: null })) },
+      })),
+    };
+  }
   assertCliCollection(value as unknown as CliCollection);
   return value as unknown as CliCollection;
 }

@@ -1,17 +1,7 @@
 import { expect, test } from 'vitest';
 import { parseCliCollection, assertCliCollection } from '../src/models/cliSchema';
-import type { CliCheckpoint } from '../src/models/cliCheckpoint';
 import { checkpointFixture } from '../src/test/fixtures/checkpointFixture';
-
-export function cliFixture(overrides: Partial<CliCheckpoint> = {}): CliCheckpoint {
-  const legacy = checkpointFixture();
-  return {
-    ...legacy, schemaVersion: 2, editorCapture: 'not-connected',
-    openFiles: [], activeFileUri: null, cursor: null, unsavedFileUris: [],
-    git: { ...legacy.git, changes: [{ path: 'new name.ts', status: 'R ', originalPath: 'old name.ts' }] },
-    ...overrides,
-  };
-}
+import { cliCheckpointFixture as cliFixture } from '../src/test/fixtures/cliCheckpointFixture';
 
 test('C6-03: schema2 retains rename metadata and explicit unavailable editor state', () => {
   const collection = { schemaVersion: 2 as const, checkpoints: [cliFixture()] };
@@ -29,4 +19,16 @@ test.each([
   ['duplicate ID', JSON.stringify({ schemaVersion: 2, checkpoints: [cliFixture(), cliFixture()] })],
 ])('C6-03: rejects %s without quoting saved input', (_name, contents) => {
   expect(() => parseCliCollection(contents)).toThrow();
+});
+
+test('C6-04: reads schema1 as legacy-unknown without changing the original representation', () => {
+  const checkpoint = checkpointFixture();
+  const original = JSON.stringify({ schemaVersion: 1, checkpoints: [checkpoint] });
+  expect(() => parseCliCollection(original)).not.toThrow();
+  const loaded = parseCliCollection(original);
+  expect(loaded.schemaVersion).toBe(1);
+  expect(loaded.checkpoints[0]).toEqual({
+    ...checkpoint, schemaVersion: 2, editorCapture: 'legacy-unknown',
+    git: { ...checkpoint.git, changes: checkpoint.git.changes.map(change => ({ ...change, originalPath: null })) },
+  });
 });

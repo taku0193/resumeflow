@@ -1,0 +1,37 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliSchema.test.ts -t C6-04
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliSchema.test.ts (9 tests | 1 failed | 8 skipped) 7ms
+   × C6-04: reads schema1 as legacy-unknown without changing the original representation 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliSchema.test.ts > C6-04: reads schema1 as legacy-unknown without changing the original representation
+AssertionError: expected [Function] to not throw an error but 'CheckpointError: CLI チェックポイントの形式が正しくあ…' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"CheckpointError: CLI チェックポイントの形式が正しくありません。"
+
+ ❯ tests/cliSchema.test.ts:27:50
+     25|   const checkpoint = checkpointFixture();
+     26|   const original = JSON.stringify({ schemaVersion: 1, checkpoints: [ch…
+     27|   expect(() => parseCliCollection(original)).not.toThrow();
+       |                                                  ^
+     28|   const loaded = parseCliCollection(original);
+     29|   expect(loaded.schemaVersion).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 skipped (9)
+   Start at  12:16:57
+   Duration  225ms (transform 54%, import 24%, tests 15%, worker 7%)
+
