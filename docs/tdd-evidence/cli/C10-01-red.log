@@ -1,0 +1,103 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointQueries.test.ts -t C10-01
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointQueries.test.ts (1 test | 1 failed) 5ms
+   × C10-01: lists only the current project in newest-first order without changing the input 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointQueries.test.ts > C10-01: lists only the current project in newest-first order without changing the input
+AssertionError: expected [] to deeply equal [ { …(14) }, { …(14) } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "activeFileUri": null,
+-     "createdAt": "2026-11-03T00:00:00Z",
+-     "cursor": null,
+-     "editorCapture": "not-connected",
+-     "git": {
+-       "available": true,
+-       "branch": "feature/api",
+-       "changes": [
+-         {
+-           "originalPath": "old name.ts",
+-           "path": "new name.ts",
+-           "status": "R ",
+-         },
+-       ],
+-       "error": null,
+-       "headCommit": "1234567890abcdef1234567890abcdef12345678",
+-       "repoRootUri": "file:///projects/my-app",
+-     },
+-     "id": "b9b2c3d4-1111-4222-8333-123456789abc",
+-     "nextAction": "テストの期待値を確認する",
+-     "note": "API レスポンス形式を調査中
+- 期待値の確認が必要",
+-     "openFiles": [],
+-     "schemaVersion": 2,
+-     "title": "my-app — 2026-11-03 09:00",
+-     "unsavedFileUris": [],
+-     "workspaceName": "my-app",
+-     "workspaceUri": "file:///projects/my-app",
+-   },
+-   {
+-     "activeFileUri": null,
+-     "createdAt": "2026-11-02T00:00:00Z",
+-     "cursor": null,
+-     "editorCapture": "not-connected",
+-     "git": {
+-       "available": true,
+-       "branch": "feature/api",
+-       "changes": [
+-         {
+-           "originalPath": "old name.ts",
+-           "path": "new name.ts",
+-           "status": "R ",
+-         },
+-       ],
+-       "error": null,
+-       "headCommit": "1234567890abcdef1234567890abcdef12345678",
+-       "repoRootUri": "file:///projects/my-app",
+-     },
+-     "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+-     "nextAction": "テストの期待値を確認する",
+-     "note": "API レスポンス形式を調査中
+- 期待値の確認が必要",
+-     "openFiles": [],
+-     "schemaVersion": 2,
+-     "title": "my-app — 2026-11-03 09:00",
+-     "unsavedFileUris": [],
+-     "workspaceName": "my-app",
+-     "workspaceUri": "file:///projects/my-app",
+-   },
+- ]
++ []
+
+ ❯ tests/checkpointQueries.test.ts:9:64
+      7|   const other = fixture({ workspaceUri: 'file:///other' });
+      8|   const collection = { schemaVersion: 2 as const, checkpoints: [old, o…
+      9|   expect(listProjectCheckpoints(collection, old.workspaceUri)).toEqual…
+       |                                                                ^
+     10|   expect(collection.checkpoints).toEqual([old, other, recent]);
+     11|   expect(listProjectCheckpoints(collection, 'file:///missing')).toEqua…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  13:58:54
+   Duration  143ms (transform 50%, import 21%, tests 17%, worker 11%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

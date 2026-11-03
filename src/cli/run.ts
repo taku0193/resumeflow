@@ -5,6 +5,8 @@ import { captureGit } from '../services/gitCapture';
 import { createCliCheckpoint } from '../services/createCliCheckpoint';
 import { CliError } from '../models/cliError';
 import { CheckpointError } from '../models/checkpointError';
+import { findProjectCheckpoint, listProjectCheckpoints } from '../services/checkpointQueries';
+import { displayText, renderContext } from '../services/contextMarkdown';
 export interface CliContext {
   project: { path: string; uri: string; name: string };
   store: Pick<CliCheckpointStore, 'load' | 'append'>;
@@ -17,8 +19,17 @@ export interface CliResult { exitCode: number; stdout: string; stderr: string }
 export async function runCli(args: readonly string[], factory: (options: CliOptions) => Promise<CliContext>): Promise<CliResult> {
   try {
     const options = parseCliArguments(args);
-    if (options.command === 'help') return { exitCode: 0, stderr: '', stdout: 'ResumeFlow\n  save [--note TEXT] [--next TEXT] [--allow-git]\n  help\n共通: --project DIR --data-dir DIR --format text|json\n' };
+    if (options.command === 'help') return { exitCode: 0, stderr: '', stdout: 'ResumeFlow\n  save [--note TEXT] [--next TEXT] [--allow-git]\n  list\n  show UUID\n  context UUID\n  help\n共通: --project DIR --data-dir DIR --format text|json\n' };
     const context = await factory(options);
+    if (options.command !== 'save') {
+      const collection = await context.store.load();
+      const data = options.command === 'list' ? listProjectCheckpoints(collection, context.project.uri)
+        : findProjectCheckpoint(collection, options.id!, context.project.uri);
+      const text = Array.isArray(data) ? data.length === 0 ? 'チェックポイントはありません。\n'
+        : data.map(entry => `${entry.id}\t${entry.createdAt}\t${displayText(entry.workspaceName)}`).join('\n') + '\n'
+        : renderContext(data);
+      return { exitCode: 0, stderr: '', stdout: options.format === 'json' ? `${JSON.stringify({ ok: true, data })}\n` : text };
+    }
     const checkpoint = await context.withLock(async () => {
       const git = await captureGit(context.project.path, options.allowGit, context.gitRunner);
       const record = createCliCheckpoint({

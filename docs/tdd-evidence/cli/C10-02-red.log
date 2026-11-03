@@ -1,0 +1,66 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointQueries.test.ts -t C10-02
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointQueries.test.ts (2 tests | 1 failed | 1 skipped) 5ms
+   × C10-02: lookup requires both ID and current project, including case-insensitive UUID input 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointQueries.test.ts > C10-02: lookup requires both ID and current project, including case-insensitive UUID input
+AssertionError: expected undefined to deeply equal { …(14) }
+
+- Expected:
+{
+  "activeFileUri": null,
+  "createdAt": "2026-11-03T00:00:00.000Z",
+  "cursor": null,
+  "editorCapture": "not-connected",
+  "git": {
+    "available": true,
+    "branch": "feature/api",
+    "changes": [
+      {
+        "originalPath": "old name.ts",
+        "path": "new name.ts",
+        "status": "R ",
+      },
+    ],
+    "error": null,
+    "headCommit": "1234567890abcdef1234567890abcdef12345678",
+    "repoRootUri": "file:///projects/my-app",
+  },
+  "id": "a9b2c3d4-1111-4222-8333-123456789abc",
+  "nextAction": "テストの期待値を確認する",
+  "note": "API レスポンス形式を調査中
+期待値の確認が必要",
+  "openFiles": [],
+  "schemaVersion": 2,
+  "title": "my-app — 2026-11-03 09:00",
+  "unsavedFileUris": [],
+  "workspaceName": "my-app",
+  "workspaceUri": "file:///projects/my-app",
+}
+
++ Received:
+undefined
+
+ ❯ tests/checkpointQueries.test.ts:16:99
+     14|   const checkpoint = fixture();
+     15|   const collection = { schemaVersion: 2 as const, checkpoints: [checkp…
+     16|   expect(findProjectCheckpoint(collection, checkpoint.id.toUpperCase()…
+       |                                                                                                   ^
+     17|   expect(() => findProjectCheckpoint(collection, checkpoint.id, 'file:…
+     18|   expect(() => findProjectCheckpoint(collection, 'b9b2c3d4-1111-4222-8…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  13:58:58
+   Duration  176ms (transform 57%, import 22%, tests 14%, worker 7%)
+

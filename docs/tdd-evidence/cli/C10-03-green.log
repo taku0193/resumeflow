@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/contextMarkdown.test.ts -t C10-03
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  14:00:03
+   Duration  131ms (transform 55%, import 28%, worker 9%, tests 8%)
+

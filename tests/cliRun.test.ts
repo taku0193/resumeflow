@@ -2,6 +2,7 @@ import { expect, test, vi } from 'vitest';
 import { runCli } from '../src/cli/run';
 import { cliContextFixture } from './cliContextFixture';
 import { CheckpointError } from '../src/models/checkpointError';
+import { cliCheckpointFixture } from '../src/test/fixtures/cliCheckpointFixture';
 test('C9-04a: help returns usage without creating any project or storage context', async () => {
   const factory = vi.fn(async () => cliContextFixture());
   const result = await runCli(['help'], factory);
@@ -41,4 +42,25 @@ test('C9-04c: usage errors exit2 without accessing data', async () => {
   expect(result.stdout).toBe('');
   expect(JSON.parse(result.stderr).error.code).toBe('USAGE');
   expect(factory).not.toHaveBeenCalled();
+});
+test('C10-05: list/show/context read current project data without saving or executing Git', async () => {
+  const context = cliContextFixture();
+  const checkpoint = cliCheckpointFixture({ workspaceUri: context.project.uri });
+  await context.store.append(checkpoint);
+  const append = vi.spyOn(context.store, 'append');
+  const factory = async () => context;
+  const list = await runCli(['list', '--format', 'json'], factory);
+  expect(list.exitCode).toBe(0);
+  expect(JSON.parse(list.stdout).data).toEqual([checkpoint]);
+  const show = await runCli(['show', checkpoint.id, '--format', 'json'], factory);
+  expect(JSON.parse(show.stdout).data).toEqual(checkpoint);
+  const markdown = await runCli(['context', checkpoint.id], factory);
+  expect(markdown.stdout).toContain('再開用コンテキスト');
+  expect(append).not.toHaveBeenCalled();
+  expect(context.gitRunner.run).not.toHaveBeenCalled();
+});
+test('C10-05: an empty project is a successful empty list', async () => {
+  const result = await runCli(['list'], async () => cliContextFixture());
+  expect(result.exitCode).toBe(0);
+  expect(result.stdout).toContain('ありません');
 });
