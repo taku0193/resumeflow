@@ -57,3 +57,11 @@ JSON の構文解析とスキーマ検証を `parseCheckpointCollection` にま�
 - REFACTOR: JSON / スキーマのエラー分類を I/O と分けて維持。`npm run verify` の型チェック・全単体70件・ビルドが成功。
 - 証跡: `docs/tdd-evidence/s2/P1-06-{red,green,regression}.log`。
 - 次: 実 VS Code I/O での破損保護・一時ファイル置換失敗の補完統合テスト、既存 E2E の回帰確認。
+
+## P1-05-UTF8: 不正な UTF-8 バイトを置換して保存しない
+
+- レビューで、従来の Buffer.toString は不正 UTF-8 を置換文字に変え、構造上は有効な JSON として読み書きできることを確認。既存の復号処理を小さな境界関数に抽出した後、先に破損バイトのテストを追加。
+- RED: `npm run test:unit -- tests/checkpointEncoding.test.ts`。書込0回の期待に対し1回実行され、破損ファイルを再保存してしまうため1件失敗。正しい日本語と BOM の扱いの2件は成功。
+- GREEN: fatal な UTF-8 復号に変更。読み取りを READ_FAILED として拒否し、元バイト列を保持。3件成功。
+- REFACTOR: 復号を VS Code に依存しない純粋な境界関数に維持。BOM は除去せず、JSON の厳密な構文検査も維持。`npm run verify` の型チェック・全単体73件・ビルドが成功。
+- 証跡: `docs/tdd-evidence/s2/P1-05-utf8-{red,green,regression}.log`。

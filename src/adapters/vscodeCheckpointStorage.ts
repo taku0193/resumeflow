@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import * as vscode from 'vscode';
 import type { CheckpointStorage } from '../services/checkpointStore';
+import { decodeCheckpointText } from '../models/checkpointEncoding';
 
 /** Only handles extension-owned data; never receives a source-file path. */
 export class VscodeCheckpointStorage implements CheckpointStorage {
@@ -13,7 +14,7 @@ export class VscodeCheckpointStorage implements CheckpointStorage {
   async read(): Promise<string | undefined> {
     try {
       const bytes = await vscode.workspace.fs.readFile(this.dataFile);
-      return Buffer.from(bytes).toString('utf8');
+      return decodeCheckpointText(bytes);
     } catch (error) {
       if (error instanceof vscode.FileSystemError && error.code === 'FileNotFound') {
         return undefined;
