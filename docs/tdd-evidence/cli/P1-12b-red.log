@@ -1,0 +1,57 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitCapture.test.ts -t P1-12b
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/gitCapture.test.ts (7 tests | 5 failed | 2 skipped) 6ms
+   × P1-12b: acquisition failure yields a concise state and allows later saving 4ms
+   × P1-12b: acquisition failure yields a concise state and allows later saving 0ms
+   × P1-12b: acquisition failure yields a concise state and allows later saving 0ms
+   × P1-12b: acquisition failure yields a concise state and allows later saving 0ms
+   × P1-12b: acquisition failure yields a concise state and allows later saving 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gitCapture.test.ts > P1-12b: acquisition failure yields a concise state and allows later saving
+ FAIL  tests/gitCapture.test.ts > P1-12b: acquisition failure yields a concise state and allows later saving
+ FAIL  tests/gitCapture.test.ts > P1-12b: acquisition failure yields a concise state and allows later saving
+ FAIL  tests/gitCapture.test.ts > P1-12b: acquisition failure yields a concise state and allows later saving
+AssertionError: promise rejected "Error: Git metadata command failed { …(2) }" instead of resolving
+ ❯ tests/gitCapture.test.ts:40:44
+     38|   const git = runner();
+     39|   git.run.mockRejectedValueOnce(error);
+     40|   await expect(captureGit(root, true, git)).resolves.toMatchObject({ a…
+       |                                            ^
+     41| });
+     42|
+
+Caused by: Error: Git metadata command failed
+ ❯ tests/gitCapture.test.ts:32:4
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'GIT_NOT_INSTALLED', exitCode: undefined }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/gitCapture.test.ts > P1-12b: acquisition failure yields a concise state and allows later saving
+AssertionError: promise rejected "Error: SENSITIVE_NATIVE_MESSAGE" instead of resolving
+ ❯ tests/gitCapture.test.ts:40:44
+     38|   const git = runner();
+     39|   git.run.mockRejectedValueOnce(error);
+     40|   await expect(captureGit(root, true, git)).resolves.toMatchObject({ a…
+       |                                            ^
+     41| });
+     42|
+
+Caused by: Error: SENSITIVE_NATIVE_MESSAGE
+ ❯ tests/gitCapture.test.ts:36:4
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 2 skipped (7)
+   Start at  13:31:26
+   Duration  153ms (transform 51%, import 23%, tests 18%, worker 8%)
+

@@ -27,3 +27,15 @@ test('P1-13 regression: without explicit permission no Git command runs', async 
   expect(await captureGit(root, false, git)).toMatchObject({ available: false, error: 'NOT_ALLOWED' });
   expect(git.run).not.toHaveBeenCalled();
 });
+
+test.each([
+  [new GitCommandError('GIT_NOT_INSTALLED'), 'GIT_NOT_INSTALLED'],
+  [new GitCommandError('GIT_FAILED', 128), 'NOT_A_REPOSITORY'],
+  [new GitCommandError('GIT_TIMEOUT'), 'GIT_TIMEOUT'],
+  [new GitCommandError('GIT_OUTPUT_LIMIT'), 'GIT_OUTPUT_LIMIT'],
+  [new Error('SENSITIVE_NATIVE_MESSAGE'), 'GIT_FAILED'],
+])('P1-12b: acquisition failure yields a concise state and allows later saving', async (error, code) => {
+  const git = runner();
+  git.run.mockRejectedValueOnce(error);
+  await expect(captureGit(root, true, git)).resolves.toMatchObject({ available: false, error: code, changes: [] });
+});
