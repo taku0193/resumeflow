@@ -74,3 +74,11 @@ JSON の構文解析とスキーマ検証を `parseCheckpointCollection` にま�
 - `npm run test:coverage`: models / services の4ファイルで statements / branches / functions / lines が100%。アダプタや UI の網羅率を意味しない。`final-coverage.log` に保存。
 - `npm run test:e2e:package`: 9個の配布対象ファイルを検査して VSIX 作成が成功。テスト fixture や開発用データは含まない。`final-package.log` に保存。
 - 保存 UI が未実装のため、E2E-11 / 12 は引き続き S6 で接続する。今回の CI は既存のパッケージ・画面表示 E2E-00 の回帰確認も実行する。
+
+## P1-04e: 欠損要素のある配列を保存しない
+
+- 最終レビューで、Array.every / forEach が配列の欠損要素を飛ばすため、検証後に JSON.stringify が null を書ける経路を発見。
+- RED: `npm run test:unit -- tests/checkpointStore.test.ts -t P1-04e`。openFiles / unsavedFileUris / Git changes の3件で、書込0回の期待に対して1回書き込まれて失敗。
+- GREEN: 文字列配列は Array.from、記録・Git changes は entries の走査で欠損位置も検証し、3件成功。
+- REFACTOR / 回帰: 既存の検証境界を維持し、`npm run verify` の型チェック・全単体76件・ビルドが成功。
+- 証跡: `docs/tdd-evidence/s2/P1-04e-{red,green,regression}.log`。

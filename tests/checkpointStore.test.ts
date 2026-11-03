@@ -178,3 +178,18 @@ test.each(['read', 'write'] as const)('P1-06: reports %s I/O failures and keeps 
   if (stage === 'read') expect(write).not.toHaveBeenCalled();
   else expect(write).toHaveBeenCalledTimes(1);
 });
+
+test.each([
+  ['open tabs', { ...nextCheckpoint, openFiles: Array<string>(1), activeFileUri: null }],
+  ['dirty files', { ...nextCheckpoint, unsavedFileUris: Array<string>(1) }],
+  ['Git changes', { ...nextCheckpoint, git: { ...nextCheckpoint.git, changes: Array(1) } }],
+])('P1-04e: sparse %s arrays cannot be saved as null entries', async (_description, checkpoint) => {
+  const original = JSON.stringify({ schemaVersion: 1, checkpoints: [validCheckpoint] });
+  const storage = new MemoryStorage(original);
+  const write = vi.spyOn(storage, 'writeAtomic');
+  const failure = await new CheckpointStore(storage).append(checkpoint).catch(error => error);
+
+  expect(write).not.toHaveBeenCalled();
+  expect(storage.contents).toBe(original);
+  expect(failure).toMatchObject({ code: 'INVALID_SCHEMA' });
+});

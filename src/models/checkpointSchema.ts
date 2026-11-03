@@ -14,7 +14,7 @@ function record(value: unknown, keys: readonly string[], field: string): Record<
 }
 
 function stringArray(value: unknown, field: string): void {
-  requireSchema(Array.isArray(value) && value.every(entry => typeof entry === 'string'), field);
+  requireSchema(Array.isArray(value) && Array.from(value).every(entry => typeof entry === 'string'), field);
 }
 
 function nullableString(value: unknown, field: string): void {
@@ -45,11 +45,11 @@ function checkpointStructure(value: unknown, field: string): asserts value is Ch
     nullableString(git[key], `${field}.git.${key}`);
   }
   requireSchema(Array.isArray(git.changes), `${field}.git.changes`);
-  git.changes.forEach((value, index) => {
+  for (const [index, value] of git.changes.entries()) {
     const changeField = `${field}.git.changes[${index}]`;
     const change = record(value, ['path', 'status'], changeField);
     requireSchema(typeof change.path === 'string' && typeof change.status === 'string', changeField);
-  });
+  }
 }
 
 function isFileUri(value: string): boolean {
@@ -93,13 +93,13 @@ export function assertCheckpointCollection(value: unknown): asserts value is Che
   requireSchema(collection.schemaVersion === 1, 'schemaVersion');
   requireSchema(Array.isArray(collection.checkpoints), 'checkpoints');
   const ids = new Set<string>();
-  collection.checkpoints.forEach((checkpoint, index) => {
+  for (const [index, checkpoint] of collection.checkpoints.entries()) {
     const field = `checkpoints[${index}]`;
     checkpointStructure(checkpoint, field);
     checkpointValues(checkpoint, field);
     requireSchema(!ids.has(checkpoint.id), `${field}.id`);
     ids.add(checkpoint.id);
-  });
+  }
 }
 
 export function parseCheckpointCollection(contents: string): CheckpointCollection {
