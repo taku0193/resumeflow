@@ -1,0 +1,58 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliRun.test.ts -t C10-05
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/cliRun.test.ts (6 tests | 2 failed | 4 skipped) 10ms
+   × C10-05: list/show/context read current project data without saving or executing Git 8ms
+   × C10-05: an empty project is a successful empty list 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/cliRun.test.ts > C10-05: list/show/context read current project data without saving or executing Git
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/cliRun.test.ts:53:25
+     51|   const factory = async () => context;
+     52|   const list = await runCli(['list', '--format', 'json'], factory);
+     53|   expect(list.exitCode).toBe(0);
+       |                         ^
+     54|   expect(JSON.parse(list.stdout).data).toEqual([checkpoint]);
+     55|   const show = await runCli(['show', checkpoint.id, '--format', 'json'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/cliRun.test.ts > C10-05: an empty project is a successful empty list
+AssertionError: expected '保存しました: a9b2c3d4-1111-4222-8333-12345…' to contain 'ありません'
+
+- Expected
++ Received
+
+- ありません
++ 保存しました: a9b2c3d4-1111-4222-8333-123456789abc
++
+
+ ❯ tests/cliRun.test.ts:65:25
+     63|   const result = await runCli(['list'], async () => cliContextFixture(…
+     64|   expect(result.exitCode).toBe(0);
+     65|   expect(result.stdout).toContain('ありません');
+       |                         ^
+     66| });
+     67|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 skipped (6)
+   Start at  14:00:10
+   Duration  187ms (transform 49%, import 26%, tests 20%, worker 5%)
+
