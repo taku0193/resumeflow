@@ -123,3 +123,11 @@ S0 / S1 では JSON を型アサーションで読み込んでいましたが、
 | ビルド・テスト基盤 | `package.json`、`package-lock.json`、`tsconfig.json`、`tsconfig.unit.json`、`vitest.config.mts` |
 | 開発環境・CI | `.vscode/launch.json`、`.vscode/tasks.json`、`.github/workflows/ci.yml`、`.gitignore` |
 | 利用・検証記録 | `README.md`、`DEVELOPMENT_LOG.md`、`docs/tdd-evidence/*.log`、`docs/development-dependency-audit.json` |
+
+## S3: エディタのメタデータ取得
+
+`codex/s3-editor-capture` / PR #3 で P1-07〜09 を実装した。通常のワークスペース内テキストタブ、実際のアクティブ URI と選択終端、dirty なファイル URI を取得する。画像・diff・仮想・外部タブを除外し、untitled は一時的な警告件数にする。本文取得、ソースへの書込、Git 実行は行わない。
+
+7つの単体 RED/GREEN、実 VS Code API のスタブからの RED/GREEN、画像タブの型に関するテスト準備失敗、取得 / 保存間の URI 規則の共通化を [S3 の記録](docs/S3_TDD_LOG.md) に残した。[最終の製品コードの CI](https://github.com/taku0193/resumeflow/actions/runs/41567531558) は型チェック・単体93件・ビルド・API統合15件・UI E2E 1件が成功した。ローカル GUI は起動していない。保存操作の画面 E2E はまだ未実装である。
+
+作業中のユーザー指示で、今後は CLI / Codex だけで使える入口を優先し、Issue → 機能別ブランチ → 細かい検証済みコミット → PR / CI で進めることになった。[親 Issue #4](https://github.com/taku0193/resumeflow/issues/4) と [仕様 Issue #5](https://github.com/taku0193/resumeflow/issues/5) に引き継ぐ。エディタ対応先の選定は保留。CLI と Codex skill は現時点では未実装。

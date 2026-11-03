@@ -117,6 +117,8 @@ NEXT: P1-02 保存して再読込する
 | E2E-00 | VSIX を実インストールして拡張ビューと詳細画面を操作し、UI E2E 1件成功 | `src/e2e/installedExtension.test.ts` / GitHub Actions run `41558662439` |
 | P1-04〜P1-06 | スキーマ検証、構文・UTF-8 破損保護、read / write 失敗を TDD で実装。単体76件・型チェック・ビルドが成功 | `docs/S2_TDD_LOG.md` / `docs/tdd-evidence/s2/` |
 | S2 の VS Code I/O 補完テスト | 破損 JSON、不正 UTF-8、置換失敗時の保護、既存ファイルの正常置換の4件を追加。実行は CI | `src/test/storageFailures.test.ts` |
-| P1-07〜P1-18 / P2-* | 未着手 | 次の対象は S3 / P1-07〜09 |
+| P1-07〜09 | フェイク境界で RED → GREEN。本文取得なしのタブ・アクティブ座標・未保存 URI / untitled 件数を実装 | `docs/S3_TDD_LOG.md` / `docs/tdd-evidence/s3/` |
+| S3 の VS Code API 補完テスト | 実タブ、背景タブ、グループ間重複、外部・仮想・diff・画像の除外、dirty / untitled を追加。CI で統合15件成功 | `src/test/editorCapture.test.ts` / run `41567531558` |
+| P1-10〜P1-18 / P2-* | 未着手 | CLI / Codex 優先の Issue #4 と仕様 Issue #5 へ引き継ぐ |
 
 S1 の補完統合テストは、未実装の保存コマンドに関する P1-17 / P1-18 の代替にはしていない。

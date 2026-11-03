@@ -2,7 +2,7 @@
 
 開発作業を中断するときの文脈をチェックポイントに保存し、再開を助けるローカル専用 VS Code 拡張機能です。仕様は `SPEC.md`、開発順序は `TEST_PLAN.md` を参照してください。
 
-現在は **S0〜S2 の開発用基盤と保存層**です。完成した拡張機能ではありません。コマンドパレットからの保存・一覧・再開・削除は、後続の開発スライスで追加します。
+現在は **S0〜S3 の開発用基盤・保存層・エディタ取得**です。完成した拡張機能ではありません。コマンドパレットからの保存・一覧・再開・削除は、後続の開発スライスで追加します。
 
 ## 開発環境
 
@@ -20,11 +20,11 @@ npm run test:coverage
 
 UI E2E は ExTester / Selenium で、インストールした VSIX を実画面から操作します。`npm run test:e2e` はローカル起動を拒否し、GitHub Actions の Xvfb 上でのみ実行します。CI の `e2e` ジョブではスクリーンショット・実行ログを artifact として7日間保存します。[E2E 計画とシナリオ一覧](E2E_PLAN.md)
 
-現在の UI E2E はパッケージのインストールと拡張詳細画面のスモークテスト（E2E-00）です。保存・再開・削除はまだ未実装のため、それらの E2E は機能実装に合わせて追加します。API 統合テスト2件とは区別して結果を報告します。[最新の CI 結果](https://github.com/taku0193/resumeflow/actions/workflows/ci.yml)
+現在の UI E2E はパッケージのインストールと拡張詳細画面のスモークテスト（E2E-00）です。保存・再開・削除はまだ未実装のため、それらの E2E は機能実装に合わせて追加します。API 統合テストとは区別して結果を報告します。[最新の CI 結果](https://github.com/taku0193/resumeflow/actions/workflows/ci.yml)
 
-ローカルの検証済み環境は macOS arm64 / Node.js 26.13.0 / npm 11.20.0 です。S2 では型チェック・単体テスト76件・ビルド・VSIX の配布対象検査が成功しました。models / services の4ファイルの単体カバレッジは statements / branches ともに 100% です。詳細は [S2 の TDD 記録](docs/S2_TDD_LOG.md) を参照してください。
+ローカルの検証済み環境は macOS arm64 / Node.js 26.13.0 / npm 11.20.0 です。S3 では型チェック・単体テスト93件・ビルド・VSIX の配布対象検査が成功しました。models / services の実行コード6ファイルの単体カバレッジは statements / branches ともに 100% です。アダプタや UI の網羅率を表す数字ではありません。[CI](https://github.com/taku0193/resumeflow/actions/runs/41567531558) でも単体93件・API統合15件・UI E2E 1件が成功しました。詳細は [S2](docs/S2_TDD_LOG.md) / [S3 の TDD 記録](docs/S3_TDD_LOG.md) を参照してください。
 
-**GitHub Actions で単体テスト4件と拡張統合テスト2件が成功しました。** 統合テストは Ubuntu 26.04.1 / Node.js 22.23.4 / VS Code 1.144.1 の Xvfb 上で実行し、拡張起動と実ファイル保存・再読込を確認しました。[CI の実行結果](https://github.com/taku0193/resumeflow/actions/runs/41556242212)
+初回 S0 / S1 の GitHub Actions では単体4件・統合2件が成功しました。Ubuntu 26.04.1 / Node.js 22.23.4 / VS Code 1.144.1 の Xvfb 上で拡張起動と実ファイル保存・再読込を確認した結果です。[初回 CI](https://github.com/taku0193/resumeflow/actions/runs/41556242212)。その後のスライスで検証ケースを追加しており、現在の件数は S3 の記録に示しています。
 
 初回の macOS ローカル実行では VS Code 起動時に `SIGABRT` が発生しました。以後、ローカル VS Code の起動は行わず、GUI が必要な検証は CI で実行します。F5 手動起動は未検証です。詳細な証跡と制約は [開発記録](DEVELOPMENT_LOG.md) を参照してください。
 
@@ -67,9 +67,9 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 ## 構成
 
 - `src/extension.ts`: 拡張の起動と依存関係の接続
-- `src/models/`: バージョン付きチェックポイントの型
-- `src/services/`: VS Code に依存しない保存ロジック
-- `src/adapters/`: VS Code のストレージ I/O
+- `src/models/`: チェックポイントの型・実行時検証、エディタのメタデータ契約
+- `src/services/`: VS Code に依存しない保存・エディタ取得の規則
+- `src/adapters/`: VS Code のストレージ I/O とタブ・カーソル情報の取得
 - `tests/`: メモリ上の偽 I/O を使う単体テスト
 - `src/test/`: VS Code Extension Development Host 内の統合テスト
 - `src/e2e/`: ExTester / Selenium による実画面 E2E
@@ -82,14 +82,17 @@ VSCODE_EXECUTABLE_PATH='/Applications/Visual Studio Code.app/Contents/MacOS/Code
 
 ストレージ層では、schemaVersion・必須項目・データ型・URI・ID の重複などを実行時に検証します。JSON や UTF-8 が破損している場合は読み込みと追記を拒否し、元データを保持します。I/O の読み書き失敗もエラーとして呼出し側へ伝えます。保存 UI は S5 で追加予定で、実データを扱うコマンドはまだありません。テストは専用保存領域で実行します。
 
+エディタ取得は通常のワークスペース内 `file:` テキストタブを対象とし、画像・diff・外部ファイル・仮想 URI を除外します。dirty な対象ファイルの URI と untitled の警告件数を返し、本文は読みません。警告件数は一時情報で、保存 JSON には追加しません。所属判定は VS Code API による URI 上の所属で、シンボリックリンクの実体は S3 で解決しません。再開時の実在・リンク先の確認は S8 の対象です。
+
 ## 開発範囲
 
 | スライス | 内容 | 状態 |
 | --- | --- | --- |
 | S0 | 雛形・単体／統合テスト基盤 | 実装済み。CI の Extension Host 起動も成功 |
 | S1 | P1-01 初期化、P1-02 保存・再読込、P1-03 追記 | 単体検証と CI の実 VS Code I/O 検証が成功 |
-| S2 | P1-04〜06 スキーマ検証・破損保護・書込失敗 | 実装・単体検証済み。実 I/O の4件を追加して CI で検証 |
-| S3〜S6 | エディタ取得・Git取得・保存 UI・保存コマンド統合 | 未着手 |
+| S2 | P1-04〜06 スキーマ検証・破損保護・書込失敗 | 単体76件・CI の実 I/O 含む統合6件が成功 |
+| S3 | P1-07〜09 タブ・アクティブ座標・未保存メタデータ取得 | 単体93件・CI の API 統合15件・UI E2E 1件が成功 |
+| S4〜S6 | Git取得・保存 UI・保存コマンド統合 | 未着手。CLI / Codex 優先の [Issue #4](https://github.com/taku0193/resumeflow/issues/4) へ引き継ぐ |
 | S7〜S9 | 一覧・再開・削除 | 未着手 |
 
 資料内で MVP の v0.1 / v0.2 表記が混在していますが、v0.2 を開発手順の改定、保存スキーマを 1 と解釈しています。初回の作業範囲には `CODEX_START_PROMPT.md` の S0 / S1 を採用しています。
