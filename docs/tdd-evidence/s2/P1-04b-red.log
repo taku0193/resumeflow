@@ -1,0 +1,1613 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/checkpointStore.test.ts -t P1-04b
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/checkpointStore.test.ts (37 tests | 28 failed | 9 skipped) 25ms
+   × P1-04b: rejects an invalid checkpoint structure (null checkpoint) 9ms
+   × P1-04b: rejects an invalid checkpoint structure (missing fields) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (checkpoint schema) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string id) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string createdAt) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string title) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string workspaceUri) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string workspaceName) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string note) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string nextAction) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-array openFiles) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string openFiles entry) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-array unsavedFileUris) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string unsaved URI) 1ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string active URI) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (missing cursor coordinate) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (string cursor coordinate) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (missing Git fields) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-boolean Git availability) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string Git repoRootUri) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string Git branch) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string Git headCommit) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string Git error) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-array Git changes) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string Git change path) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (non-string Git change status) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (unexpected file body) 0ms
+   × P1-04b: rejects an invalid checkpoint structure (unexpected Git diff) 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 28 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (null checkpoint)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     null,
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (missing fields)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {},
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (checkpoint schema)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 2,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string id)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": 17,
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string createdAt)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": 17,
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string title)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": 17,
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string workspaceUri)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": 17,
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string workspaceName)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": 17,
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string note)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": 17,
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string nextAction)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": 17,
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-array openFiles)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": "",
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string openFiles entry)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         4,
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-array unsavedFileUris)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": null,
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string unsaved URI)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         false,
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string active URI)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": 2,
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (missing cursor coordinate)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "line": 1,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (string cursor coordinate)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 0,
++         "line": "1",
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (missing Git fields)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {},
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-boolean Git availability)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": "true",
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string Git repoRootUri)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": 3,
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string Git branch)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": 3,
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string Git headCommit)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": 3,
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string Git error)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": 3,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-array Git changes)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": {},
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string Git change path)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": 8,
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (non-string Git change status)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "a.ts",
++             "status": null,
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (unexpected file body)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "fileBody": "do not persist this",
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "path": "src/api.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/28]⎯
+
+ FAIL  tests/checkpointStore.test.ts > P1-04b: rejects an invalid checkpoint structure (unexpected Git diff)
+AssertionError: promise resolved "{ schemaVersion: 1, …(1) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "checkpoints": [
++     {
++       "activeFileUri": "file:///projects/my-app/src/api.ts",
++       "createdAt": "2026-11-03T00:00:00.000Z",
++       "cursor": {
++         "character": 8,
++         "line": 42,
++       },
++       "git": {
++         "available": true,
++         "branch": "feature/api",
++         "changes": [
++           {
++             "diff": "do not persist",
++             "path": "a.ts",
++             "status": " M",
++           },
++         ],
++         "error": null,
++         "headCommit": "1234567890abcdef1234567890abcdef12345678",
++         "repoRootUri": "file:///projects/my-app",
++       },
++       "id": "a9b2c3d4-1111-4222-8333-123456789abc",
++       "nextAction": "テストの期待値を確認する",
++       "note": "API レスポンス形式を調査中
++ 期待値の確認が必要",
++       "openFiles": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "schemaVersion": 1,
++       "title": "my-app — 2026-11-03 09:00",
++       "unsavedFileUris": [
++         "file:///projects/my-app/src/api.ts",
++       ],
++       "workspaceName": "my-app",
++       "workspaceUri": "file:///projects/my-app",
++     },
++   ],
++   "schemaVersion": 1,
+  }
+
+ ❯ tests/checkpointStore.test.ts:80:52
+     78| ])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_des…
+     79|   const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1,…
+     80|   await expect(new CheckpointStore(storage).load()).rejects.toMatchObj…
+       |                                                    ^
+     81|     name: 'CheckpointError', code: 'INVALID_SCHEMA',
+     82|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/28]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  28 failed | 9 skipped (37)
+   Start at  10:40:59
+   Duration  390ms (transform 42%, tests 35%, import 18%, worker 5%)
+
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

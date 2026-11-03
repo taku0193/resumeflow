@@ -51,3 +51,33 @@ test.each([
   const store = new CheckpointStore(new MemoryStorage(JSON.stringify(value)));
   await expect(store.load()).rejects.toMatchObject({ name: 'CheckpointError', code: 'INVALID_SCHEMA' });
 });
+
+const validCheckpoint = checkpointFixture();
+test.each([
+  ['null checkpoint', null],
+  ['missing fields', {}],
+  ['checkpoint schema', { ...validCheckpoint, schemaVersion: 2 }],
+  ...['id', 'createdAt', 'title', 'workspaceUri', 'workspaceName', 'note', 'nextAction']
+    .map(field => [`non-string ${field}`, { ...validCheckpoint, [field]: 17 }]),
+  ['non-array openFiles', { ...validCheckpoint, openFiles: '' }],
+  ['non-string openFiles entry', { ...validCheckpoint, openFiles: [4] }],
+  ['non-array unsavedFileUris', { ...validCheckpoint, unsavedFileUris: null }],
+  ['non-string unsaved URI', { ...validCheckpoint, unsavedFileUris: [false] }],
+  ['non-string active URI', { ...validCheckpoint, activeFileUri: 2 }],
+  ['missing cursor coordinate', { ...validCheckpoint, cursor: { line: 1 } }],
+  ['string cursor coordinate', { ...validCheckpoint, cursor: { line: '1', character: 0 } }],
+  ['missing Git fields', { ...validCheckpoint, git: {} }],
+  ['non-boolean Git availability', { ...validCheckpoint, git: { ...validCheckpoint.git, available: 'true' } }],
+  ...['repoRootUri', 'branch', 'headCommit', 'error']
+    .map(field => [`non-string Git ${field}`, { ...validCheckpoint, git: { ...validCheckpoint.git, [field]: 3 } }]),
+  ['non-array Git changes', { ...validCheckpoint, git: { ...validCheckpoint.git, changes: {} } }],
+  ['non-string Git change path', { ...validCheckpoint, git: { ...validCheckpoint.git, changes: [{ path: 8, status: ' M' }] } }],
+  ['non-string Git change status', { ...validCheckpoint, git: { ...validCheckpoint.git, changes: [{ path: 'a.ts', status: null }] } }],
+  ['unexpected file body', { ...validCheckpoint, fileBody: 'do not persist this' }],
+  ['unexpected Git diff', { ...validCheckpoint, git: { ...validCheckpoint.git, changes: [{ path: 'a.ts', status: ' M', diff: 'do not persist' }] } }],
+])('P1-04b: rejects an invalid checkpoint structure (%s)', async (_description, checkpoint) => {
+  const storage = new MemoryStorage(JSON.stringify({ schemaVersion: 1, checkpoints: [checkpoint] }));
+  await expect(new CheckpointStore(storage).load()).rejects.toMatchObject({
+    name: 'CheckpointError', code: 'INVALID_SCHEMA',
+  });
+});
