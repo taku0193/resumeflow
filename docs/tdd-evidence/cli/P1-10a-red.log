@@ -1,0 +1,53 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/gitStatusParser.test.ts -t P1-10a
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+ ❯ tests/gitStatusParser.test.ts (1 test | 1 failed) 8ms
+   × P1-10a: parses ordinary, staged and untracked NUL records 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gitStatusParser.test.ts > P1-10a: parses ordinary, staged and untracked NUL records
+AssertionError: expected [] to deeply equal [ { path: 'src/a.ts', …(2) }, …(2) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "originalPath": null,
+-     "path": "src/a.ts",
+-     "status": " M",
+-   },
+-   {
+-     "originalPath": null,
+-     "path": "src/b.ts",
+-     "status": "A ",
+-   },
+-   {
+-     "originalPath": null,
+-     "path": "new.txt",
+-     "status": "??",
+-   },
+- ]
++ []
+
+ ❯ tests/gitStatusParser.test.ts:5:68
+      3|
+      4| test('P1-10a: parses ordinary, staged and untracked NUL records', () =…
+      5|   expect(parseGitStatus(' M src/a.ts\0A  src/b.ts\0?? new.txt\0')).toE…
+       |                                                                    ^
+      6|     { path: 'src/a.ts', status: ' M', originalPath: null },
+      7|     { path: 'src/b.ts', status: 'A ', originalPath: null },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  12:23:07
+   Duration  220ms (transform 50%, import 22%, tests 19%, worker 9%)
+
