@@ -1,0 +1,13 @@
+
+> resumeflow@0.0.1 test:unit
+> vitest run tests/cliPaths.test.ts -t C6-06
+
+
+ RUN  v5.1.0 /Users/takumayamane/Documents/Codex/2026-11-03/kore/outputs/resumeflow
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  12:17:41
+   Duration  187ms (transform 51%, import 29%, worker 10%, tests 8%)
+
